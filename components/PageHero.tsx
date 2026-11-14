@@ -17,10 +17,10 @@ type Props = {
 /** Lavender page header with breadcrumbs, H1, intro and an optional illustration. */
 export default function PageHero({ crumbs, title, intro, illustration, illustrationClassName = "w-56 lg:w-64", children }: Props) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-accent-soft/70 to-paper">
+    <section className="fc-hero-bg relative overflow-hidden">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-24 -top-32 size-[26rem] rounded-full bg-accent-soft opacity-80 blur-3xl"
+        className="pointer-events-none absolute -right-24 -top-32 size-[26rem] rounded-full fc-glow-shape opacity-90 blur-3xl"
       />
       <Container className="relative grid items-center gap-6 pb-8 pt-8 sm:pt-10 md:grid-cols-[1fr_auto] md:pb-10">
         <div className="max-w-2xl">

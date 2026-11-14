@@ -20,7 +20,7 @@ const shortcuts = [
 
 export default function NotFound() {
   return (
-    <section className="bg-gradient-to-b from-accent-soft/70 to-paper">
+    <section className="fc-hero-bg">
       <Container className="py-12 text-center sm:py-16">
         <Artwork art={ART.notFound} sizes="(min-width: 640px) 360px, 80vw" priority className="mx-auto max-w-[22.5rem]" />
         <p className="glyph mt-6 text-4xl font-extrabold text-accent dark:text-accent-strong" aria-hidden="true">

@@ -4,7 +4,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-paper: #faf8ff;
+  /* Page background. Also used for subtle inner surfaces such as input fields. */
+  --color-paper: #f8f5ff;
   --color-surface: #ffffff;
   --color-sand: #f0e9ff;
   --color-line: #e5daff;
@@ -24,6 +25,30 @@
 
   --radius-card: 1.125rem;
   --shadow-card: 0 1px 2px rgb(23 20 59 / 0.04), 0 10px 30px -14px rgb(100 37 232 / 0.18);
+}
+
+/*
+ * Background palette. Only page and section backgrounds use these;
+ * cards, buttons and borders keep their own colors.
+ */
+:root {
+  --bg-main: #f8f5ff;
+  --bg-secondary: #f1eaff;
+  --bg-soft: #f5efff;
+  --bg-lavender: #ede3ff;
+  --bg-highlight: #e6d7ff;
+  --bg-deep: 109 40 240; /* #6D28F0 as RGB, for tinted glows */
+  --bg-glow: rgb(139 92 246 / 0.12);
+}
+
+.dark {
+  --bg-main: #0e0c22;
+  --bg-secondary: #14112f;
+  --bg-soft: #110e29;
+  --bg-lavender: #1a1642;
+  --bg-highlight: #221c55;
+  --bg-deep: 124 77 255;
+  --bg-glow: rgb(139 92 246 / 0.14);
 }
 
 .dark {
@@ -49,10 +74,34 @@ html {
 }
 
 body {
-  background: var(--color-paper);
+  /* Base color plus two soft glows near the top of every page. */
+  background:
+    radial-gradient(56rem 36rem at 100% 0, var(--bg-glow), transparent 70%),
+    radial-gradient(48rem 32rem at 0 22rem, rgb(var(--bg-deep) / 0.06), transparent 70%),
+    var(--bg-main);
   color: var(--color-ink);
   font-family: var(--font-sans);
   overflow-x: hidden;
+}
+
+/* Page heroes: lavender at the top that fades into the page, with a soft glow. */
+.fc-hero-bg {
+  background:
+    radial-gradient(40rem 26rem at 88% -6rem, var(--bg-glow), transparent 70%),
+    radial-gradient(34rem 22rem at 8% 0, rgb(var(--bg-deep) / 0.07), transparent 70%),
+    linear-gradient(180deg, var(--bg-lavender) 0%, var(--bg-soft) 55%, transparent 100%);
+}
+
+/* Highlighted page sections: fades in and out so sections blend without hard lines. */
+.fc-band {
+  background:
+    radial-gradient(44rem 22rem at 85% 50%, var(--bg-glow), transparent 70%),
+    linear-gradient(180deg, transparent 0%, var(--bg-secondary) 14%, var(--bg-secondary) 86%, transparent 100%);
+}
+
+/* Large blurred shape used as a quiet decoration behind hero content. */
+.fc-glow-shape {
+  background: radial-gradient(circle, var(--bg-highlight) 0%, transparent 70%);
 }
 
 :focus-visible {

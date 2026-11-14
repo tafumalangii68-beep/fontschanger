@@ -127,10 +127,10 @@ export default function HomePage() {
       />
 
       {/* Hero + generator */}
-      <section className="relative overflow-hidden pb-14 pt-8 sm:pt-12">
+      <section className="fc-hero-bg relative overflow-hidden pb-14 pt-8 sm:pt-12">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -left-40 -top-40 size-[28rem] rounded-full bg-accent-soft opacity-70 blur-3xl"
+          className="pointer-events-none absolute -left-40 -top-40 size-[28rem] rounded-full fc-glow-shape opacity-90 blur-3xl"
         />
         <Container className="relative">
           <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_1fr]">
@@ -219,7 +219,7 @@ export default function HomePage() {
       </Container>
 
       {/* Collections */}
-      <section aria-labelledby="collections-heading" className="mt-16 border-y border-line bg-surface py-16">
+      <section aria-labelledby="collections-heading" className="fc-band mt-16 py-16">
         <Container>
           <SectionHeading
             id="collections-heading"
@@ -381,7 +381,7 @@ export default function HomePage() {
       </Container>
 
       {/* How to use */}
-      <section aria-labelledby="howto-heading" className="border-y border-line bg-surface py-16">
+      <section aria-labelledby="howto-heading" className="fc-band py-16">
         <Container>
           <SectionHeading
             id="howto-heading"

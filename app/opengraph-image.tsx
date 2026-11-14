@@ -23,7 +23,7 @@ export default async function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background: "linear-gradient(135deg, #f0e9ff 0%, #faf8ff 60%)",
+          background: "linear-gradient(135deg, #ede3ff 0%, #f8f5ff 60%)",
           color: "#17143b",
         }}
       >
