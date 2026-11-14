@@ -1,4 +1,5 @@
 import Link from "next/link";
+import AuthorProfile from "@/components/AuthorProfile";
 import HeaderActions from "@/components/HeaderActions";
 import Logo from "@/components/Logo";
 import SiteNav from "@/components/SiteNav";
@@ -19,6 +20,9 @@ export default function SiteHeader() {
         </Link>
         <SiteNav items={mainNav} />
         <div className="ml-auto flex items-center gap-1 lg:ml-0">
+          {/* Phones show the author in the menu instead; the header has no room there. */}
+          <AuthorProfile className="hidden sm:flex" />
+          <span aria-hidden="true" className="mx-1.5 hidden h-6 w-px bg-line sm:block" />
           <HeaderActions />
         </div>
       </div>

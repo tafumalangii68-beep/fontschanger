@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import AuthorProfile from "@/components/AuthorProfile";
 import type { NavItem } from "@/lib/site-config";
 
 function isActive(pathname: string, href: string) {
@@ -54,6 +55,8 @@ export default function SiteNav({ items }: { items: NavItem[] }) {
           aria-label="Mobile"
           className="absolute inset-x-0 top-full z-40 border-b border-line bg-surface shadow-[var(--shadow-card)] lg:hidden"
         >
+          {/* On phones the header has no room for the author, so it sits at the top of the menu. */}
+          <AuthorProfile className="mx-auto flex max-w-6xl px-8 pt-4 sm:hidden" nameFrom="always" />
           <ul className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3">
             {items.map((item) => {
               const active = isActive(pathname, item.href);
