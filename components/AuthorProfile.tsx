@@ -1,7 +1,7 @@
 import Image from "next/image";
-import authorPhoto from "@/public/images/author-tafu-yash.webp";
+import authorPhoto from "@/public/images/author.webp";
 
-export const AUTHOR_NAME = "Tafu Yash";
+export const AUTHOR_NAME = "Ali Khan";
 
 /** Small round photo plus name. The name shows from `nameFrom` up and stays readable to screen readers below it. */
 export default function AuthorProfile({ className = "", nameFrom = "lg" }: { className?: string; nameFrom?: "lg" | "always" }) {
