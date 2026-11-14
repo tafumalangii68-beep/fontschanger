@@ -23,6 +23,7 @@ import FontOfTheDay from "@/components/FontOfTheDay";
 import PlatformPreview from "@/components/PlatformPreview";
 import RecentCopies from "@/components/RecentCopies";
 import SymbolGenerator from "@/components/SymbolGenerator";
+import TypographyBackground from "@/components/TypographyBackground";
 import JsonLd from "@/components/JsonLd";
 import { homeFaqs } from "@/data/faqs";
 import { ART, STEP_ART } from "@/lib/art";
@@ -127,12 +128,9 @@ export default function HomePage() {
       />
 
       {/* Hero + generator */}
-      <section className="fc-hero-bg relative overflow-hidden pb-14 pt-8 sm:pt-12">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -left-40 -top-40 size-[28rem] rounded-full fc-glow-shape opacity-90 blur-3xl"
-        />
-        <Container className="relative">
+      <section className="fc-type-hero relative overflow-hidden pb-14 pt-8 sm:pt-12">
+        <TypographyBackground />
+        <Container className="relative z-10">
           <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_1fr]">
             <div>
               <p className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-3.5 py-1.5 text-sm font-semibold text-ink">

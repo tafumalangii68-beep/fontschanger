@@ -99,6 +99,160 @@ body {
     linear-gradient(180deg, transparent 0%, var(--bg-secondary) 14%, var(--bg-secondary) 86%, transparent 100%);
 }
 
+/* ---------- Homepage animated typography background ---------- */
+
+.fc-type-hero {
+  background:
+    radial-gradient(38rem 26rem at 92% 8rem, rgb(236 72 153 / 0.08), transparent 70%),
+    linear-gradient(180deg, var(--type-base) 0%, var(--type-base) 46rem, transparent 60rem);
+}
+
+:root {
+  --type-base: #f5edff;
+  --type-ink: 109 40 240; /* violet */
+  --type-veil: 245 237 255;
+}
+.dark {
+  --type-base: #120f2c;
+  --type-ink: 196 171 255;
+  --type-veil: 18 15 44;
+}
+
+.fc-type-bg {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 50rem;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+  /* Fades out before the results grid so it never sits behind body text. */
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%);
+}
+
+.fc-type-lane {
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-size: var(--fc-lane-size, 2rem);
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.fc-type-back {
+  filter: blur(0.6px);
+}
+
+.fc-type-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: fc-marquee-left 60s linear infinite;
+}
+.fc-type-right {
+  animation-name: fc-marquee-right;
+}
+
+.fc-type-item {
+  display: inline-block;
+  padding: 0 0.55em;
+  font-family: var(--font-glyph);
+  white-space: nowrap;
+  transform: rotate(var(--fc-rot, 0deg));
+  animation: fc-float var(--fc-float, 6s) ease-in-out infinite;
+  animation-delay: var(--fc-delay, 0s);
+}
+
+.fc-type-solid {
+  color: rgb(var(--type-ink));
+}
+.fc-type-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(var(--type-ink));
+}
+.fc-type-gradient {
+  background: linear-gradient(90deg, #7c3aed, #a855f7 45%, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.fc-type-glow {
+  color: rgb(var(--type-ink));
+  text-shadow:
+    0 0 18px rgb(236 72 153 / 0.55),
+    0 0 36px rgb(139 92 246 / 0.5);
+}
+
+.fc-type-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: rgb(var(--type-ink) / 0.16);
+  stroke-width: 1.5;
+}
+.fc-type-lines path {
+  stroke-dasharray: 6 10;
+  animation: fc-dash 40s linear infinite;
+}
+.fc-type-line-faint {
+  stroke: rgb(236 72 153 / 0.14);
+}
+
+.fc-type-veil {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(34rem 20rem at 24% 30%, rgb(var(--type-veil) / 0.88), rgb(var(--type-veil) / 0.55) 55%, transparent 80%);
+}
+
+@keyframes fc-marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+@keyframes fc-marquee-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fc-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--fc-rot, 0deg));
+  }
+  50% {
+    transform: translate3d(0, -0.12em, 0) rotate(calc(var(--fc-rot, 0deg) * -1));
+  }
+}
+@keyframes fc-dash {
+  to {
+    stroke-dashoffset: -320;
+  }
+}
+
+@media (max-width: 767px) {
+  .fc-type-bg {
+    height: 40rem;
+  }
+  .fc-type-desktop {
+    display: none;
+  }
+  .fc-type-lane {
+    font-size: calc(var(--fc-lane-size, 2rem) * 0.72);
+  }
+  .fc-type-veil {
+    background: radial-gradient(28rem 22rem at 30% 32%, rgb(var(--type-veil) / 0.9), rgb(var(--type-veil) / 0.6) 60%, transparent 85%);
+  }
+}
+
 /* Large blurred shape used as a quiet decoration behind hero content. */
 .fc-glow-shape {
   background: radial-gradient(circle, var(--bg-highlight) 0%, transparent 70%);
@@ -191,6 +345,12 @@ dialog::backdrop {
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+  /* Looping animations must stop entirely; a 0.01ms infinite loop would flicker. */
+  .fc-type-track,
+  .fc-type-item,
+  .fc-type-lines path {
+    animation: none !important;
   }
 }
 
