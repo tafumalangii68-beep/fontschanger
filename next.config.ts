@@ -7,14 +7,15 @@ const nextConfig: NextConfig = {
   // Short aliases for existing pages, so shared links never break.
   async redirects() {
     return [
-      // The default Vercel address serves a full copy of the site; send it to the real domain.
-      // Only this exact host: preview deployment URLs keep working.
-      {
+      // fontschanger.app (non-www) is the only canonical domain. www and the default Vercel
+      // address serve full copies of the site, so send them there with a 301 and the same path.
+      // Exact hosts only: preview deployment URLs keep working.
+      ...["www.fontschanger.app", "fontschanger.vercel.app"].map((host) => ({
         source: "/:path*",
-        has: [{ type: "host", value: "fontschanger.vercel.app" }],
+        has: [{ type: "host" as const, value: host }],
         destination: "https://fontschanger.app/:path*",
-        statusCode: 301,
-      },
+        statusCode: 301 as const,
+      })),
       { source: "/font-styles", destination: "/fonts", permanent: true },
       { source: "/terms", destination: "/terms-and-conditions", permanent: true },
     ];
