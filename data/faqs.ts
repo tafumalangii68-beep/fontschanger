@@ -86,3 +86,35 @@ export const generalFaqs: Faq[] = [
       "No. When you star a style, its name is saved only in your current browser. Clearing your browser data removes it.",
   },
 ];
+
+/** Opening questions for the FAQ page, ahead of the usage and general lists. */
+export const introFaqs = (styleCount: number): Faq[] => [
+  {
+    question: "What is Fonts Changer?",
+    answer:
+      "Fonts Changer is a free online tool that converts your normal text into stylish, fancy text you can copy and paste anywhere. It also includes a Text Decorator that adds symbols, borders and brackets around your words.",
+  },
+  {
+    question: "Is Fonts Changer free to use?",
+    answer: "Yes. Every style and tool is free, with no limits on how often you use them and no watermark.",
+  },
+  {
+    question: "Do I need to create an account?",
+    answer:
+      "No. There is no sign-up and no login. Styles you save with the heart button are remembered in your own browser instead of an account.",
+  },
+  {
+    question: "Where can I use these fonts?",
+    answer:
+      "Almost anywhere that accepts emoji: Instagram and TikTok bios, Discord nicknames and channel names, WhatsApp and Telegram messages, X posts, YouTube comments and many games. Fields such as usernames, email addresses and passwords usually only accept basic letters.",
+  },
+  {
+    question: "Is my text stored on your server?",
+    answer:
+      "No. The conversion runs in your browser with JavaScript, so your text never reaches our server. It is not saved and disappears when you close or reload the page.",
+  },
+  {
+    question: "How many font styles are available?",
+    answer: `There are currently ${styleCount} styles, grouped into cursive, bold, aesthetic, fancy, small, line, glitch and upside-down categories. The Text Decorator adds dozens of symbol frames on top of those.`,
+  },
+];

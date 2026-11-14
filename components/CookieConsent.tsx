@@ -119,7 +119,7 @@ export default function CookieConsent() {
               <span className="rounded-full bg-sand px-2.5 py-0.5 text-xs font-medium text-muted">Always active</span>
             </div>
             <p className="mt-2 text-sm leading-relaxed text-muted">
-              Remembers your cookie choice and the font styles you save with the star button. This stays in your browser
+              Remembers your cookie choice and the font styles you save with the heart button. This stays in your browser
               and is never sent to us. It cannot be switched off here, but you can clear it in your browser settings.
             </p>
           </div>

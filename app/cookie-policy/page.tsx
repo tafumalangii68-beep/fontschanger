@@ -39,8 +39,14 @@ export default function CookiePolicyPage() {
             <tr>
               <td className="px-4 py-3 font-mono text-xs">fc-saved-styles</td>
               <td className="px-4 py-3">Local storage, functional</td>
-              <td className="px-4 py-3">Remembers styles you starred. Only created when you tap a star.</td>
-              <td className="px-4 py-3">Until you remove the stars or clear browser data</td>
+              <td className="px-4 py-3">Remembers styles you saved. Only created when you tap a heart.</td>
+              <td className="px-4 py-3">Until you remove the hearts or clear browser data</td>
+            </tr>
+            <tr>
+              <td className="px-4 py-3 font-mono text-xs">fc-theme</td>
+              <td className="px-4 py-3">Local storage, functional</td>
+              <td className="px-4 py-3">Remembers whether you chose light or dark mode. Only created when you use the theme button.</td>
+              <td className="px-4 py-3">Until you change it or clear browser data</td>
             </tr>
           </tbody>
         </table>

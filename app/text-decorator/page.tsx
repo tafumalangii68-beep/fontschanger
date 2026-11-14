@@ -1,13 +1,13 @@
 import Link from "next/link";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import Container from "@/components/Container";
 import FaqList from "@/components/FaqList";
 import JsonLd from "@/components/JsonLd";
+import PageHero from "@/components/PageHero";
+import { DecoratorIllustration } from "@/components/PageIllustrations";
 import TextDecorator from "@/components/TextDecorator";
 import { DECORATIONS } from "@/lib/decorations";
 import { buildMetadata, faqJsonLd, webPageJsonLd } from "@/lib/seo";
 import type { Faq } from "@/types/content";
-
 const title = "Text Decorator: Add Symbols and Frames Around Your Text";
 const description =
   "Decorate your name or text with symbol frames like ꧁༺ ༻꧂, ★彡 and 【 】. Pick a letter style, then copy and paste. Free and runs in your browser.";
@@ -35,48 +35,50 @@ export const metadata = buildMetadata({ title, description, path, absoluteTitle:
 
 export default function TextDecoratorPage() {
   return (
-    <Container className="py-10">
-      <Breadcrumbs
-        items={[
+    <>
+      <JsonLd data={[webPageJsonLd(title, description, path), faqJsonLd(faqs)]} />
+      <PageHero
+        crumbs={[
           { name: "Home", path: "/" },
           { name: "Text Decorator", path },
         ]}
+        title="Text Decorator"
+        intro={`Add stylish symbols, borders and decorations to make your text stand out. Choose from ${DECORATIONS.length} decorations, perfect for bios, posts and profiles.`}
+        illustration={<DecoratorIllustration className="w-full" />}
       />
-      <JsonLd data={[webPageJsonLd(title, description, path), faqJsonLd(faqs)]} />
-      <header className="mb-7 max-w-2xl">
-        <h1 className="text-3xl font-extrabold tracking-tight text-ink sm:text-[2.6rem] sm:leading-tight">
-          Text <span className="text-accent dark:text-accent-strong">Decorator</span>
-        </h1>
-        <p className="mt-3 text-lg leading-relaxed text-muted">
-          Frame your name or a short phrase with symbols. Choose a letter style, then copy any of the {DECORATIONS.length}{" "}
-          decorations.
-        </p>
-      </header>
 
-      <TextDecorator />
+      <Container className="pt-6">
+        <TextDecorator />
 
-      <div className="prose-fc mt-4 max-w-3xl">
-        <h2>How to decorate your text</h2>
-        <ol>
-          <li>Type your name or a short phrase in the box.</li>
-          <li>Pick a letter style, or Plain to keep your normal letters.</li>
-          <li>Tap any decorated result to copy it, then paste it into your app.</li>
-        </ol>
-        <h2>Tips for good-looking decorations</h2>
-        <ul>
-          <li>Short text works best. Most decorations add four to twelve extra characters.</li>
-          <li>Match the mood: Royal and Crown suit gaming names, while Flowers, Ribbon and Sparkles suit soft, aesthetic bios.</li>
-          <li>Keep anything people need to search for, like your real name or business, outside the decoration in plain text.</li>
-        </ul>
-        <p>
-          Want more letter styles? Open the <Link href="/">Fonts Changer generator</Link> or browse all{" "}
-          <Link href="/fonts">font styles</Link>.
-        </p>
-        <h2>Text Decorator questions</h2>
-      </div>
-      <div className="mt-5 max-w-3xl">
-        <FaqList faqs={faqs} />
-      </div>
-    </Container>
+        <div className="mt-16 grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+          <div className="prose-fc">
+            <h2>How to decorate your text</h2>
+            <ol>
+              <li>Type your name or a short phrase in the box.</li>
+              <li>Pick a letter style, or Plain to keep your normal letters.</li>
+              <li>Choose Borders, Symbols, Separators or Brackets.</li>
+              <li>Tap any decorated result to copy it, then paste it into your app.</li>
+            </ol>
+            <h2>Tips for good-looking decorations</h2>
+            <ul>
+              <li>Short text works best. Most decorations add four to twelve extra characters.</li>
+              <li>Match the mood: Royal and Crown suit gaming names, while Flowers, Ribbon and Sparkles suit soft, aesthetic bios.</li>
+              <li>Separators make tidy section headings in long captions and channel descriptions.</li>
+              <li>Keep anything people need to search for, like your real name or business, outside the decoration in plain text.</li>
+            </ul>
+            <p>
+              Want more letter styles? Open the <Link href="/">Fonts Changer generator</Link> or browse all{" "}
+              <Link href="/fonts">font styles</Link>.
+            </p>
+          </div>
+          <section aria-labelledby="decorator-faq">
+            <h2 id="decorator-faq" className="mb-5 text-[1.6rem] font-extrabold leading-tight tracking-tight text-ink">
+              Text Decorator questions
+            </h2>
+            <FaqList faqs={faqs} />
+          </section>
+        </div>
+      </Container>
+    </>
   );
 }

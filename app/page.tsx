@@ -1,6 +1,9 @@
 import Link from "next/link";
 import {
   ArrowRight,
+  Camera,
+  Gamepad2,
+  Music2,
   ClipboardCopy,
   Heart,
   Keyboard,
@@ -42,6 +45,12 @@ const popular: { id: string; label: string; href: string; note: string }[] = [
   { id: "small-caps", label: "Small text", href: "/fonts/small-text", note: "Quiet, tidy capitals for subtitles" },
   { id: "glitch", label: "Glitch", href: "/fonts/glitch-text", note: "Creepy, distorted text for gaming" },
   { id: "upside-down", label: "Upside down", href: "/fonts/upside-down-text", note: "Flipped text for jokes and puzzles" },
+];
+
+const platformLinks: { href: string; icon: LucideIcon; title: string; text: string; tint: string }[] = [
+  { href: "#instagram", icon: Camera, title: "For Instagram", text: "Stylish bios and captions", tint: "bg-gradient-to-br from-fuchsia-500 to-orange-400" },
+  { href: "#discord", icon: Gamepad2, title: "For Discord", text: "Unique nicknames and channels", tint: "bg-accent" },
+  { href: "#tiktok", icon: Music2, title: "For TikTok", text: "Trendy profile text", tint: "bg-navy dark:bg-[#2d2763]" },
 ];
 
 const steps: { icon: LucideIcon; title: string; text: string }[] = [
@@ -172,6 +181,26 @@ export default function HomePage() {
           <div className="mt-8 lg:mt-4">
             <FontGenerator inputLabel="Type the text you want to change" />
           </div>
+
+          <ul className="mt-10 grid gap-3 sm:grid-cols-3">
+            {platformLinks.map(({ href, icon: Icon, title: linkTitle, text, tint }) => (
+              <li key={href}>
+                <a
+                  href={href}
+                  className="group flex items-center gap-3 rounded-[var(--radius-card)] border border-line bg-surface p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-[var(--shadow-card)]"
+                >
+                  <span className={`grid size-11 shrink-0 place-items-center rounded-xl ${tint}`}>
+                    <Icon className="size-5 text-white" aria-hidden="true" />
+                  </span>
+                  <span className="flex-1">
+                    <span className="block font-bold text-ink">{linkTitle}</span>
+                    <span className="block text-sm text-muted">{text}</span>
+                  </span>
+                  <ArrowRight className="size-4 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
         </Container>
       </section>
 
@@ -216,7 +245,7 @@ export default function HomePage() {
 
       {/* Platform sections */}
       <Container className="space-y-20 py-20">
-        <section aria-labelledby="instagram-heading" className="grid items-center gap-10 lg:grid-cols-2">
+        <section id="instagram" aria-labelledby="instagram-heading" className="scroll-mt-24 grid items-center gap-10 lg:grid-cols-2">
           <div>
             <SectionHeading id="instagram-heading" eyebrow="Instagram" title="Fancy Fonts for Instagram" />
             <div className="prose-fc mt-4">
@@ -245,7 +274,7 @@ export default function HomePage() {
           />
         </section>
 
-        <section aria-labelledby="discord-heading" className="grid items-center gap-10 lg:grid-cols-2">
+        <section id="discord" aria-labelledby="discord-heading" className="scroll-mt-24 grid items-center gap-10 lg:grid-cols-2">
           <div className="lg:order-2">
             <SectionHeading id="discord-heading" eyebrow="Discord" title="Discord Fonts Generator" />
             <div className="prose-fc mt-4">
@@ -275,7 +304,7 @@ export default function HomePage() {
           />
         </section>
 
-        <section aria-labelledby="tiktok-heading" className="grid items-center gap-10 lg:grid-cols-2">
+        <section id="tiktok" aria-labelledby="tiktok-heading" className="scroll-mt-24 grid items-center gap-10 lg:grid-cols-2">
           <div>
             <SectionHeading id="tiktok-heading" eyebrow="TikTok" title="Stylish Text for TikTok" />
             <div className="prose-fc mt-4">

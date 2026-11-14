@@ -1,20 +1,23 @@
+import { CircleHelp } from "lucide-react";
+import { Accordion, AccordionItem } from "@/components/Accordion";
 import type { Faq } from "@/types/content";
 
-export default function FaqList({ faqs, headingLevel = "h3" }: { faqs: Faq[]; headingLevel?: "h2" | "h3" }) {
-  const Heading = headingLevel;
+export default function FaqList({
+  faqs,
+  headingLevel = "h3",
+  openFirst = false,
+}: {
+  faqs: Faq[];
+  headingLevel?: "h2" | "h3";
+  openFirst?: boolean;
+}) {
   return (
-    <div className="divide-y divide-line rounded-[var(--radius-card)] border border-line bg-surface">
-      {faqs.map((f) => (
-        <details key={f.question} className="group p-4 sm:p-5">
-          <summary className="flex cursor-pointer list-none items-start justify-between gap-4 [&::-webkit-details-marker]:hidden">
-            <Heading className="text-base font-semibold text-ink">{f.question}</Heading>
-            <span aria-hidden="true" className="mt-0.5 text-lg leading-none text-muted transition-transform group-open:rotate-45">
-              +
-            </span>
-          </summary>
-          <p className="mt-3 leading-relaxed text-body">{f.answer}</p>
-        </details>
+    <Accordion>
+      {faqs.map((f, i) => (
+        <AccordionItem key={f.question} icon={CircleHelp} title={f.question} headingLevel={headingLevel} defaultOpen={openFirst && i === 0}>
+          <p>{f.answer}</p>
+        </AccordionItem>
       ))}
-    </div>
+    </Accordion>
   );
 }

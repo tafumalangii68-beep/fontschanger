@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import Container from "@/components/Container";
 import FaqList from "@/components/FaqList";
 import FontGenerator from "@/components/FontGenerator";
 import JsonLd from "@/components/JsonLd";
+import PageHero from "@/components/PageHero";
+import { StylesIllustration } from "@/components/PageIllustrations";
 import { fontPages, getFontPage } from "@/data/font-pages";
 import { FONT_STYLES } from "@/lib/fonts";
 import { buildMetadata, webPageJsonLd } from "@/lib/seo";
@@ -39,55 +40,38 @@ export default async function FontCategoryPage({ params }: { params: Promise<Par
   const related = page.related.map(getFontPage).filter((p) => p !== undefined);
 
   return (
-    <Container className="py-10">
-      <Breadcrumbs
-        items={[
+    <>
+      <JsonLd data={webPageJsonLd(page.metaTitle, page.metaDescription, path)} />
+      <PageHero
+        crumbs={[
           { name: "Home", path: "/" },
           { name: "Font Styles", path: "/fonts" },
           { name: page.name, path },
         ]}
+        title={page.h1}
+        intro={page.intro}
+        illustration={<StylesIllustration className="w-full" />}
       />
-      <JsonLd data={webPageJsonLd(page.metaTitle, page.metaDescription, path)} />
-
-      <header className="mb-6 max-w-2xl">
-        <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">{page.h1}</h1>
-        <p className="mt-3 text-lg leading-relaxed text-muted">{page.intro}</p>
-      </header>
+      <Container className="pt-6">
 
       <FontGenerator initialFilter={page.category} sample={page.sample} />
 
-      <section aria-labelledby="examples" className="mt-12 max-w-3xl">
-        <h2 id="examples" className="text-2xl font-semibold tracking-tight">
+      <section aria-labelledby="examples" className="mt-14">
+        <h2 id="examples" className="text-2xl font-extrabold tracking-tight text-ink sm:text-[1.75rem]">
           Examples
         </h2>
-        <div className="mt-4 overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-sand text-muted">
-              <tr>
-                <th scope="col" className="px-4 py-2.5 font-medium">
-                  Use
-                </th>
-                <th scope="col" className="px-4 py-2.5 font-medium">
-                  Result
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-line">
-              {page.examples.map((ex) => {
-                const style = FONT_STYLES.find((s) => s.id === ex.styleId);
-                return (
-                  <tr key={ex.label}>
-                    <th scope="row" className="px-4 py-3 align-top font-normal text-muted">
-                      {ex.label}
-                      <span className="block text-xs">{style?.name}</span>
-                    </th>
-                    <td className="glyph px-4 py-3 text-lg text-ink">{style ? style.transform(ex.plain) : ex.plain}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {page.examples.map((ex) => {
+            const style = FONT_STYLES.find((s) => s.id === ex.styleId);
+            return (
+              <li key={ex.label} className="rounded-[var(--radius-card)] border border-line bg-surface p-5 shadow-sm">
+                <p className="text-[0.7rem] font-bold uppercase tracking-wider text-accent dark:text-accent-strong">{ex.label}</p>
+                <p className="glyph mt-2 text-2xl text-ink">{style ? style.transform(ex.plain) : ex.plain}</p>
+                <p className="mt-2 text-sm text-muted">{style?.name}</p>
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       <article className="prose-fc max-w-3xl">
@@ -109,14 +93,14 @@ export default async function FontCategoryPage({ params }: { params: Promise<Par
       </article>
 
       <section aria-labelledby="faq" className="mt-12 max-w-3xl">
-        <h2 id="faq" className="mb-4 text-2xl font-semibold tracking-tight">
+        <h2 id="faq" className="mb-4 text-2xl font-extrabold tracking-tight text-ink sm:text-[1.75rem]">
           {page.name}: common questions
         </h2>
         <FaqList faqs={page.faqs} />
       </section>
 
       <section aria-labelledby="more" className="mt-12 max-w-3xl">
-        <h2 id="more" className="text-2xl font-semibold tracking-tight">
+        <h2 id="more" className="text-2xl font-extrabold tracking-tight text-ink sm:text-[1.75rem]">
           Try other styles
         </h2>
         <ul className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -140,6 +124,7 @@ export default async function FontCategoryPage({ params }: { params: Promise<Par
           with all {FONT_STYLES.length} styles.
         </p>
       </section>
-    </Container>
+      </Container>
+    </>
   );
 }
