@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Cookie, Globe, Info, Lock, RefreshCw, Settings, ShieldCheck, UserRound } from "lucide-react";
 import { Accordion, AccordionItem } from "@/components/Accordion";
 import InfoPage from "@/components/InfoPage";
-import { PrivacyIllustration } from "@/components/PageIllustrations";
+import Artwork from "@/components/Artwork";
+import { ART } from "@/lib/art";
 import { RECENT_KEY, SAVED_KEY, THEME_KEY, VIEW_KEY } from "@/lib/browser-store";
 import { CONSENT_KEY } from "@/lib/consent";
 import { buildMetadata } from "@/lib/seo";
@@ -21,7 +22,8 @@ export default function PrivacyPolicyPage() {
       description={description}
       path="/privacy-policy"
       intro="Your privacy matters to us. This page explains how Fonts Changer works and how we handle your information."
-      illustration={<PrivacyIllustration className="w-full" />}
+      illustration={<Artwork art={ART.privacy} sizes="(min-width: 1024px) 336px, 288px" />}
+      illustrationClassName="w-72 lg:w-[21rem]"
       showUpdated
       prose={false}
     >

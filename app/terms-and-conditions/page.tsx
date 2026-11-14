@@ -2,7 +2,8 @@ import Link from "next/link";
 import { AlertTriangle, Copyright, FileCheck, Globe, Pencil, Scale, UserCheck, Wrench } from "lucide-react";
 import { Accordion, AccordionItem } from "@/components/Accordion";
 import InfoPage from "@/components/InfoPage";
-import { TermsIllustration } from "@/components/PageIllustrations";
+import Artwork from "@/components/Artwork";
+import { ART } from "@/lib/art";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 
@@ -18,7 +19,8 @@ export default function TermsPage() {
       description={description}
       path="/terms-and-conditions"
       intro="Please read these terms carefully before using Fonts Changer."
-      illustration={<TermsIllustration className="w-full" />}
+      illustration={<Artwork art={ART.terms} sizes="(min-width: 1024px) 336px, 288px" />}
+      illustrationClassName="w-72 lg:w-[21rem]"
       showUpdated
       prose={false}
     >

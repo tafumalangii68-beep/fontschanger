@@ -23,7 +23,6 @@ import FontOfTheDay from "@/components/FontOfTheDay";
 import PlatformPreview from "@/components/PlatformPreview";
 import RecentCopies from "@/components/RecentCopies";
 import SymbolGenerator from "@/components/SymbolGenerator";
-import HeroIllustration from "@/components/HeroIllustration";
 import JsonLd from "@/components/JsonLd";
 import { homeFaqs } from "@/data/faqs";
 import { ART, STEP_ART } from "@/lib/art";
@@ -176,7 +175,7 @@ export default function HomePage() {
                 ))}
               </ul>
             </div>
-            <HeroIllustration className="hidden w-full max-w-xl justify-self-center lg:block" />
+            <Artwork art={ART.homeHero} sizes="(min-width: 1152px) 540px, 45vw" className="hidden max-w-xl justify-self-center lg:block" />
           </div>
 
           <div className="mt-8 lg:mt-4">

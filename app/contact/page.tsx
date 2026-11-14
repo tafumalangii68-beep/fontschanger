@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Bug, Clock, Lightbulb, Mail, MessageCircle, Send, type LucideIcon } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
 import InfoPage from "@/components/InfoPage";
-import { ContactIllustration } from "@/components/PageIllustrations";
+import Artwork from "@/components/Artwork";
+import { ART } from "@/lib/art";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 
@@ -35,7 +36,8 @@ export default function ContactPage() {
       path="/contact"
       schemaType="ContactPage"
       intro="Have a question, suggestion or feedback? We'd love to hear from you."
-      illustration={<ContactIllustration className="w-full" />}
+      illustration={<Artwork art={ART.contact} sizes="(min-width: 1024px) 336px, 288px" />}
+      illustrationClassName="w-72 lg:w-[21rem]"
       prose={false}
     >
       <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">

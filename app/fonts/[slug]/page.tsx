@@ -7,7 +7,6 @@ import FontGenerator from "@/components/FontGenerator";
 import JsonLd from "@/components/JsonLd";
 import PageHero from "@/components/PageHero";
 import Artwork from "@/components/Artwork";
-import { StylesIllustration } from "@/components/PageIllustrations";
 import { CATEGORY_ART } from "@/lib/art";
 import { fontPages, getFontPage } from "@/data/font-pages";
 import { FONT_STYLES } from "@/lib/fonts";
@@ -60,7 +59,7 @@ export default async function FontCategoryPage({ params }: { params: Promise<Par
         ]}
         title={page.h1}
         intro={page.intro}
-        illustration={art ? <Artwork art={art} sizes="(min-width: 1024px) 336px, 288px" /> : <StylesIllustration className="w-full" />}
+        illustration={art && <Artwork art={art} sizes="(min-width: 1024px) 336px, 288px" />}
         illustrationClassName={art ? "w-72 lg:w-[21rem]" : undefined}
       />
       <Container className="pt-6">

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, CircleCheck, Code2, Lightbulb, Scale, Target, type LucideIcon } from "lucide-react";
-import HeroIllustration from "@/components/HeroIllustration";
+import Image from "next/image";
 import InfoPage from "@/components/InfoPage";
 import Artwork from "@/components/Artwork";
 import { ART } from "@/lib/art";
@@ -69,7 +69,7 @@ export default function AboutPage() {
         aria-labelledby="different-heading"
         className="mt-8 grid items-center gap-8 rounded-[1.5rem] border border-line bg-surface p-6 shadow-sm sm:p-8 md:grid-cols-[1fr_1.1fr]"
       >
-        <HeroIllustration className="mx-auto w-full max-w-sm" />
+        <Image src={ART.homeHero.src} alt={ART.homeHero.alt} sizes="(min-width: 768px) 400px, 90vw" className="mx-auto h-auto w-full max-w-sm" />
         <div>
           <h2 id="different-heading" className="text-2xl font-extrabold tracking-tight text-ink sm:text-[1.75rem]">
             What Makes Us Different?

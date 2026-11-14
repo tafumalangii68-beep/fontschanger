@@ -13,20 +13,24 @@ import collectionAesthetic from "@/public/images/collection-aesthetic.webp";
 import collectionCreative from "@/public/images/collection-creative.webp";
 import collectionGaming from "@/public/images/collection-gaming.webp";
 import collectionSocial from "@/public/images/collection-social.webp";
+import contact from "@/public/images/contact.webp";
 import ctaBanner from "@/public/images/cta-banner.webp";
 import cursiveFonts from "@/public/images/cursive-fonts.webp";
 import faq from "@/public/images/faq.webp";
 import fontOfDayBg from "@/public/images/font-of-day-bg.webp";
 import fontStyles from "@/public/images/font-styles.webp";
 import glitchText from "@/public/images/glitch-text.webp";
+import homeHero from "@/public/images/home-hero.webp";
 import instagramFonts from "@/public/images/instagram-fonts.webp";
 import notFound from "@/public/images/not-found.webp";
 import platforms from "@/public/images/platforms.webp";
+import privacy from "@/public/images/privacy.webp";
 import smallText from "@/public/images/small-text.webp";
 import step1 from "@/public/images/step-1.webp";
 import step2 from "@/public/images/step-2.webp";
 import step3 from "@/public/images/step-3.webp";
 import step4 from "@/public/images/step-4.webp";
+import terms from "@/public/images/terms.webp";
 import textDecorator from "@/public/images/text-decorator.webp";
 import upsideDownText from "@/public/images/upside-down-text.webp";
 import type { CollectionId } from "@/lib/collections";
@@ -34,6 +38,13 @@ import type { CollectionId } from "@/lib/collections";
 export type Art = { src: StaticImageData; alt: string; framed?: boolean };
 
 export const ART = {
+  homeHero: {
+    src: homeHero,
+    alt: "Laptop showing the word Fonts in purple cursive inside a selection box, surrounded by Aa cards in serif, cursive and glitch styles, a heart and a small plant",
+  },
+  contact: { src: contact, alt: "Open envelope with a purple paper plane flying out of it and a speech bubble with three dots" },
+  privacy: { src: privacy, alt: "Purple shield with a white padlock, next to cards showing a check mark and a crossed-out eye" },
+  terms: { src: terms, alt: "Document with neat text lines, a purple pen and a round check mark badge" },
   fontStyles: { src: fontStyles, alt: "Two glossy tiles showing the letters Aa in a bold serif and a flowing cursive style" },
   textDecorator: { src: textDecorator, alt: "Browser window with the letters Aa framed by wings, brackets, stars and a small heart" },
   faq: { src: faq, alt: "Purple speech bubble with a question mark next to a white reply bubble with three dots" },
