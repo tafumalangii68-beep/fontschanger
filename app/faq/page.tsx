@@ -4,7 +4,8 @@ import Container from "@/components/Container";
 import FaqSearch from "@/components/FaqSearch";
 import JsonLd from "@/components/JsonLd";
 import PageHero from "@/components/PageHero";
-import { FaqIllustration } from "@/components/PageIllustrations";
+import Artwork from "@/components/Artwork";
+import { ART } from "@/lib/art";
 import { generalFaqs, homeFaqs, introFaqs } from "@/data/faqs";
 import { FONT_STYLES } from "@/lib/fonts";
 import { buildMetadata, faqJsonLd, webPageJsonLd } from "@/lib/seo";
@@ -31,7 +32,8 @@ export default function FaqPage() {
         ]}
         title={title}
         intro="Find quick answers to common questions about Fonts Changer, its features and how it works."
-        illustration={<FaqIllustration className="w-full" />}
+        illustration={<Artwork art={ART.faq} sizes="(min-width: 1024px) 336px, 288px" />}
+        illustrationClassName="w-72 lg:w-[21rem]"
       />
       <Container className="pt-6">
         <div className="max-w-4xl">

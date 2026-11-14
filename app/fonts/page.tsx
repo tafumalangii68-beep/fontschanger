@@ -4,7 +4,8 @@ import Container from "@/components/Container";
 import FontStylesBrowser from "@/components/FontStylesBrowser";
 import JsonLd from "@/components/JsonLd";
 import PageHero from "@/components/PageHero";
-import { StylesIllustration } from "@/components/PageIllustrations";
+import Artwork from "@/components/Artwork";
+import { ART } from "@/lib/art";
 import { fontPages } from "@/data/font-pages";
 import { FONT_STYLES } from "@/lib/fonts";
 import { buildMetadata, webPageJsonLd } from "@/lib/seo";
@@ -30,7 +31,8 @@ export default function FontsIndexPage() {
         ]}
         title="Explore All Fancy Font Styles"
         intro={`Browse ${count} stylish font styles and find the perfect look for your text. Copy with one click and use it anywhere.`}
-        illustration={<StylesIllustration className="w-full" />}
+        illustration={<Artwork art={ART.fontStyles} sizes="(min-width: 1024px) 336px, 288px" />}
+        illustrationClassName="w-72 lg:w-[21rem]"
       />
 
       <Container className="pt-6">

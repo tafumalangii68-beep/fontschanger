@@ -8,12 +8,14 @@ type Props = {
   title: ReactNode;
   intro?: ReactNode;
   illustration?: ReactNode;
+  /** Width of the illustration column; photos and 3D artwork need more room than icons. */
+  illustrationClassName?: string;
   /** Extra content under the intro, such as a "last updated" line. */
   children?: ReactNode;
 };
 
 /** Lavender page header with breadcrumbs, H1, intro and an optional illustration. */
-export default function PageHero({ crumbs, title, intro, illustration, children }: Props) {
+export default function PageHero({ crumbs, title, intro, illustration, illustrationClassName = "w-56 lg:w-64", children }: Props) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-accent-soft/70 to-paper">
       <div
@@ -27,7 +29,7 @@ export default function PageHero({ crumbs, title, intro, illustration, children 
           {intro && <div className="mt-3 text-lg leading-relaxed text-muted">{intro}</div>}
           {children}
         </div>
-        {illustration && <div className="hidden w-56 md:block lg:w-64">{illustration}</div>}
+        {illustration && <div className={`hidden shrink-0 md:block ${illustrationClassName}`}>{illustration}</div>}
       </Container>
     </section>
   );

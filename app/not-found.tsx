@@ -1,7 +1,9 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, Frame, Home, LayoutGrid } from "lucide-react";
+import Artwork from "@/components/Artwork";
 import Container from "@/components/Container";
+import { ART } from "@/lib/art";
 import { fontPages } from "@/data/font-pages";
 import { upsideDown } from "@/lib/fonts";
 
@@ -19,11 +21,12 @@ const shortcuts = [
 export default function NotFound() {
   return (
     <section className="bg-gradient-to-b from-accent-soft/70 to-paper">
-      <Container className="py-16 text-center sm:py-20">
-        <p className="glyph text-6xl font-extrabold text-accent dark:text-accent-strong" aria-hidden="true">
+      <Container className="py-12 text-center sm:py-16">
+        <Artwork art={ART.notFound} sizes="(min-width: 640px) 360px, 80vw" priority className="mx-auto max-w-[22.5rem]" />
+        <p className="glyph mt-6 text-4xl font-extrabold text-accent dark:text-accent-strong" aria-hidden="true">
           {upsideDown("404")}
         </p>
-        <h1 className="mt-4 text-[2rem] font-extrabold tracking-tight text-ink sm:text-[2.6rem]">Page not found</h1>
+        <h1 className="mt-2 text-[2rem] font-extrabold tracking-tight text-ink sm:text-[2.6rem]">Page not found</h1>
         <p className="mx-auto mt-3 max-w-xl text-lg text-muted">
           This page does not exist or has moved. Head back to the generator or pick a font style below.
         </p>

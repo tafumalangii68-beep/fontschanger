@@ -11,6 +11,7 @@ type Props = {
   path: string;
   intro?: ReactNode;
   illustration?: ReactNode;
+  illustrationClassName?: string;
   showUpdated?: boolean;
   /** Set to false when the page lays out its own content instead of long-form prose. */
   prose?: boolean;
@@ -29,7 +30,7 @@ export function formatUpdated(): string {
 }
 
 /** Shared layout for About, Contact, FAQ and legal pages. */
-export default function InfoPage({ title, description, path, intro, illustration, showUpdated, prose = true, schemaType = "WebPage", children }: Props) {
+export default function InfoPage({ title, description, path, intro, illustration, illustrationClassName, showUpdated, prose = true, schemaType = "WebPage", children }: Props) {
   return (
     <>
       <JsonLd data={webPageJsonLd(title, description, path, schemaType)} />
@@ -41,6 +42,7 @@ export default function InfoPage({ title, description, path, intro, illustration
         title={title}
         intro={intro ?? description}
         illustration={illustration}
+        illustrationClassName={illustrationClassName}
       >
         {showUpdated && (
           <p className="mt-3 text-sm text-muted">

@@ -2,7 +2,8 @@ import Link from "next/link";
 import { ArrowRight, CircleCheck, Code2, Lightbulb, Scale, Target, type LucideIcon } from "lucide-react";
 import HeroIllustration from "@/components/HeroIllustration";
 import InfoPage from "@/components/InfoPage";
-import { AboutIllustration } from "@/components/PageIllustrations";
+import Artwork from "@/components/Artwork";
+import { ART } from "@/lib/art";
 import { FONT_STYLES } from "@/lib/fonts";
 import { buildMetadata } from "@/lib/seo";
 
@@ -44,7 +45,8 @@ export default function AboutPage() {
       path="/about"
       schemaType="AboutPage"
       intro="Learn more about our tool, our mission and why we created Fonts Changer."
-      illustration={<AboutIllustration className="w-full" />}
+      illustration={<Artwork art={ART.about} sizes="(min-width: 1024px) 336px, 288px" />}
+      illustrationClassName="w-72 lg:w-[21rem]"
       prose={false}
     >
       <div className="grid gap-5 md:grid-cols-2">

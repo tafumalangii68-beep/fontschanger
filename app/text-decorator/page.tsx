@@ -3,7 +3,8 @@ import Container from "@/components/Container";
 import FaqList from "@/components/FaqList";
 import JsonLd from "@/components/JsonLd";
 import PageHero from "@/components/PageHero";
-import { DecoratorIllustration } from "@/components/PageIllustrations";
+import Artwork from "@/components/Artwork";
+import { ART } from "@/lib/art";
 import TextDecorator from "@/components/TextDecorator";
 import { DECORATIONS } from "@/lib/decorations";
 import { buildMetadata, faqJsonLd, webPageJsonLd } from "@/lib/seo";
@@ -44,7 +45,8 @@ export default function TextDecoratorPage() {
         ]}
         title="Text Decorator"
         intro={`Add stylish symbols, borders and decorations to make your text stand out. Choose from ${DECORATIONS.length} decorations, perfect for bios, posts and profiles.`}
-        illustration={<DecoratorIllustration className="w-full" />}
+        illustration={<Artwork art={ART.textDecorator} sizes="(min-width: 1024px) 336px, 288px" />}
+        illustrationClassName="w-72 lg:w-[21rem]"
       />
 
       <Container className="pt-6">

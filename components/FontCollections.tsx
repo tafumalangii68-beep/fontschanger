@@ -1,16 +1,11 @@
 "use client";
 
-import { ArrowRight, Gamepad2, Palette, Smartphone, Sparkles, type LucideIcon } from "lucide-react";
-import { COLLECTIONS, type CollectionId } from "@/lib/collections";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import { COLLECTION_ART } from "@/lib/art";
+import { COLLECTIONS } from "@/lib/collections";
 import { FONT_STYLES } from "@/lib/fonts";
 import { goToResults, studio, useStore } from "@/lib/stores";
-
-const ICONS: Record<CollectionId, { icon: LucideIcon; tint: string }> = {
-  gaming: { icon: Gamepad2, tint: "bg-navy dark:bg-[#2d2763]" },
-  social: { icon: Smartphone, tint: "bg-gradient-to-br from-fuchsia-500 to-orange-400" },
-  aesthetic: { icon: Sparkles, tint: "bg-gradient-to-br from-violet-400 to-accent" },
-  creative: { icon: Palette, tint: "bg-gradient-to-br from-sky-400 to-accent" },
-};
 
 /** Curated style sets. "Use collection" filters the generator results above. */
 export default function FontCollections() {
@@ -20,7 +15,7 @@ export default function FontCollections() {
   return (
     <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {COLLECTIONS.map((c) => {
-        const { icon: Icon, tint } = ICONS[c.id];
+        const art = COLLECTION_ART[c.id];
         const samples = c.styleIds
           .slice(0, 3)
           .map((id) => FONT_STYLES.find((s) => s.id === id))
@@ -29,13 +24,18 @@ export default function FontCollections() {
         return (
           <li
             key={c.id}
-            className={`flex flex-col rounded-[var(--radius-card)] border bg-surface p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)] ${
+            className={`flex flex-col rounded-[var(--radius-card)] border bg-surface p-3 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)] ${
               active ? "border-accent ring-2 ring-accent/20" : "border-line"
             }`}
           >
-            <span className={`grid size-11 place-items-center rounded-xl ${tint}`}>
-              <Icon className="size-5 text-white" aria-hidden="true" />
-            </span>
+            <Image
+              src={art.src}
+              alt={art.alt}
+              placeholder="blur"
+              sizes="(min-width: 1024px) 260px, (min-width: 640px) 45vw, 90vw"
+              className="h-auto w-full rounded-xl"
+            />
+            <div className="flex flex-1 flex-col px-2 pb-2">
             <h3 className="mt-4 text-lg font-bold text-ink">{c.name} fonts</h3>
             <p className="mt-1 text-sm leading-relaxed text-muted">{c.description}</p>
             <ul className="mt-4 flex-1 space-y-1.5" aria-label={`${c.name} examples`}>
@@ -61,6 +61,7 @@ export default function FontCollections() {
               {active ? "Showing in results" : `Use all ${c.styleIds.length} styles`}
               <ArrowRight className="size-4" aria-hidden="true" />
             </button>
+            </div>
           </li>
         );
       })}

@@ -1,21 +1,19 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
   Camera,
   Gamepad2,
   Music2,
-  ClipboardCopy,
   Heart,
-  Keyboard,
   Layers,
-  MousePointerClick,
-  Search,
   ShieldCheck,
   Smartphone,
   Sparkles,
   Zap,
   type LucideIcon,
 } from "lucide-react";
+import Artwork from "@/components/Artwork";
 import Container from "@/components/Container";
 import FaqList from "@/components/FaqList";
 import BioGenerator from "@/components/BioGenerator";
@@ -28,6 +26,7 @@ import SymbolGenerator from "@/components/SymbolGenerator";
 import HeroIllustration from "@/components/HeroIllustration";
 import JsonLd from "@/components/JsonLd";
 import { homeFaqs } from "@/data/faqs";
+import { ART, STEP_ART } from "@/lib/art";
 import { FONT_STYLES } from "@/lib/fonts";
 import { buildMetadata, faqJsonLd, organizationJsonLd } from "@/lib/seo";
 import { absoluteUrl, siteConfig } from "@/lib/site-config";
@@ -59,11 +58,12 @@ const platformLinks: { href: string; icon: LucideIcon; title: string; text: stri
   { href: "#tiktok", icon: Music2, title: "For TikTok", text: "Trendy profile text", tint: "bg-navy dark:bg-[#2d2763]" },
 ];
 
-const steps: { icon: LucideIcon; title: string; text: string }[] = [
-  { icon: Keyboard, title: "Type your text", text: "Write a name, a bio line or a short message in the box at the top." },
-  { icon: Search, title: "Find a style", text: "Use the category filters or search to narrow the list down." },
-  { icon: MousePointerClick, title: "Tap to copy", text: "Tap a preview or its Copy button. A check mark confirms it." },
-  { icon: ClipboardCopy, title: "Paste anywhere", text: "Press and hold in any text field in your app and choose Paste." },
+// Each step's picture comes from STEP_ART in the same order.
+const steps: { title: string; text: string }[] = [
+  { title: "Type your text", text: "Write a name, a bio line or a short message in the box at the top." },
+  { title: "Find a style", text: "Use the category filters or search to narrow the list down." },
+  { title: "Tap to copy", text: "Tap a preview or its Copy button. A check mark confirms it." },
+  { title: "Paste anywhere", text: "Press and hold in any text field in your app and choose Paste." },
 ];
 
 const reasons: { icon: LucideIcon; title: string; text: string }[] = [
@@ -183,7 +183,9 @@ export default function HomePage() {
             <FontGenerator inputLabel="Type the text you want to change" />
           </div>
 
-          <ul className="mt-10 grid gap-3 sm:grid-cols-3">
+          <div className="mt-10 grid items-center gap-5 lg:grid-cols-[1.3fr_1fr]">
+          <Artwork art={ART.platforms} sizes="(min-width: 1024px) 640px, 100vw" />
+          <ul className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
             {platformLinks.map(({ href, icon: Icon, title: linkTitle, text, tint }) => (
               <li key={href}>
                 <a
@@ -202,6 +204,7 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
+          </div>
         </Container>
       </section>
 
@@ -260,12 +263,15 @@ export default function HomePage() {
       {/* Bio + symbol text generators */}
       <Container className="space-y-20 pt-20">
         <section aria-labelledby="bio-heading" id="bio-generator" className="scroll-mt-24">
-          <SectionHeading
-            id="bio-heading"
-            eyebrow="Bio generator"
-            title="Create a stylish social media bio"
-            intro="Add your name and a few words about you, pick a vibe, and get ready-made bios with styled letters and symbols. Each one shows its length against the platform limit."
-          />
+          <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]">
+            <SectionHeading
+              id="bio-heading"
+              eyebrow="Bio generator"
+              title="Create a stylish social media bio"
+              intro="Add your name and a few words about you, pick a vibe, and get ready-made bios with styled letters and symbols. Each one shows its length against the platform limit."
+            />
+            <Artwork art={ART.bioGenerator} sizes="(min-width: 1024px) 384px, 320px" className="hidden w-80 md:block lg:w-96" />
+          </div>
           <div className="mt-8">
             <BioGenerator />
           </div>
@@ -385,19 +391,28 @@ export default function HomePage() {
             intro="Four steps, and no sign-up. Everything happens on this page."
           />
           <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {steps.map(({ icon: Icon, title: stepTitle, text }, i) => (
-              <li key={stepTitle} className="relative rounded-[var(--radius-card)] border border-line bg-paper p-5">
-                <span className="absolute right-5 top-4 text-4xl font-extrabold text-line-strong" aria-hidden="true">
-                  {i + 1}
-                </span>
-                <span className="grid size-11 place-items-center rounded-xl bg-accent text-white">
-                  <Icon className="size-5" aria-hidden="true" />
-                </span>
-                <h3 className="mt-4 text-lg font-bold text-ink">
+            {steps.map(({ title: stepTitle, text }, i) => (
+              <li key={stepTitle} className="relative rounded-[var(--radius-card)] border border-line bg-paper p-3">
+                <div className="relative">
+                  <Image
+                    src={STEP_ART[i].src}
+                    alt={STEP_ART[i].alt}
+                    placeholder="blur"
+                    sizes="(min-width: 1024px) 260px, (min-width: 640px) 45vw, 90vw"
+                    className="h-auto w-full rounded-xl"
+                  />
+                  <span
+                    className="absolute left-3 top-3 grid size-9 place-items-center rounded-full bg-white text-base font-extrabold text-accent shadow"
+                    aria-hidden="true"
+                  >
+                    {i + 1}
+                  </span>
+                </div>
+                <h3 className="mt-4 px-2 text-lg font-bold text-ink">
                   <span className="sr-only">Step {i + 1}: </span>
                   {stepTitle}
                 </h3>
-                <p className="mt-1.5 leading-relaxed text-muted">{text}</p>
+                <p className="mt-1.5 px-2 pb-2 leading-relaxed text-muted">{text}</p>
               </li>
             ))}
           </ol>
@@ -464,9 +479,18 @@ export default function HomePage() {
         {/* Closing call to action */}
         <section
           aria-labelledby="cta-heading"
-          className="mt-20 flex flex-col items-start gap-6 rounded-[1.75rem] bg-navy px-6 py-10 text-white sm:px-10 md:flex-row md:items-center md:justify-between"
+          className="relative mt-20 flex flex-col items-start gap-6 overflow-hidden rounded-[1.75rem] bg-navy px-6 py-10 text-white sm:px-10 sm:py-14 md:flex-row md:items-center md:justify-between"
         >
-          <div>
+          <Image
+            src={ART.ctaBanner.src}
+            alt=""
+            fill
+            sizes="(min-width: 1152px) 1104px, 100vw"
+            className="object-cover object-right"
+          />
+          {/* Keeps the headline readable over the artwork. */}
+          <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/10" />
+          <div className="relative">
             <h2 id="cta-heading" className="text-2xl font-extrabold tracking-tight sm:text-3xl">
               Ready to change your font?
             </h2>
@@ -476,7 +500,7 @@ export default function HomePage() {
           </div>
           <a
             href="#fc-top"
-            className="inline-flex shrink-0 items-center gap-2 rounded-2xl bg-accent px-6 py-3.5 font-bold text-white transition-colors hover:bg-[#7a45f0]"
+            className="relative inline-flex shrink-0 items-center gap-2 rounded-2xl bg-accent px-6 py-3.5 font-bold text-white shadow-[0_10px_24px_-10px_rgb(100_37_232/0.9)] transition-colors hover:bg-[#7a45f0]"
           >
             <Sparkles className="size-5" aria-hidden="true" />
             Start generating fonts
