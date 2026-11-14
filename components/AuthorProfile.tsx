@@ -2,19 +2,13 @@
 
 import { useId, useRef } from "react";
 import Image from "next/image";
-import { Heart, LayoutGrid, Palette, ShieldCheck, Sparkles, X, type LucideIcon } from "lucide-react";
+import Link from "next/link";
+import { Sparkles, X } from "lucide-react";
 import authorPhoto from "@/public/images/author.webp";
 import authorPhotoLarge from "@/public/images/author-large.webp";
 
 export const AUTHOR_NAME = "Ali Khan";
 const AUTHOR_TITLE = "Founder & Creator of Fonts Changer";
-
-const WHAT_I_DO: { icon: LucideIcon; text: string }[] = [
-  { icon: Palette, text: "Design and add new copy-and-paste font styles" },
-  { icon: LayoutGrid, text: "Build free tools like the Text Decorator and Bio Generator" },
-  { icon: ShieldCheck, text: "Keep every tool private: your text never leaves your browser" },
-  { icon: Heart, text: "Improve the site based on feedback from people who use it" },
-];
 
 /**
  * Small round photo plus name in the header. Clicking it opens a profile popup.
@@ -83,21 +77,24 @@ export default function AuthorProfile({ className = "", nameFrom = "lg" }: { cla
 
             <h3 className="mt-6 text-sm font-bold uppercase tracking-wider text-muted">About {AUTHOR_NAME}</h3>
             <p className="mt-2 leading-relaxed text-body">
-              Hi, I&apos;m {AUTHOR_NAME}. I created Fonts Changer to make stylish text simple, fast and free for everyone.
-              Type once, pick a style you like, and paste it anywhere: no sign-up and no limits.
+              Hi, I&apos;m {AUTHOR_NAME}, the creator of Fonts Changer. I built this site to make it easy for anyone to turn
+              plain text into stylish fonts for Instagram, TikTok, Discord and more. No apps, no sign-up, just copy and
+              paste.
             </p>
 
             <h3 className="mt-6 text-sm font-bold uppercase tracking-wider text-muted">What I Do</h3>
-            <ul className="mt-3 space-y-2.5">
-              {WHAT_I_DO.map(({ icon: Icon, text }) => (
-                <li key={text} className="flex items-start gap-3 text-body">
-                  <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-accent-soft">
-                    <Icon className="size-4 text-accent dark:text-accent-strong" aria-hidden="true" />
-                  </span>
-                  <span className="pt-1 text-[0.95rem] leading-snug">{text}</span>
-                </li>
-              ))}
-            </ul>
+            <p className="mt-2 leading-relaxed text-body">
+              I design and build simple, fast web tools that solve everyday problems. I keep Fonts Changer free, add new
+              font styles regularly, and improve it based on user feedback. Have an idea or found a bug? Use the{" "}
+              <Link
+                href="/contact"
+                onClick={() => dialogRef.current?.close()}
+                className="font-semibold text-accent underline underline-offset-2 dark:text-accent-strong"
+              >
+                contact form
+              </Link>
+              , and I read every message.
+            </p>
           </div>
         </div>
       </dialog>
