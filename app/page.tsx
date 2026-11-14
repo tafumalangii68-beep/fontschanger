@@ -18,7 +18,13 @@ import {
 } from "lucide-react";
 import Container from "@/components/Container";
 import FaqList from "@/components/FaqList";
+import BioGenerator from "@/components/BioGenerator";
+import FontCollections from "@/components/FontCollections";
 import FontGenerator from "@/components/FontGenerator";
+import FontOfTheDay from "@/components/FontOfTheDay";
+import PlatformPreview from "@/components/PlatformPreview";
+import RecentCopies from "@/components/RecentCopies";
+import SymbolGenerator from "@/components/SymbolGenerator";
 import HeroIllustration from "@/components/HeroIllustration";
 import JsonLd from "@/components/JsonLd";
 import { homeFaqs } from "@/data/faqs";
@@ -204,44 +210,84 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Popular styles */}
-      <section aria-labelledby="popular-heading" className="border-y border-line bg-surface py-16">
+      {/* Daily pick + recent copies */}
+      <Container className="pb-4">
+        <div className="grid gap-5 lg:grid-cols-2">
+          <FontOfTheDay />
+          <RecentCopies />
+        </div>
+        <div className="mt-12">
+          <PlatformPreview />
+        </div>
+      </Container>
+
+      {/* Collections */}
+      <section aria-labelledby="collections-heading" className="mt-16 border-y border-line bg-surface py-16">
         <Container>
           <SectionHeading
-            id="popular-heading"
-            eyebrow="Popular font styles"
-            title="Start with the styles people copy most"
-            intro="Each style family has its own page with examples, tips on where it works best and a generator that opens on that category."
+            id="collections-heading"
+            eyebrow="Font collections"
+            title="Curated sets for every vibe"
+            intro="Hand-picked styles for gaming, social media, aesthetic and creative use. Choose a collection to filter the results above."
           />
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {popular.map((p) => (
-              <li key={p.id}>
+          <div className="mt-8">
+            <FontCollections />
+          </div>
+          <div className="mt-8">
+            <p className="text-sm font-semibold text-ink">Popular style guides</p>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {popular.map((p) => (
+                <li key={p.id}>
+                  <Link
+                    href={p.href}
+                    title={p.note}
+                    className="inline-flex items-center gap-2 rounded-full border border-line bg-paper px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-accent hover:bg-accent-soft"
+                  >
+                    <span className="glyph text-accent dark:text-accent-strong">{styled(p.id, "Aa")}</span>
+                    {p.label} fonts
+                  </Link>
+                </li>
+              ))}
+              <li>
                 <Link
-                  href={p.href}
-                  className="group flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-paper p-5 transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-[var(--shadow-card)]"
+                  href="/fonts"
+                  className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold text-accent hover:underline dark:text-accent-strong"
                 >
-                  <span className="glyph text-2xl text-ink">{styled(p.id, "Fonts Changer")}</span>
-                  <span className="mt-4 flex items-center justify-between">
-                    <span className="text-lg font-bold text-ink">{p.label} fonts</span>
-                    <ArrowRight
-                      className="size-4 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent"
-                      aria-hidden="true"
-                    />
-                  </span>
-                  <span className="mt-1 text-sm leading-relaxed text-muted">{p.note}</span>
+                  All font styles
+                  <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
               </li>
-            ))}
-          </ul>
-          <Link
-            href="/fonts"
-            className="mt-6 inline-flex items-center gap-1.5 font-semibold text-accent hover:underline dark:text-accent-strong"
-          >
-            See every font style category
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </Link>
+            </ul>
+          </div>
         </Container>
       </section>
+
+      {/* Bio + symbol text generators */}
+      <Container className="space-y-20 pt-20">
+        <section aria-labelledby="bio-heading" id="bio-generator" className="scroll-mt-24">
+          <SectionHeading
+            id="bio-heading"
+            eyebrow="Bio generator"
+            title="Create a stylish social media bio"
+            intro="Add your name and a few words about you, pick a vibe, and get ready-made bios with styled letters and symbols. Each one shows its length against the platform limit."
+          />
+          <div className="mt-8">
+            <BioGenerator />
+          </div>
+        </section>
+
+        <section aria-labelledby="symbols-heading" id="text-generator" className="scroll-mt-24">
+          <SectionHeading
+            id="symbols-heading"
+            eyebrow="Text generator"
+            title="Decorative text and symbol combinations"
+            intro="Mix letter styles with stars, hearts, flowers and more. Pick a theme, then press Generate new mix to try different combinations."
+          />
+          <div className="mt-8">
+            <SymbolGenerator />
+          </div>
+        </section>
+      </Container>
 
       {/* Platform sections */}
       <Container className="space-y-20 py-20">

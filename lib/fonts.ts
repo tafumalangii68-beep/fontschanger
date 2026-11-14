@@ -16,7 +16,9 @@ export type FontCategory =
   | "small"
   | "lines"
   | "glitch"
-  | "flip";
+  | "flip"
+  | "decorated"
+  | "enclosed";
 
 export type Transform = (text: string) => string;
 
@@ -171,20 +173,20 @@ const DEFS: StyleDef[] = [
   ["Old English Bold", "popular bold fancy", boldFraktur],
   ["Old English", "fancy", fraktur],
   ["Double Struck", "popular fancy", doubleStruck],
-  ["Royal Wings", "popular fancy", wrap("꧁༺ ", " ༻꧂", boldScript)],
+  ["Royal Wings", "popular fancy decorated", wrap("꧁༺ ", " ༻꧂", boldScript)],
   ["Aesthetic Wide", "popular aesthetic", fullwidth],
   ["Small Caps", "popular small aesthetic", smallCaps],
-  ["Bubbles", "popular fancy", bubbles],
+  ["Bubbles", "popular fancy enclosed", bubbles],
   ["Asian Style", "popular aesthetic", asian],
-  ["Stars", "popular fancy", wrap("★彡 ", " 彡★", boldFraktur)],
+  ["Stars", "popular fancy decorated", wrap("★彡 ", " 彡★", boldFraktur)],
   ["Sans Serif", "aesthetic", sans],
   ["Sans Italic", "cursive aesthetic", sansItalic],
   ["Sans Bold Italic", "bold cursive", sansBoldItalic],
   ["Monospace", "aesthetic", monospace],
-  ["Black Bubbles", "fancy", enclosed(0x1f150, null, "⓿", 0x2776)],
-  ["Squares", "fancy", enclosed(0x1f130, null)],
-  ["Black Squares", "fancy", enclosed(0x1f170, null)],
-  ["Parentheses", "fancy", enclosed(0x1f110, 0x249c, undefined, 0x2474)],
+  ["Black Bubbles", "fancy enclosed", enclosed(0x1f150, null, "⓿", 0x2776)],
+  ["Squares", "fancy enclosed", enclosed(0x1f130, null)],
+  ["Black Squares", "fancy enclosed", enclosed(0x1f170, null)],
+  ["Parentheses", "fancy enclosed", enclosed(0x1f110, 0x249c, undefined, 0x2474)],
   ["Tiny Superscript", "small", superscript],
   ["Spaced Small Caps", "small aesthetic", joinWith(" ", smallCaps)],
   ["Yi Script", "aesthetic", lookup("ꍏꌃꏳꀷꏂꎇꁅꀍꀤ꒻ꀘ꒒ꎭꈤꂦᖘꆰꋪꌚ꓄ꀎ꒦ꅐꉧꌩꁴ")],
@@ -193,17 +195,17 @@ const DEFS: StyleDef[] = [
   ["Faux Cyrillic", "fancy", lookup("ДБҀↁЄFБНІЈЌLМИФРQЯЅГЦVЩЖЧZ")],
   ["Dotted", "fancy", lookup("äḅċḋëḟġḧïjḳḷṁṅöṗqṛṡẗüṿẅẍÿż", "ÄḄĊḊЁḞĠḦЇJḲḶṀṄÖṖQṚṠṪÜṾẄẌŸŻ")],
   ["Currency", "fancy", lookup("₳฿₵ĐɆ₣₲ⱧłJ₭Ⱡ₥₦Ø₱QⱤ₴₮ɄV₩ӾɎⱫ")],
-  ["Asian Wings", "aesthetic", wrap("꧁ ", " ꧂", asian)],
-  ["Vaporwave Brackets", "aesthetic", wrap("【 ", " 】", fullwidth)],
-  ["Flowers", "aesthetic", wrap("✿ ", " ✿", script)],
-  ["Hearts", "aesthetic", wrap("♡ ", " ♡", smallCaps)],
-  ["Sparkles", "aesthetic", wrap("⋆｡°✩ ", " ✩°｡⋆", script)],
-  ["Heart Between", "aesthetic", joinWith("♥")],
-  ["Star Between", "fancy", joinWith("☆")],
-  ["Sniper", "fancy", wrap("▄︻デ ", " ══━一", boldFraktur)],
-  ["Crown", "fancy", wrap("♛ ", " ♛", boldItalic)],
-  ["Waves", "fancy", wrap("˜”*°•.˜”*°• ", " •°*”˜.•°*”˜", boldScript)],
-  ["Corner Brackets", "fancy", wrap("『 ", " 』", sansBold)],
+  ["Asian Wings", "aesthetic decorated", wrap("꧁ ", " ꧂", asian)],
+  ["Vaporwave Brackets", "aesthetic decorated", wrap("【 ", " 】", fullwidth)],
+  ["Flowers", "aesthetic decorated", wrap("✿ ", " ✿", script)],
+  ["Hearts", "aesthetic decorated", wrap("♡ ", " ♡", smallCaps)],
+  ["Sparkles", "aesthetic decorated", wrap("⋆｡°✩ ", " ✩°｡⋆", script)],
+  ["Heart Between", "aesthetic decorated", joinWith("♥")],
+  ["Star Between", "fancy decorated", joinWith("☆")],
+  ["Sniper", "fancy decorated", wrap("▄︻デ ", " ══━一", boldFraktur)],
+  ["Crown", "fancy decorated", wrap("♛ ", " ♛", boldItalic)],
+  ["Waves", "fancy decorated", wrap("˜”*°•.˜”*°• ", " •°*”˜.•°*”˜", boldScript)],
+  ["Corner Brackets", "fancy decorated", wrap("『 ", " 』", sansBold)],
   ["Strikethrough", "lines", combining("̶")],
   ["Underline", "lines", combining("̲")],
   ["Double Underline", "lines", combining("̳")],
@@ -243,6 +245,8 @@ export const CATEGORY_LABELS: Record<FontCategory | "all" | "saved", string> = {
   lines: "Lines",
   glitch: "Glitch",
   flip: "Upside down",
+  decorated: "Decorated",
+  enclosed: "Enclosed",
 };
 
 export const MAX_INPUT_LENGTH = 500;

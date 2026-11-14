@@ -4,6 +4,8 @@
  */
 export const SAVED_KEY = "fc-saved-styles";
 export const THEME_KEY = "fc-theme";
+export const RECENT_KEY = "fc-recent-styles";
+export const VIEW_KEY = "fc-view";
 const SAVED_EVENT = "fc:saved-change";
 /** Fired by the header heart button to show saved styles in the generator. */
 export const SHOW_SAVED_EVENT = "fc:show-saved";

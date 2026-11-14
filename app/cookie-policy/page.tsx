@@ -48,6 +48,18 @@ export default function CookiePolicyPage() {
               <td className="px-4 py-3">Remembers whether you chose light or dark mode. Only created when you use the theme button.</td>
               <td className="px-4 py-3">Until you change it or clear browser data</td>
             </tr>
+            <tr>
+              <td className="px-4 py-3 font-mono text-xs">fc-recent-styles</td>
+              <td className="px-4 py-3">Local storage, functional</td>
+              <td className="px-4 py-3">Names of the last 8 styles you copied, shown under Recent Copies. Never your text.</td>
+              <td className="px-4 py-3">Until you press Clear or clear browser data</td>
+            </tr>
+            <tr>
+              <td className="px-4 py-3 font-mono text-xs">fc-view</td>
+              <td className="px-4 py-3">Local storage, functional</td>
+              <td className="px-4 py-3">Remembers grid or list layout for results. Only created when you switch layout.</td>
+              <td className="px-4 py-3">Until you change it or clear browser data</td>
+            </tr>
           </tbody>
         </table>
       </div>

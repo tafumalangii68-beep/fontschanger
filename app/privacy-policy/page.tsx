@@ -3,7 +3,7 @@ import { Cookie, Globe, Info, Lock, RefreshCw, Settings, ShieldCheck, UserRound 
 import { Accordion, AccordionItem } from "@/components/Accordion";
 import InfoPage from "@/components/InfoPage";
 import { PrivacyIllustration } from "@/components/PageIllustrations";
-import { SAVED_KEY, THEME_KEY } from "@/lib/browser-store";
+import { RECENT_KEY, SAVED_KEY, THEME_KEY, VIEW_KEY } from "@/lib/browser-store";
 import { CONSENT_KEY } from "@/lib/consent";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
@@ -74,7 +74,7 @@ export default function PrivacyPolicyPage() {
           </AccordionItem>
 
           <AccordionItem icon={Cookie} title="Cookies and Local Storage">
-            <p>We do not set tracking cookies. The site uses your browser&apos;s local storage for three small settings:</p>
+            <p>We do not set tracking cookies. The site uses your browser&apos;s local storage for a few small settings:</p>
             <ul>
               <li>
                 <strong>Cookie choice</strong> (<code>{CONSENT_KEY}</code>): remembers whether you accepted or rejected
@@ -86,6 +86,13 @@ export default function PrivacyPolicyPage() {
               </li>
               <li>
                 <strong>Theme</strong> (<code>{THEME_KEY}</code>): remembers whether you chose light or dark mode.
+              </li>
+              <li>
+                <strong>Recent copies</strong> (<code>{RECENT_KEY}</code>): the names of the last few styles you copied, so you
+                can reuse them. It never contains the text you copied.
+              </li>
+              <li>
+                <strong>Layout</strong> (<code>{VIEW_KEY}</code>): remembers whether you prefer the grid or list view of results.
               </li>
             </ul>
             <p>

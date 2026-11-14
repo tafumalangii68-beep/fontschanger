@@ -73,7 +73,7 @@ export default function TextDecorator() {
           className="block min-h-24 w-full resize-y rounded-2xl border-2 border-line bg-paper px-4 py-3.5 text-lg text-ink transition-colors placeholder:text-muted/80 focus:border-accent focus:bg-surface focus:outline-none"
         />
 
-        <fieldset className="mt-4">
+        <fieldset className="mt-4 min-w-0">
           <legend className="mb-2 text-sm font-semibold text-ink">Letter style</legend>
           <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:-mx-7 sm:px-7 lg:mx-0 lg:flex-wrap lg:px-0">
             {BASES.map((b) => {

@@ -3,9 +3,11 @@
 import {
   ArrowUpDown,
   Bold,
+  CircleDot,
   Crown,
   Feather,
   Flame,
+  Frame,
   Heart,
   LayoutGrid,
   Sparkles,
@@ -30,6 +32,8 @@ export const FILTERS: { id: Filter; icon: LucideIcon; tint: string }[] = [
   { id: "lines", icon: Strikethrough, tint: "text-accent dark:text-accent-strong" },
   { id: "glitch", icon: Zap, tint: "text-violet-500" },
   { id: "flip", icon: ArrowUpDown, tint: "text-sky-500" },
+  { id: "decorated", icon: Frame, tint: "text-pink-500" },
+  { id: "enclosed", icon: CircleDot, tint: "text-accent dark:text-accent-strong" },
 ];
 
 type Props = {
