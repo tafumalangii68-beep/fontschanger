@@ -8,7 +8,7 @@ import { OPEN_SETTINGS_EVENT, readConsent, writeConsent, type OptionalCategory }
 type Choice = Record<OptionalCategory, boolean>;
 
 const btnPrimary =
-  "rounded-lg bg-ink px-4 py-2.5 text-sm font-medium text-white hover:bg-black focus-visible:outline-offset-2";
+  "rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-white hover:bg-accent-strong dark:hover:bg-[#8455f5] focus-visible:outline-offset-2";
 const btnSecondary =
   "rounded-lg border border-line-strong bg-surface px-4 py-2.5 text-sm font-medium text-ink hover:bg-sand";
 

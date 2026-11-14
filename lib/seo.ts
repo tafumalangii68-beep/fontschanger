@@ -56,3 +56,15 @@ export function webPageJsonLd(name: string, description: string, path: string) {
     isPartOf: { "@type": "WebSite", name: siteConfig.name, url: absoluteUrl("/") },
   };
 }
+
+export function faqJsonLd(faqs: { question: string; answer: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  };
+}

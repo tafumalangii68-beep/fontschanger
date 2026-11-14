@@ -26,6 +26,7 @@ export type NavItem = { label: string; href: string };
 export const mainNav: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Font Styles", href: "/fonts" },
+  { label: "Text Decorator", href: "/text-decorator" },
   { label: "FAQ", href: "/faq" },
   { label: "About", href: "/about" },
 ];

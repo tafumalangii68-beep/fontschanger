@@ -18,7 +18,7 @@ export default function SiteHeader() {
           <Logo />
         </Link>
         <SiteNav items={mainNav} />
-        <div className="flex items-center gap-1">
+        <div className="ml-auto flex items-center gap-1 lg:ml-0">
           <HeaderActions />
         </div>
       </div>

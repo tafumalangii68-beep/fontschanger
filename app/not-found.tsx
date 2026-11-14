@@ -21,7 +21,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="mt-6 inline-flex rounded-lg bg-ink px-5 py-3 text-sm font-medium text-white hover:bg-black"
+        className="mt-6 inline-flex rounded-lg bg-accent px-5 py-3 text-sm font-medium text-white hover:bg-accent-strong dark:hover:bg-[#8455f5]"
       >
         Go to Fonts Changer
       </Link>

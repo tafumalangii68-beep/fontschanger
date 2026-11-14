@@ -34,6 +34,9 @@ import { copyText } from "@/lib/clipboard";
 
 type Filter = FontCategory | "all" | "saved";
 
+/** Cards shown under "All" before the visitor asks for the full list. */
+const PREVIEW_COUNT = 16;
+
 const FILTERS: { id: Filter; icon: LucideIcon; tint: string }[] = [
   { id: "all", icon: LayoutGrid, tint: "" },
   { id: "popular", icon: Flame, tint: "text-orange-500" },
@@ -75,6 +78,7 @@ export default function FontGenerator({
   const [query, setQuery] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [status, setStatus] = useState("");
+  const [showAll, setShowAll] = useState(false);
   const saved = useSyncExternalStore(subscribeSaved, getSavedSnapshot, getSavedServerSnapshot);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const resultsRef = useRef<HTMLHeadingElement>(null);
@@ -109,11 +113,15 @@ export default function FontGenerator({
     });
   }, [filter, query, saved]);
 
+  // The full "All" list is long, so show a preview first to keep the page scannable.
+  const collapsed = filter === "all" && !query.trim() && !showAll && visible.length > PREVIEW_COUNT;
+  const shown = useMemo(() => (collapsed ? visible.slice(0, PREVIEW_COUNT) : visible), [collapsed, visible]);
+
   const outputs = useMemo(() => {
     const map: Record<string, string> = {};
-    for (const s of visible) map[s.id] = s.transform(source);
+    for (const s of shown) map[s.id] = s.transform(source);
     return map;
-  }, [visible, source]);
+  }, [shown, source]);
 
   async function copy(s: FontStyle) {
     await copyText(outputs[s.id]);
@@ -143,6 +151,7 @@ export default function FontGenerator({
     <div>
       {/* Input panel */}
       <section
+        id="fc-top"
         aria-label="Font generator"
         className="relative rounded-[1.5rem] border border-line bg-surface p-4 shadow-[var(--shadow-card)] sm:p-7"
       >
@@ -264,7 +273,7 @@ export default function FontGenerator({
         </p>
 
         <ul className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4">
-          {visible.map((s) => {
+          {shown.map((s) => {
             const isSaved = saved.includes(s.id);
             const isCopied = copiedId === s.id;
             return (
@@ -313,6 +322,18 @@ export default function FontGenerator({
             );
           })}
         </ul>
+        {collapsed && (
+          <div className="mt-6 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowAll(true)}
+              className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-6 py-3 text-sm font-bold text-ink shadow-sm transition-colors hover:border-accent hover:bg-accent-soft"
+            >
+              <LayoutGrid className="size-4 text-accent dark:text-accent-strong" aria-hidden="true" />
+              Show all {visible.length} styles
+            </button>
+          </div>
+        )}
         <p className="sr-only" role="status" aria-live="polite">
           {status}
         </p>

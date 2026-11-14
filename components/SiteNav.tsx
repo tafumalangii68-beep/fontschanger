@@ -39,7 +39,7 @@ export default function SiteNav({ items }: { items: NavItem[] }) {
 
       <button
         type="button"
-        className="grid size-10 place-items-center rounded-full text-ink hover:bg-sand lg:hidden"
+        className="order-last grid size-10 place-items-center rounded-full text-ink hover:bg-sand lg:hidden"
         aria-expanded={open}
         aria-controls="mobile-nav"
         aria-label={open ? "Close menu" : "Open menu"}

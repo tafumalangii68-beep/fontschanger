@@ -12,7 +12,7 @@ export default function FaqList({ faqs, headingLevel = "h3" }: { faqs: Faq[]; he
               +
             </span>
           </summary>
-          <p className="mt-3 leading-relaxed text-[#3a3631]">{f.answer}</p>
+          <p className="mt-3 leading-relaxed text-body">{f.answer}</p>
         </details>
       ))}
     </div>

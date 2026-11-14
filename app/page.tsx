@@ -1,22 +1,93 @@
 import Link from "next/link";
-import { ArrowRight, ShieldCheck } from "lucide-react";
+import {
+  ArrowRight,
+  ClipboardCopy,
+  Heart,
+  Keyboard,
+  Layers,
+  MousePointerClick,
+  Search,
+  ShieldCheck,
+  Smartphone,
+  Sparkles,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
 import Container from "@/components/Container";
 import FaqList from "@/components/FaqList";
 import FontGenerator from "@/components/FontGenerator";
+import HeroIllustration from "@/components/HeroIllustration";
 import JsonLd from "@/components/JsonLd";
-import { fontPages } from "@/data/font-pages";
 import { homeFaqs } from "@/data/faqs";
 import { FONT_STYLES } from "@/lib/fonts";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, faqJsonLd } from "@/lib/seo";
 import { absoluteUrl, siteConfig } from "@/lib/site-config";
 
+const styleCount = FONT_STYLES.length;
+
 const title = "Fonts Changer: Fancy Text Generator to Copy and Paste";
-const description =
-  "Fonts Changer turns your text into 50+ fancy fonts: cursive, bold, aesthetic, small, glitch and more. Copy and paste them into Instagram, TikTok, WhatsApp or Discord. Free, no sign-up.";
+const description = `Fonts Changer turns your text into ${styleCount} fancy fonts: cursive, bold, aesthetic, small, glitch and more. Copy and paste them into Instagram, TikTok, Discord or WhatsApp. Free, no sign-up.`;
 
 export const metadata = buildMetadata({ title, description, path: "/", absoluteTitle: true });
 
-const styleCount = FONT_STYLES.length;
+function styled(id: string, text: string): string {
+  const style = FONT_STYLES.find((s) => s.id === id);
+  return style ? style.transform(text) : text;
+}
+
+const popular: { id: string; label: string; href: string; note: string }[] = [
+  { id: "bold-cursive", label: "Cursive", href: "/fonts/cursive-fonts", note: "Elegant handwriting for names and bios" },
+  { id: "bold-sans", label: "Bold", href: "/fonts/bold-text", note: "Make one line stand out in a caption" },
+  { id: "aesthetic-wide", label: "Aesthetic", href: "/fonts/aesthetic-fonts", note: "Wide, airy letters with a retro feel" },
+  { id: "small-caps", label: "Small text", href: "/fonts/small-text", note: "Quiet, tidy capitals for subtitles" },
+  { id: "glitch", label: "Glitch", href: "/fonts/glitch-text", note: "Creepy, distorted text for gaming" },
+  { id: "upside-down", label: "Upside down", href: "/fonts/upside-down-text", note: "Flipped text for jokes and puzzles" },
+];
+
+const steps: { icon: LucideIcon; title: string; text: string }[] = [
+  { icon: Keyboard, title: "Type your text", text: "Write a name, a bio line or a short message in the box at the top." },
+  { icon: Search, title: "Find a style", text: "Use the category filters or search to narrow the list down." },
+  { icon: MousePointerClick, title: "Tap to copy", text: "Tap a preview or its Copy button. A check mark confirms it." },
+  { icon: ClipboardCopy, title: "Paste anywhere", text: "Press and hold in any text field in your app and choose Paste." },
+];
+
+const reasons: { icon: LucideIcon; title: string; text: string }[] = [
+  { icon: Zap, title: "Results as you type", text: `Every one of the ${styleCount} styles updates instantly. There is no waiting and no extra click.` },
+  { icon: ShieldCheck, title: "Private by design", text: "Conversion happens in your browser. Your text never reaches a server and is never stored." },
+  { icon: Heart, title: "Keep your favorites", text: "Tap the heart on a style to save it. Saved styles stay in this browser for your next visit." },
+  { icon: Layers, title: "Sorted by mood", text: "Cursive, bold, aesthetic, small, lines and glitch filters help you find a look quickly." },
+  { icon: Smartphone, title: "Made for phones", text: "Big tap targets, a scrollable filter row and a compact grid make it easy on small screens." },
+  { icon: Sparkles, title: "Free, no sign-up", text: "No account, no limits and no watermark. Open the page, type and copy." },
+];
+
+function SectionHeading({ eyebrow, title, intro, id }: { eyebrow: string; title: string; intro?: string; id: string }) {
+  return (
+    <div className="max-w-2xl">
+      <p className="text-sm font-bold uppercase tracking-wider text-accent dark:text-accent-strong">{eyebrow}</p>
+      <h2 id={id} className="mt-2 text-[1.75rem] font-extrabold leading-tight tracking-tight text-ink sm:text-[2.1rem]">
+        {title}
+      </h2>
+      {intro && <p className="mt-3 text-lg leading-relaxed text-muted">{intro}</p>}
+    </div>
+  );
+}
+
+/** A plain mock "post" used to show how styled text looks in a feed or chat. */
+function Mockup({ lines, caption }: { lines: { label: string; text: string; muted?: boolean }[]; caption: string }) {
+  return (
+    <figure className="rounded-[1.5rem] border border-line bg-surface p-5 shadow-[var(--shadow-card)] sm:p-6">
+      <div className="space-y-3">
+        {lines.map((l) => (
+          <div key={l.label} className="rounded-2xl bg-paper px-4 py-3">
+            <p className="text-[0.7rem] font-bold uppercase tracking-wider text-muted">{l.label}</p>
+            <p className={`glyph mt-1 text-lg ${l.muted ? "text-body" : "text-ink"}`}>{l.text}</p>
+          </div>
+        ))}
+      </div>
+      <figcaption className="mt-4 text-sm text-muted">{caption}</figcaption>
+    </figure>
+  );
+}
 
 export default function HomePage() {
   return (
@@ -40,169 +111,307 @@ export default function HomePage() {
             operatingSystem: "Any (runs in a web browser)",
             isAccessibleForFree: true,
             browserRequirements: "Requires JavaScript",
+            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
           },
+          faqJsonLd(homeFaqs),
         ]}
       />
 
-      <section className="border-b border-line bg-surface/60 pb-12 pt-8 sm:pt-12">
-        <Container>
-          <div className="mb-6 max-w-2xl">
-            <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-[2.6rem] sm:leading-tight">
-              Fonts Changer: fancy text you can copy and paste
-            </h1>
-            <p className="mt-3 text-lg leading-relaxed text-muted">
-              Type once and see your words in {styleCount} styles, including cursive, bold, aesthetic, small and glitch.
-              Tap any result to copy it.
-            </p>
-            <p className="mt-3 flex items-center gap-2 text-sm text-muted">
-              <ShieldCheck className="size-4 text-accent" aria-hidden="true" />
-              Free, no account needed. Your text stays on your device.
-            </p>
+      {/* Hero + generator */}
+      <section className="relative overflow-hidden pb-14 pt-8 sm:pt-12">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-40 -top-40 size-[28rem] rounded-full bg-accent-soft opacity-70 blur-3xl"
+        />
+        <Container className="relative">
+          <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_1fr]">
+            <div>
+              <p className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-3.5 py-1.5 text-sm font-semibold text-ink">
+                <Sparkles className="size-4 text-accent dark:text-accent-strong" aria-hidden="true" />
+                Free Online Font Generator
+              </p>
+              <h1 className="mt-4 text-[2.1rem] font-extrabold leading-[1.12] tracking-tight text-ink sm:text-5xl sm:leading-[1.08]">
+                Fonts Changer: Fancy Text You Can{" "}
+                <span className="relative inline-block text-accent dark:text-accent-strong">
+                  Copy and Paste
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 300 14"
+                    preserveAspectRatio="none"
+                    className="absolute -bottom-2 left-[4%] h-3 w-[92%] text-accent dark:text-accent-strong"
+                  >
+                    <path d="M3 10C80 2 200 1 297 7" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </h1>
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
+                Turn simple text into stylish, unique fonts in seconds. Choose from {styleCount} styles including bold,
+                cursive, aesthetic, small and glitch, then paste them into your bio, captions or chats.
+              </p>
+              <ul className="mt-6 flex flex-wrap gap-2.5">
+                {[
+                  { icon: Zap, label: `${styleCount} Font Styles` },
+                  { icon: Layers, label: "Instant Copy" },
+                  { icon: ShieldCheck, label: "100% Free" },
+                ].map(({ icon: Icon, label }) => (
+                  <li
+                    key={label}
+                    className="flex items-center gap-2 rounded-full border border-line bg-surface py-2 pl-2.5 pr-4 text-sm font-semibold text-ink shadow-sm"
+                  >
+                    <span className="grid size-7 place-items-center rounded-full bg-accent-soft">
+                      <Icon className="size-4 text-accent dark:text-accent-strong" aria-hidden="true" />
+                    </span>
+                    {label}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <HeroIllustration className="hidden w-full max-w-xl justify-self-center lg:block" />
           </div>
-          <FontGenerator inputLabel="Type the text you want to change" />
+
+          <div className="mt-8 lg:mt-4">
+            <FontGenerator inputLabel="Type the text you want to change" />
+          </div>
         </Container>
       </section>
 
-      <Container className="py-12">
-        <div className="prose-fc max-w-3xl">
-          <h2>What Fonts Changer does</h2>
-          <p>
-            Most apps, including Instagram, TikTok, WhatsApp and X, do not let you choose a font for your posts or profile.
-            Fonts Changer gets around that by converting your letters into special Unicode characters that already look
-            bold, curly, wide or decorated. Because they are characters rather than a font setting, they keep their style
-            when you paste them into another app.
-          </p>
+      {/* Popular styles */}
+      <section aria-labelledby="popular-heading" className="border-y border-line bg-surface py-16">
+        <Container>
+          <SectionHeading
+            id="popular-heading"
+            eyebrow="Popular font styles"
+            title="Start with the styles people copy most"
+            intro="Each style family has its own page with examples, tips on where it works best and a generator that opens on that category."
+          />
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {popular.map((p) => (
+              <li key={p.id}>
+                <Link
+                  href={p.href}
+                  className="group flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-paper p-5 transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-[var(--shadow-card)]"
+                >
+                  <span className="glyph text-2xl text-ink">{styled(p.id, "Fonts Changer")}</span>
+                  <span className="mt-4 flex items-center justify-between">
+                    <span className="text-lg font-bold text-ink">{p.label} fonts</span>
+                    <ArrowRight
+                      className="size-4 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span className="mt-1 text-sm leading-relaxed text-muted">{p.note}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link
+            href="/fonts"
+            className="mt-6 inline-flex items-center gap-1.5 font-semibold text-accent hover:underline dark:text-accent-strong"
+          >
+            See every font style category
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+        </Container>
+      </section>
 
-          <h2>How to use it</h2>
-          <ol>
-            <li>Type or paste your text into the box at the top of the page.</li>
-            <li>
-              Browse the results, or use the filter buttons (Cursive, Bold, Aesthetic and more) or the search box to narrow
-              them down.
-            </li>
-            <li>Tap a result or its Copy button. A check mark shows that it was copied.</li>
-            <li>Open your app, press and hold in a text field, and choose Paste.</li>
-            <li>
-              Optional: tap the star on any style to save it. Saved styles appear under the Saved filter next time you visit
-              in this browser.
-            </li>
-          </ol>
+      {/* Platform sections */}
+      <Container className="space-y-20 py-20">
+        <section aria-labelledby="instagram-heading" className="grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <SectionHeading id="instagram-heading" eyebrow="Instagram" title="Fancy Fonts for Instagram" />
+            <div className="prose-fc mt-4">
+              <p>
+                Instagram does not let you pick a font for your bio, name or captions, but it does accept Unicode
+                characters. That is why styled text copied from Fonts Changer keeps its look after you paste it into the
+                app.
+              </p>
+              <ul>
+                <li>Use one styled line, such as your name or a short tagline, and keep contact details in plain text.</li>
+                <li>Cursive and bold styles are the easiest to read in a small profile header.</li>
+                <li>Decorated styles like wings and stars work well as section dividers in captions.</li>
+              </ul>
+              <p>
+                For bio ideas and character limits, read the guide to <Link href="/fonts/instagram-fonts">Instagram fonts</Link>.
+              </p>
+            </div>
+          </div>
+          <Mockup
+            caption="Example bio using Bold Cursive for the name and Small Caps for the tagline."
+            lines={[
+              { label: "Name", text: styled("bold-cursive", "Maya Rivers") },
+              { label: "Bio", text: styled("small-caps", "travel · film photos · coffee"), muted: true },
+              { label: "Caption", text: styled("royal-wings", "Weekend mood") },
+            ]}
+          />
+        </section>
 
-          <h2>Where you can paste the text</h2>
-          <p>
-            The text works almost anywhere that accepts emoji. Common uses include social media bios and display names,
-            captions and comments, chat messages, gaming nicknames, and stream or channel titles. It does not work in
-            fields that only accept basic letters, such as most usernames, email addresses and passwords.
-          </p>
+        <section aria-labelledby="discord-heading" className="grid items-center gap-10 lg:grid-cols-2">
+          <div className="lg:order-2">
+            <SectionHeading id="discord-heading" eyebrow="Discord" title="Discord Fonts Generator" />
+            <div className="prose-fc mt-4">
+              <p>
+                Discord already supports simple formatting like <code>**bold**</code> and <code>*italic*</code> in
+                messages. Unicode styles go further: they also work in places where formatting does not, such as your
+                server nickname, your profile bio and channel names.
+              </p>
+              <ul>
+                <li>Glitch and Old English styles suit gaming servers and roleplay channels.</li>
+                <li>Small Caps and Monospace look clean in channel and role names.</li>
+                <li>Heavy glitch text can be hard to read in chat, so save it for short names.</li>
+              </ul>
+              <p>
+                Try the <Link href="/fonts/glitch-text">glitch text generator</Link> or the{" "}
+                <Link href="/fonts/bold-text">bold text styles</Link> for headings in your server.
+              </p>
+            </div>
+          </div>
+          <Mockup
+            caption="Example nickname and channel names using Glitch Bold, Small Caps and Monospace."
+            lines={[
+              { label: "Nickname", text: styled("glitch-bold", "NightOwl") },
+              { label: "Channel", text: "# " + styled("small-caps", "general-chat"), muted: true },
+              { label: "Role", text: styled("monospace", "Moderator") },
+            ]}
+          />
+        </section>
 
-          <h2>How the conversion works</h2>
-          <p>
-            Unicode, the standard that defines the characters computers use, contains many letter variants. For example,
-            the <a href="https://www.unicode.org/charts/PDF/U1D400.pdf">Mathematical Alphanumeric Symbols</a> block has
-            complete bold, italic, script, Fraktur (Old English) and double-struck alphabets made for mathematical writing.
-            Other blocks contain <a href="https://www.unicode.org/charts/PDF/U2460.pdf">circled letters</a>,{" "}
-            <a href="https://www.unicode.org/charts/PDF/UFF00.pdf">fullwidth letters</a> and{" "}
-            <a href="https://www.unicode.org/charts/PDF/U0300.pdf">combining marks</a> such as strikethrough lines.
-          </p>
-          <p>
-            For each style, Fonts Changer looks up every letter you type and swaps it for the matching character. Letters
-            without a match, such as accented letters, emoji and other alphabets, are left unchanged. The whole process
-            runs in your browser, so results appear as you type.
-          </p>
+        <section aria-labelledby="tiktok-heading" className="grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <SectionHeading id="tiktok-heading" eyebrow="TikTok" title="Stylish Text for TikTok" />
+            <div className="prose-fc mt-4">
+              <p>
+                On TikTok, a styled display name or bio helps your profile look finished when people tap through from
+                your videos. Paste styled text into your name, bio or comments the same way you paste normal text.
+              </p>
+              <ul>
+                <li>Aesthetic Wide and Sparkles fit soft, lifestyle accounts.</li>
+                <li>Bold Sans is clear on a busy video screen, so it works well in comments.</li>
+                <li>Check your name after saving: TikTok limits name length, and styled letters can count as more than one character.</li>
+              </ul>
+              <p>
+                Browse the <Link href="/fonts/aesthetic-fonts">aesthetic fonts</Link> for more ideas, or add symbols with the{" "}
+                <Link href="/text-decorator">Text Decorator</Link>.
+              </p>
+            </div>
+          </div>
+          <Mockup
+            caption="Example profile using Aesthetic Wide, Sparkles and Bold Sans."
+            lines={[
+              { label: "Name", text: styled("aesthetic-wide", "daily bakes") },
+              { label: "Bio", text: styled("sparkles", "new recipe every friday"), muted: true },
+              { label: "Comment", text: styled("bold-sans", "Recipe in the pinned comment!") },
+            ]}
+          />
+        </section>
+      </Container>
 
-          <h2>Font style categories</h2>
-          <p>Each category has its own page with tips, examples and answers to common questions:</p>
-        </div>
-
-        <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-          {fontPages.map((p) => (
-            <li key={p.slug}>
-              <Link
-                href={`/fonts/${p.slug}`}
-                className="group flex h-full flex-col rounded-xl border border-line bg-surface p-4 transition-colors hover:border-accent"
-              >
-                <span className="flex items-center justify-between font-medium text-ink">
-                  {p.name}
-                  <ArrowRight className="size-4 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" aria-hidden="true" />
+      {/* How to use */}
+      <section aria-labelledby="howto-heading" className="border-y border-line bg-surface py-16">
+        <Container>
+          <SectionHeading
+            id="howto-heading"
+            eyebrow="How it works"
+            title="How to Use Fonts Changer"
+            intro="Four steps, and no sign-up. Everything happens on this page."
+          />
+          <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {steps.map(({ icon: Icon, title: stepTitle, text }, i) => (
+              <li key={stepTitle} className="relative rounded-[var(--radius-card)] border border-line bg-paper p-5">
+                <span className="absolute right-5 top-4 text-4xl font-extrabold text-line-strong" aria-hidden="true">
+                  {i + 1}
                 </span>
-                <span className="mt-1 text-sm leading-relaxed text-muted">{p.metaDescription.split(".")[0]}.</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                <span className="grid size-11 place-items-center rounded-xl bg-accent text-white">
+                  <Icon className="size-5" aria-hidden="true" />
+                </span>
+                <h3 className="mt-4 text-lg font-bold text-ink">
+                  <span className="sr-only">Step {i + 1}: </span>
+                  {stepTitle}
+                </h3>
+                <p className="mt-1.5 leading-relaxed text-muted">{text}</p>
+              </li>
+            ))}
+          </ol>
+          <div className="prose-fc mt-10 max-w-3xl">
+            <h3>Why the text keeps its style</h3>
+            <p>
+              Fonts Changer does not change a font setting. It swaps each letter for a look-alike Unicode character, such
+              as the bold and script letters from the{" "}
+              <a href="https://www.unicode.org/charts/PDF/U1D400.pdf">Mathematical Alphanumeric Symbols</a> block. Because
+              these are characters rather than formatting, they stay styled wherever you paste them. Letters with no match,
+              such as accented letters and emoji, stay as they are.
+            </p>
+          </div>
+        </Container>
+      </section>
 
-        <div className="prose-fc max-w-3xl">
-          <h2>What affects how your text looks</h2>
-          <ul>
-            <li>
-              <strong>The device and app.</strong> Each system draws these characters with its own fonts, so the same text
-              can look slightly different on Android, iPhone, Windows and macOS.
-            </li>
-            <li>
-              <strong>Missing characters.</strong> Older devices may lack fonts for rarer characters and show empty boxes
-              instead. The bold, italic and cursive styles have the widest support.
-            </li>
-            <li>
-              <strong>Platform filters.</strong> Some apps remove combining marks or limit them, which affects glitch and
-              strikethrough styles.
-            </li>
+      {/* Why choose */}
+      <Container className="pt-20">
+        <section aria-labelledby="why-heading">
+          <SectionHeading
+            id="why-heading"
+            eyebrow="Why Fonts Changer"
+            title="Why Choose Our Fonts Changer?"
+            intro="A focused tool that does one job well: turning your words into styles you can actually use."
+          />
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {reasons.map(({ icon: Icon, title: reasonTitle, text }) => (
+              <li key={reasonTitle} className="rounded-[var(--radius-card)] border border-line bg-surface p-5 shadow-sm">
+                <span className="grid size-11 place-items-center rounded-xl bg-accent-soft">
+                  <Icon className="size-5 text-accent dark:text-accent-strong" aria-hidden="true" />
+                </span>
+                <h3 className="mt-4 text-lg font-bold text-ink">{reasonTitle}</h3>
+                <p className="mt-1.5 leading-relaxed text-muted">{text}</p>
+              </li>
+            ))}
           </ul>
-
-          <h2>Limitations to keep in mind</h2>
-          <p>Styled Unicode text is fun, but it is not the same as normal text:</p>
-          <ul>
-            <li>
-              <strong>Accessibility.</strong> Screen readers may read styled letters by their technical names or skip them.
-              The Unicode Consortium&apos;s{" "}
-              <a href="https://www.unicode.org/reports/tr25/">report on mathematics</a> notes that the math alphabets are
-              not intended as a replacement for regular styled text.
-            </li>
-            <li>
-              <strong>Search.</strong> Search inside apps and search engines usually treats styled letters as different
-              characters, so people may not find words written in them.
-            </li>
-            <li>
-              <strong>Incomplete alphabets.</strong> Some styles are missing certain letters and use lookalikes instead,
-              and only basic Latin letters A to Z and digits are converted.
-            </li>
-            <li>
-              <strong>Character limits.</strong> Many styled characters take more space in storage than normal letters, so
-              you may reach a bio or name limit sooner.
-            </li>
-          </ul>
-          <p>
-            A good rule: style a short line, like your name or a heading, and keep important details in plain text.
+          <p className="mt-6 max-w-3xl text-sm leading-relaxed text-muted">
+            One honest note: styled Unicode text can be hard for screen readers and search to understand, and older devices
+            may show empty boxes for rare characters. Use it for short, decorative lines and keep important details in
+            plain text.
           </p>
+        </section>
 
-          <h2>Frequently asked questions</h2>
-        </div>
-
-        <div className="mt-6 max-w-3xl">
-          <FaqList faqs={homeFaqs} />
-          <p className="mt-4 text-sm text-muted">
-            More answers on the{" "}
-            <Link href="/faq" className="text-accent-strong underline underline-offset-2">
-              full FAQ page
+        {/* FAQ */}
+        <section aria-labelledby="faq-heading" className="mt-20 grid gap-8 lg:grid-cols-[1fr_1.6fr]">
+          <div>
+            <SectionHeading
+              id="faq-heading"
+              eyebrow="FAQ"
+              title="Frequently Asked Questions"
+              intro="Quick answers about copying, privacy and why some styles look different on some phones."
+            />
+            <Link
+              href="/faq"
+              className="mt-5 inline-flex items-center gap-1.5 font-semibold text-accent hover:underline dark:text-accent-strong"
+            >
+              Read the full FAQ
+              <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
-            .
-          </p>
-        </div>
+          </div>
+          <FaqList faqs={homeFaqs} />
+        </section>
 
-        <div className="prose-fc max-w-3xl">
-          <h2>Ready to try it?</h2>
-          <p>
-            Scroll back up, type your name or a short phrase, and copy the style you like. If you want a specific look,
-            start with the <Link href="/fonts/cursive-fonts">cursive styles</Link> or the{" "}
-            <Link href="/fonts/instagram-fonts">styles that work well in an Instagram bio</Link>.
-          </p>
-        </div>
-        <a
-          href="#fc-input"
-          className="mt-6 inline-flex items-center gap-2 rounded-lg bg-ink px-5 py-3 text-sm font-medium text-white hover:bg-black"
+        {/* Closing call to action */}
+        <section
+          aria-labelledby="cta-heading"
+          className="mt-20 flex flex-col items-start gap-6 rounded-[1.75rem] bg-navy px-6 py-10 text-white sm:px-10 md:flex-row md:items-center md:justify-between"
         >
-          Start changing your font
-          <ArrowRight className="size-4" aria-hidden="true" />
-        </a>
+          <div>
+            <h2 id="cta-heading" className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+              Ready to change your font?
+            </h2>
+            <p className="mt-2 max-w-xl text-white/75">
+              Type your name or a short phrase and copy the style you like. It takes about ten seconds.
+            </p>
+          </div>
+          <a
+            href="#fc-top"
+            className="inline-flex shrink-0 items-center gap-2 rounded-2xl bg-accent px-6 py-3.5 font-bold text-white transition-colors hover:bg-[#7a45f0]"
+          >
+            <Sparkles className="size-5" aria-hidden="true" />
+            Start generating fonts
+          </a>
+        </section>
       </Container>
     </>
   );

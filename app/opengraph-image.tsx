@@ -18,15 +18,15 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background: "#faf9f7",
-          color: "#24221f",
+          background: "#faf8ff",
+          color: "#17143b",
         }}
       >
-        <div style={{ display: "flex", fontSize: 34, color: "#3d6466" }}>{siteConfig.name}</div>
+        <div style={{ display: "flex", fontSize: 34, color: "#6425e8" }}>{siteConfig.name}</div>
         <div style={{ display: "flex", fontSize: 76, fontWeight: 700, marginTop: 24, lineHeight: 1.1 }}>
           Fancy text you can copy and paste
         </div>
-        <div style={{ display: "flex", fontSize: 34, color: "#5c5750", marginTop: 28 }}>
+        <div style={{ display: "flex", fontSize: 34, color: "#65627a", marginTop: 28 }}>
           Cursive · Bold · Aesthetic · Small · Glitch · Upside down
         </div>
       </div>

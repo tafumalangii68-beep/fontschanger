@@ -54,7 +54,7 @@ export default function ContactForm({ email }: { email: string }) {
           {error}
         </p>
       )}
-      <button type="submit" className="rounded-lg bg-ink px-4 py-2.5 text-sm font-medium text-white hover:bg-black">
+      <button type="submit" className="rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-white hover:bg-accent-strong dark:hover:bg-[#8455f5]">
         Open in my email app
       </button>
       <p className="text-sm text-muted" aria-live="polite">
