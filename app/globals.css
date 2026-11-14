@@ -351,6 +351,44 @@ dialog::backdrop {
   background: rgb(23 20 59 / 0.5);
 }
 
+/* Author profile popup: fades and lifts in, and animates out on close where supported. */
+.fc-author-dialog {
+  opacity: 0;
+  transform: translateY(14px) scale(0.97);
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease,
+    overlay 0.22s ease allow-discrete,
+    display 0.22s ease allow-discrete;
+}
+.fc-author-dialog[open] {
+  opacity: 1;
+  transform: none;
+}
+.fc-author-dialog::backdrop {
+  background: rgb(23 20 59 / 0);
+  backdrop-filter: blur(0);
+  transition:
+    background 0.22s ease,
+    backdrop-filter 0.22s ease,
+    overlay 0.22s ease allow-discrete,
+    display 0.22s ease allow-discrete;
+}
+.fc-author-dialog[open]::backdrop {
+  background: rgb(23 20 59 / 0.55);
+  backdrop-filter: blur(3px);
+}
+@starting-style {
+  .fc-author-dialog[open] {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  .fc-author-dialog[open]::backdrop {
+    background: rgb(23 20 59 / 0);
+    backdrop-filter: blur(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
