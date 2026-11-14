@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   formatDetection: { telephone: false, email: false, address: false },
   openGraph: { type: "website", siteName: siteConfig.name, locale: siteConfig.locale },
   twitter: { card: "summary_large_image" },
+  verification: { google: "MEkuCPceO_XddPG7rgJ9rWdlgBdKmOG6WVq1LlmtF3Q" },
 };
 
 export const viewport: Viewport = {
