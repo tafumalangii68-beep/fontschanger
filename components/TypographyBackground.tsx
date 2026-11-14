@@ -6,6 +6,7 @@
  * loop is seamless. Motion stops when the visitor prefers reduced motion.
  */
 import type { CSSProperties } from "react";
+import PauseWhenOffscreen from "@/components/PauseWhenOffscreen";
 
 const WORDS = [
   "Fonts",
@@ -29,7 +30,7 @@ type Lane = {
   direction: "left" | "right";
   size: string;
   opacity: number;
-  /** Back lanes are slightly blurred to add depth. */
+  /** Layer label only: back lanes are smaller and fainter, front lanes larger. */
   depth: "back" | "front";
   variants: Variant[];
   /** Rotates the word list so neighbouring lanes start differently. */
@@ -55,12 +56,9 @@ function Group({ lane, copy }: { lane: Lane; copy: number }) {
     <>
       {laneWords(lane.offset).map((word, i) => {
         const variant = lane.variants[i % lane.variants.length];
-        // Small, varied float and tilt per word; values are fixed so server and client match.
-        const style = {
-          "--fc-rot": `${((i * 7) % 9) - 4}deg`,
-          "--fc-float": `${5 + ((i * 3) % 5)}s`,
-          "--fc-delay": `${-((i * 1.3 + copy * 0.7) % 5).toFixed(2)}s`,
-        } as CSSProperties;
+        // A small fixed tilt per word. It is static on purpose: animating 100 words
+        // separately made low-end phones drop to about 10 fps. The lane floats instead.
+        const style = { "--fc-rot": `${((i * 7) % 9) - 4}deg` } as CSSProperties;
         return (
           <span key={`${copy}-${i}`} className={`fc-type-item fc-type-${variant}`} style={style}>
             {word}
@@ -73,7 +71,8 @@ function Group({ lane, copy }: { lane: Lane; copy: number }) {
 
 export default function TypographyBackground() {
   return (
-    <div aria-hidden="true" className="fc-type-bg">
+    <div aria-hidden="true" id="fc-type-bg" className="fc-type-bg">
+      {/* Static curves: animating their dashes repainted the whole hero every frame. */}
       <svg className="fc-type-lines" viewBox="0 0 1440 760" preserveAspectRatio="none">
         <path d="M-20 170C240 90 460 260 720 190S1180 60 1460 150" />
         <path d="M-20 470C300 380 520 560 820 470S1220 360 1460 440" />
@@ -82,20 +81,26 @@ export default function TypographyBackground() {
       {LANES.map((lane, i) => (
         <div
           key={i}
-          className={`fc-type-lane fc-type-${lane.depth} ${lane.desktopOnly ? "fc-type-desktop" : ""}`}
+          className={`fc-type-lane ${lane.desktopOnly ? "fc-type-desktop" : ""}`}
           style={{ top: lane.top, opacity: lane.opacity, "--fc-lane-size": lane.size } as CSSProperties}
         >
-          <div
-            className={`fc-type-track ${lane.direction === "right" ? "fc-type-right" : ""}`}
-            style={{ animationDuration: `${lane.duration}s` }}
-          >
-            <Group lane={lane} copy={0} />
-            <Group lane={lane} copy={1} />
+          {/* One gentle float per lane (cheap) instead of one per word. */}
+          <div className="fc-type-float" style={{ animationDuration: `${7 + i * 1.5}s`, animationDelay: `${-i * 1.7}s` }}>
+            <div
+              className={`fc-type-track ${lane.direction === "right" ? "fc-type-right" : ""}`}
+              style={{ animationDuration: `${lane.duration}s` }}
+            >
+              <Group lane={lane} copy={0} />
+              <Group lane={lane} copy={1} />
+            </div>
           </div>
         </div>
       ))}
       {/* Soft light patch behind the heading so it always reads clearly. */}
       <div className="fc-type-veil" />
+      {/* Fades the lanes out at the bottom (cheaper than a CSS mask). */}
+      <div className="fc-type-fade" />
+      <PauseWhenOffscreen targetId="fc-type-bg" />
     </div>
   );
 }

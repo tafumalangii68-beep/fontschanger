@@ -126,9 +126,8 @@ body {
   pointer-events: none;
   z-index: 0;
   user-select: none;
-  /* Fades out before the results grid so it never sits behind body text. */
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%);
+  /* Keeps the moving lanes in their own layer so they never repaint the page. */
+  contain: strict;
 }
 
 .fc-type-lane {
@@ -140,8 +139,11 @@ body {
   font-weight: 800;
   letter-spacing: -0.01em;
 }
-.fc-type-back {
-  filter: blur(0.6px);
+
+/* Only transforms are animated, so the browser can move the lanes on the GPU. */
+.fc-type-float {
+  animation: fc-lane-float 8s ease-in-out infinite;
+  will-change: transform;
 }
 
 .fc-type-track {
@@ -160,8 +162,6 @@ body {
   font-family: var(--font-glyph);
   white-space: nowrap;
   transform: rotate(var(--fc-rot, 0deg));
-  animation: fc-float var(--fc-float, 6s) ease-in-out infinite;
-  animation-delay: var(--fc-delay, 0s);
 }
 
 .fc-type-solid {
@@ -192,10 +192,7 @@ body {
   fill: none;
   stroke: rgb(var(--type-ink) / 0.16);
   stroke-width: 1.5;
-}
-.fc-type-lines path {
   stroke-dasharray: 6 10;
-  animation: fc-dash 40s linear infinite;
 }
 .fc-type-line-faint {
   stroke: rgb(236 72 153 / 0.14);
@@ -205,6 +202,20 @@ body {
   position: absolute;
   inset: 0;
   background: radial-gradient(34rem 20rem at 24% 30%, rgb(var(--type-veil) / 0.88), rgb(var(--type-veil) / 0.55) 55%, transparent 80%);
+}
+
+/* Fades the lanes out before the results grid so they never sit behind body text. */
+.fc-type-fade {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 32%;
+  background: linear-gradient(180deg, transparent, var(--type-base));
+}
+
+/* Set by PauseWhenOffscreen while the hero is scrolled out of view. */
+.fc-type-paused .fc-type-track,
+.fc-type-paused .fc-type-float {
+  animation-play-state: paused;
 }
 
 @keyframes fc-marquee-left {
@@ -223,24 +234,28 @@ body {
     transform: translate3d(0, 0, 0);
   }
 }
-@keyframes fc-float {
+@keyframes fc-lane-float {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) rotate(var(--fc-rot, 0deg));
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   50% {
-    transform: translate3d(0, -0.12em, 0) rotate(calc(var(--fc-rot, 0deg) * -1));
-  }
-}
-@keyframes fc-dash {
-  to {
-    stroke-dashoffset: -320;
+    transform: translate3d(0, -0.18em, 0) rotate(-0.6deg);
   }
 }
 
 @media (max-width: 767px) {
   .fc-type-bg {
     height: 40rem;
+  }
+  /*
+   * Phones show the lanes without motion. Any running animation kept the main
+   * thread busy every frame (about 10% of a slow phone CPU, 48 fps while
+   * scrolling in testing), so low-end devices get the look without the cost.
+   */
+  .fc-type-track,
+  .fc-type-float {
+    animation: none;
   }
   .fc-type-desktop {
     display: none;
@@ -348,8 +363,7 @@ dialog::backdrop {
   }
   /* Looping animations must stop entirely; a 0.01ms infinite loop would flicker. */
   .fc-type-track,
-  .fc-type-item,
-  .fc-type-lines path {
+  .fc-type-float {
     animation: none !important;
   }
 }
