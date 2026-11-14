@@ -83,7 +83,7 @@ export function organizationJsonLd() {
       "@id": ORG_ID,
       name: siteConfig.name,
       url: absoluteUrl("/"),
-      logo: { "@type": "ImageObject", url: absoluteUrl("/apple-icon"), width: 180, height: 180 },
+      logo: { "@type": "ImageObject", url: absoluteUrl("/brand/logo-mark-512.png"), width: 512, height: 512 },
     },
     {
       "@context": "https://schema.org",
