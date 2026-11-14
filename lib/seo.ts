@@ -10,6 +10,14 @@ type MetaInput = {
   noIndex?: boolean;
 };
 
+/** Shared social image, generated once at build time by app/opengraph-image.tsx. */
+export const OG_IMAGE = {
+  url: "/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: "Fonts Changer: fancy text you can copy and paste",
+} as const;
+
 export function buildMetadata({ title, description, path, absoluteTitle, noIndex }: MetaInput): Metadata {
   const url = absoluteUrl(path);
   const fullTitle = absoluteTitle ? title : `${title} | ${siteConfig.name}`;
@@ -18,6 +26,7 @@ export function buildMetadata({ title, description, path, absoluteTitle, noIndex
     description,
     alternates: { canonical: url },
     robots: noIndex ? { index: false, follow: true } : { index: true, follow: true },
+    // Page-level openGraph replaces the layout's, so the image must be repeated here.
     openGraph: {
       type: "website",
       url,
@@ -25,8 +34,9 @@ export function buildMetadata({ title, description, path, absoluteTitle, noIndex
       description,
       siteName: siteConfig.name,
       locale: siteConfig.locale,
+      images: [OG_IMAGE],
     },
-    twitter: { card: "summary_large_image", title: fullTitle, description },
+    twitter: { card: "summary_large_image", title: fullTitle, description, images: [OG_IMAGE.url] },
   };
 }
 
@@ -45,16 +55,46 @@ export function breadcrumbJsonLd(crumbs: Crumb[]) {
   };
 }
 
-export function webPageJsonLd(name: string, description: string, path: string) {
+const ORG_ID = `${absoluteUrl("/")}#organization`;
+const SITE_ID = `${absoluteUrl("/")}#website`;
+
+export type PageType = "WebPage" | "AboutPage" | "ContactPage" | "CollectionPage" | "FAQPage";
+
+export function webPageJsonLd(name: string, description: string, path: string, type: PageType = "WebPage") {
   return {
     "@context": "https://schema.org",
-    "@type": "WebPage",
+    "@type": type,
+    "@id": `${absoluteUrl(path)}#webpage`,
     name,
     description,
     url: absoluteUrl(path),
     inLanguage: siteConfig.language,
-    isPartOf: { "@type": "WebSite", name: siteConfig.name, url: absoluteUrl("/") },
+    isPartOf: { "@id": SITE_ID },
+    publisher: { "@id": ORG_ID },
   };
+}
+
+/** Site-wide identity: who publishes the site and its logo. Rendered on the homepage. */
+export function organizationJsonLd() {
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": ORG_ID,
+      name: siteConfig.name,
+      url: absoluteUrl("/"),
+      logo: { "@type": "ImageObject", url: absoluteUrl("/apple-icon"), width: 180, height: 180 },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": SITE_ID,
+      name: siteConfig.name,
+      url: absoluteUrl("/"),
+      inLanguage: siteConfig.language,
+      publisher: { "@id": ORG_ID },
+    },
+  ];
 }
 
 export function faqJsonLd(faqs: { question: string; answer: string }[]) {

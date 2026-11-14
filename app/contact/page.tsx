@@ -33,6 +33,7 @@ export default function ContactPage() {
       title={title}
       description={description}
       path="/contact"
+      schemaType="ContactPage"
       intro="Have a question, suggestion or feedback? We'd love to hear from you."
       illustration={<ContactIllustration className="w-full" />}
       prose={false}

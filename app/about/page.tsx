@@ -11,7 +11,8 @@ const title = "About Fonts Changer";
 const description =
   "Learn what Fonts Changer is, why we built it, how the text generator works in your browser and what makes it different.";
 
-export const metadata = buildMetadata({ title, description, path: "/about" });
+// Short browser title; the page itself is headed "About Fonts Changer".
+export const metadata = buildMetadata({ title: "About Us", description, path: "/about" });
 
 const different = [
   `${count} stylish font styles`,
@@ -41,6 +42,7 @@ export default function AboutPage() {
       title={title}
       description={description}
       path="/about"
+      schemaType="AboutPage"
       intro="Learn more about our tool, our mission and why we created Fonts Changer."
       illustration={<AboutIllustration className="w-full" />}
       prose={false}

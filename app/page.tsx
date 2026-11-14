@@ -29,13 +29,13 @@ import HeroIllustration from "@/components/HeroIllustration";
 import JsonLd from "@/components/JsonLd";
 import { homeFaqs } from "@/data/faqs";
 import { FONT_STYLES } from "@/lib/fonts";
-import { buildMetadata, faqJsonLd } from "@/lib/seo";
+import { buildMetadata, faqJsonLd, organizationJsonLd } from "@/lib/seo";
 import { absoluteUrl, siteConfig } from "@/lib/site-config";
 
 const styleCount = FONT_STYLES.length;
 
 const title = "Fonts Changer: Fancy Text Generator to Copy and Paste";
-const description = `Fonts Changer turns your text into ${styleCount} fancy fonts: cursive, bold, aesthetic, small, glitch and more. Copy and paste them into Instagram, TikTok, Discord or WhatsApp. Free, no sign-up.`;
+const description = `Turn your text into ${styleCount} fancy fonts: cursive, bold, aesthetic and more. Copy and paste them into Instagram, TikTok or Discord. Free, no sign-up.`;
 
 export const metadata = buildMetadata({ title, description, path: "/", absoluteTitle: true });
 
@@ -109,19 +109,14 @@ export default function HomePage() {
     <>
       <JsonLd
         data={[
-          {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            name: siteConfig.name,
-            url: absoluteUrl("/"),
-            inLanguage: siteConfig.language,
-          },
+          ...organizationJsonLd(),
           {
             "@context": "https://schema.org",
             "@type": "WebApplication",
             name: siteConfig.name,
             url: absoluteUrl("/"),
             description,
+            publisher: { "@id": `${absoluteUrl("/")}#organization` },
             applicationCategory: "UtilitiesApplication",
             operatingSystem: "Any (runs in a web browser)",
             isAccessibleForFree: true,

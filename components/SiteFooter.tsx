@@ -11,6 +11,8 @@ const tools = [
   { label: "Font Generator", href: "/" },
   { label: "All Font Styles", href: "/fonts" },
   { label: "Text Decorator", href: "/text-decorator" },
+  { label: "Bio Generator", href: "/#bio-generator" },
+  { label: "Symbol Text Generator", href: "/#text-generator" },
   { label: "Saved Styles", href: "/#saved" },
   { label: "FAQ", href: "/faq" },
 ];

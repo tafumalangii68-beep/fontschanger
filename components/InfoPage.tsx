@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Container from "@/components/Container";
 import JsonLd from "@/components/JsonLd";
 import PageHero from "@/components/PageHero";
-import { webPageJsonLd } from "@/lib/seo";
+import { webPageJsonLd, type PageType } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 
 type Props = {
@@ -14,6 +14,8 @@ type Props = {
   showUpdated?: boolean;
   /** Set to false when the page lays out its own content instead of long-form prose. */
   prose?: boolean;
+  /** Schema.org page type for structured data. */
+  schemaType?: PageType;
   children: ReactNode;
 };
 
@@ -27,10 +29,10 @@ export function formatUpdated(): string {
 }
 
 /** Shared layout for About, Contact, FAQ and legal pages. */
-export default function InfoPage({ title, description, path, intro, illustration, showUpdated, prose = true, children }: Props) {
+export default function InfoPage({ title, description, path, intro, illustration, showUpdated, prose = true, schemaType = "WebPage", children }: Props) {
   return (
     <>
-      <JsonLd data={webPageJsonLd(title, description, path)} />
+      <JsonLd data={webPageJsonLd(title, description, path, schemaType)} />
       <PageHero
         crumbs={[
           { name: "Home", path: "/" },

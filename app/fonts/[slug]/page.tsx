@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CircleHelp, Frame, Shuffle, UserRound, type LucideIcon } from "lucide-react";
 import Container from "@/components/Container";
 import FaqList from "@/components/FaqList";
 import FontGenerator from "@/components/FontGenerator";
@@ -9,9 +9,16 @@ import PageHero from "@/components/PageHero";
 import { StylesIllustration } from "@/components/PageIllustrations";
 import { fontPages, getFontPage } from "@/data/font-pages";
 import { FONT_STYLES } from "@/lib/fonts";
-import { buildMetadata, webPageJsonLd } from "@/lib/seo";
+import { buildMetadata, faqJsonLd, webPageJsonLd } from "@/lib/seo";
 
 type Params = { slug: string };
+
+const MORE_TOOLS: { href: string; icon: LucideIcon; title: string; text: string }[] = [
+  { href: "/text-decorator", icon: Frame, title: "Text Decorator", text: "Add wings, stars, borders and brackets around your text." },
+  { href: "/#bio-generator", icon: UserRound, title: "Bio Generator", text: "Build a styled bio for Instagram, TikTok or Discord." },
+  { href: "/#text-generator", icon: Shuffle, title: "Symbol Text Generator", text: "Mix letter styles with hearts, flowers and other symbols." },
+  { href: "/faq", icon: CircleHelp, title: "Fancy Text FAQ", text: "Why some characters show as boxes, and where styled text works." },
+];
 
 export const dynamicParams = false;
 
@@ -41,7 +48,7 @@ export default async function FontCategoryPage({ params }: { params: Promise<Par
 
   return (
     <>
-      <JsonLd data={webPageJsonLd(page.metaTitle, page.metaDescription, path)} />
+      <JsonLd data={[webPageJsonLd(page.metaTitle, page.metaDescription, path), faqJsonLd(page.faqs)]} />
       <PageHero
         crumbs={[
           { name: "Home", path: "/" },
@@ -121,8 +128,34 @@ export default async function FontCategoryPage({ params }: { params: Promise<Par
           <Link href="/" className="text-accent-strong underline underline-offset-2">
             full Fonts Changer generator
           </Link>{" "}
-          with all {FONT_STYLES.length} styles.
+          with all {FONT_STYLES.length} styles, or browse every{" "}
+          <Link href="/fonts" className="text-accent-strong underline underline-offset-2">
+            font style category
+          </Link>
+          .
         </p>
+      </section>
+
+      <section aria-labelledby="tools" className="mt-12">
+        <h2 id="tools" className="text-2xl font-extrabold tracking-tight text-ink sm:text-[1.75rem]">
+          More free tools
+        </h2>
+        <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {MORE_TOOLS.map(({ href, icon: Icon, title, text }) => (
+            <li key={href}>
+              <Link
+                href={href}
+                className="group flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-[var(--shadow-card)]"
+              >
+                <span className="grid size-10 place-items-center rounded-xl bg-accent-soft">
+                  <Icon className="size-5 text-accent dark:text-accent-strong" aria-hidden="true" />
+                </span>
+                <span className="mt-3 font-bold text-ink">{title}</span>
+                <span className="mt-1 text-sm leading-relaxed text-muted">{text}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
       </Container>
     </>

@@ -68,7 +68,7 @@ export default function TextDecoratorPage() {
             </ul>
             <p>
               Want more letter styles? Open the <Link href="/">Fonts Changer generator</Link> or browse all{" "}
-              <Link href="/fonts">font styles</Link>.
+              <Link href="/fonts">font styles</Link>. Need a full profile line? The <Link href="/#bio-generator">bio generator</Link> combines styles and symbols for you.
             </p>
           </div>
           <section aria-labelledby="decorator-faq">

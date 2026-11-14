@@ -22,7 +22,7 @@ function preview(id: string, text: string) {
 export default function FontsIndexPage() {
   return (
     <>
-      <JsonLd data={webPageJsonLd(title, description, "/fonts")} />
+      <JsonLd data={webPageJsonLd(title, description, "/fonts", "CollectionPage")} />
       <PageHero
         crumbs={[
           { name: "Home", path: "/" },
