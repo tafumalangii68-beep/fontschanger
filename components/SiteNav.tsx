@@ -16,7 +16,7 @@ export default function SiteNav({ items }: { items: NavItem[] }) {
 
   return (
     <>
-      <nav aria-label="Main" className="hidden sm:block">
+      <nav aria-label="Main" className="hidden lg:block">
         <ul className="flex items-center gap-1">
           {items.map((item) => {
             const active = isActive(pathname, item.href);
@@ -25,8 +25,8 @@ export default function SiteNav({ items }: { items: NavItem[] }) {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`rounded-md px-3 py-2 text-sm transition-colors ${
-                    active ? "bg-sand font-medium text-ink" : "text-muted hover:bg-sand hover:text-ink"
+                  className={`rounded-xl px-4 py-2.5 text-[0.95rem] font-semibold transition-colors ${
+                    active ? "bg-accent text-white shadow-sm" : "text-ink hover:bg-sand"
                   }`}
                 >
                   {item.label}
@@ -39,7 +39,7 @@ export default function SiteNav({ items }: { items: NavItem[] }) {
 
       <button
         type="button"
-        className="rounded-md p-2 text-ink hover:bg-sand sm:hidden"
+        className="grid size-10 place-items-center rounded-full text-ink hover:bg-sand lg:hidden"
         aria-expanded={open}
         aria-controls="mobile-nav"
         aria-label={open ? "Close menu" : "Open menu"}
@@ -49,20 +49,29 @@ export default function SiteNav({ items }: { items: NavItem[] }) {
       </button>
 
       {open && (
-        <nav id="mobile-nav" aria-label="Mobile" className="absolute inset-x-0 top-full z-40 border-b border-line bg-surface shadow-sm sm:hidden">
-          <ul className="mx-auto flex max-w-5xl flex-col px-4 py-2">
-            {items.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  aria-current={isActive(pathname, item.href) ? "page" : undefined}
-                  className="block rounded-md px-3 py-3 text-base text-ink hover:bg-sand"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+        <nav
+          id="mobile-nav"
+          aria-label="Mobile"
+          className="absolute inset-x-0 top-full z-40 border-b border-line bg-surface shadow-[var(--shadow-card)] lg:hidden"
+        >
+          <ul className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3">
+            {items.map((item) => {
+              const active = isActive(pathname, item.href);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                    className={`block rounded-xl px-4 py-3 text-base font-semibold ${
+                      active ? "bg-accent-soft text-accent-strong" : "text-ink hover:bg-sand"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       )}

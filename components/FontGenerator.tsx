@@ -1,56 +1,102 @@
 "use client";
 
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
-import { Check, Copy, Search, Star, X } from "lucide-react";
-import { CATEGORY_LABELS, FONT_STYLES, MAX_INPUT_LENGTH, type FontCategory } from "@/lib/fonts";
+import { useDeferredValue, useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import {
+  ArrowUpDown,
+  Bold,
+  Check,
+  Copy,
+  Crown,
+  Feather,
+  Flame,
+  Heart,
+  LayoutGrid,
+  PenLine,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  Strikethrough,
+  Type,
+  WandSparkles,
+  X,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
+import { CATEGORY_LABELS, FONT_STYLES, MAX_INPUT_LENGTH, type FontCategory, type FontStyle } from "@/lib/fonts";
+import {
+  SHOW_SAVED_EVENT,
+  getSavedServerSnapshot,
+  getSavedSnapshot,
+  subscribeSaved,
+  toggleSavedStyle,
+} from "@/lib/browser-store";
+import { copyText } from "@/lib/clipboard";
 
 type Filter = FontCategory | "all" | "saved";
 
-const FILTERS: Filter[] = ["all", "popular", "saved", "cursive", "bold", "aesthetic", "fancy", "small", "lines", "glitch", "flip"];
-const SAVED_KEY = "fc-saved-styles";
+const FILTERS: { id: Filter; icon: LucideIcon; tint: string }[] = [
+  { id: "all", icon: LayoutGrid, tint: "" },
+  { id: "popular", icon: Flame, tint: "text-orange-500" },
+  { id: "saved", icon: Heart, tint: "text-rose-500" },
+  { id: "cursive", icon: Feather, tint: "text-accent dark:text-accent-strong" },
+  { id: "bold", icon: Bold, tint: "text-accent dark:text-accent-strong" },
+  { id: "aesthetic", icon: Sparkles, tint: "text-fuchsia-500" },
+  { id: "fancy", icon: Crown, tint: "text-amber-500" },
+  { id: "small", icon: Type, tint: "text-accent dark:text-accent-strong" },
+  { id: "lines", icon: Strikethrough, tint: "text-accent dark:text-accent-strong" },
+  { id: "glitch", icon: Zap, tint: "text-violet-500" },
+  { id: "flip", icon: ArrowUpDown, tint: "text-sky-500" },
+];
 
 type Props = {
   initialFilter?: Filter;
   sample?: string;
   inputLabel?: string;
+  resultsHeading?: string;
 };
 
-function legacyCopy(text: string) {
-  const ta = document.createElement("textarea");
-  ta.value = text;
-  ta.setAttribute("readonly", "");
-  ta.style.position = "fixed";
-  ta.style.opacity = "0";
-  document.body.appendChild(ta);
-  ta.select();
-  try {
-    document.execCommand("copy");
-  } finally {
-    document.body.removeChild(ta);
-  }
+/** Gives cards different rhythm depending on the kind of style. */
+function previewClass(s: FontStyle): string {
+  if (s.categories.includes("glitch")) return "text-lg leading-[2.3] py-2";
+  if (s.categories.includes("small")) return "text-xl sm:text-2xl";
+  if (s.categories.includes("lines")) return "text-lg sm:text-xl tracking-wide";
+  if (s.categories.includes("cursive")) return "text-xl sm:text-[1.6rem]";
+  return "text-lg sm:text-[1.4rem]";
 }
 
-export default function FontGenerator({ initialFilter = "all", sample = "Fonts Changer", inputLabel = "Type your text" }: Props) {
+export default function FontGenerator({
+  initialFilter = "all",
+  sample = "Fonts Changer",
+  inputLabel = "Type the text you want to change",
+  resultsHeading = "Your Text in Different Fonts",
+}: Props) {
   const [text, setText] = useState("");
   const [filter, setFilter] = useState<Filter>(initialFilter);
   const [query, setQuery] = useState("");
-  const [saved, setSaved] = useState<string[]>([]);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [status, setStatus] = useState("");
+  const saved = useSyncExternalStore(subscribeSaved, getSavedSnapshot, getSavedServerSnapshot);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resultsRef = useRef<HTMLHeadingElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const ids = { input: useId(), help: useId(), search: useId(), results: useId() };
   const deferredText = useDeferredValue(text);
   const source = deferredText || sample;
 
-  // Saved styles are stored only after the visitor taps the star button.
+  // Header heart button and "/#saved" links open the Saved filter.
   useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(SAVED_KEY);
-      const parsed: unknown = raw ? JSON.parse(raw) : [];
-      if (Array.isArray(parsed)) setSaved(parsed.filter((x): x is string => typeof x === "string"));
-    } catch {
-      /* ignore */
-    }
+    const showSaved = () => {
+      setFilter("saved");
+      setQuery("");
+      resultsRef.current?.scrollIntoView({ block: "start" });
+    };
+    if (window.location.hash === "#saved") showSaved();
+    const onHash = () => window.location.hash === "#saved" && showSaved();
+    window.addEventListener(SHOW_SAVED_EVENT, showSaved);
+    window.addEventListener("hashchange", onHash);
     return () => {
+      window.removeEventListener(SHOW_SAVED_EVENT, showSaved);
+      window.removeEventListener("hashchange", onHash);
       if (timer.current) clearTimeout(timer.current);
     };
   }, []);
@@ -69,163 +115,200 @@ export default function FontGenerator({ initialFilter = "all", sample = "Fonts C
     return map;
   }, [visible, source]);
 
-  function toggleSaved(id: string) {
-    setSaved((prev) => {
-      const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
-      try {
-        window.localStorage.setItem(SAVED_KEY, JSON.stringify(next));
-      } catch {
-        /* ignore */
-      }
-      return next;
-    });
+  async function copy(s: FontStyle) {
+    await copyText(outputs[s.id]);
+    setCopiedId(s.id);
+    setStatus(`${s.name} copied to clipboard.`);
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => setCopiedId(null), 1600);
   }
 
-  async function copy(id: string, name: string) {
-    const value = outputs[id];
-    try {
-      if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(value);
-      else legacyCopy(value);
-    } catch {
-      legacyCopy(value);
+  function generate() {
+    if (!text.trim()) {
+      inputRef.current?.focus();
+      setStatus("Type some text first. The results below show a sample.");
+      return;
     }
-    setCopiedId(id);
-    setStatus(`${name} copied to clipboard.`);
-    if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => setCopiedId(null), 1500);
+    resultsRef.current?.scrollIntoView({ block: "start" });
+    resultsRef.current?.focus({ preventScroll: true });
+    setStatus(`${visible.length} font styles ready.`);
   }
 
   const emptyMessage =
     filter === "saved" && !query
-      ? "No saved styles yet. Tap the star on any style to keep it here."
+      ? "No saved styles yet. Tap the heart on any style to keep it here."
       : "No styles match your search. Try another word or choose All.";
 
   return (
-    <div className="rounded-[var(--radius-card)] border border-line bg-surface shadow-[0_1px_2px_rgb(36_34_31/0.05),0_8px_24px_-12px_rgb(36_34_31/0.12)]">
-      <div className="border-b border-line p-4 sm:p-5">
-        <label htmlFor="fc-input" className="mb-2 block text-sm font-medium text-ink">
-          {inputLabel}
-        </label>
-        <div className="relative">
-          <textarea
-            id="fc-input"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            maxLength={MAX_INPUT_LENGTH}
-            rows={2}
-            placeholder="Type or paste your text here…"
-            className="block w-full resize-y rounded-lg border border-line-strong bg-paper px-3.5 py-3 pr-11 text-lg text-ink placeholder:text-muted/80 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
-            aria-describedby="fc-input-help"
-            spellCheck={false}
-          />
-          {text && (
-            <button
-              type="button"
-              onClick={() => setText("")}
-              className="absolute right-2 top-2 rounded-md p-1.5 text-muted hover:bg-sand hover:text-ink"
-              aria-label="Clear text"
-            >
-              <X className="size-4" aria-hidden="true" />
-            </button>
-          )}
-        </div>
-        <p id="fc-input-help" className="mt-2 flex flex-wrap justify-between gap-x-4 gap-y-1 text-xs text-muted">
-          <span>Your text is converted in your browser and is never sent to a server.</span>
-          <span aria-live="polite">
+    <div>
+      {/* Input panel */}
+      <section
+        aria-label="Font generator"
+        className="relative rounded-[1.5rem] border border-line bg-surface p-4 shadow-[var(--shadow-card)] sm:p-7"
+      >
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <label htmlFor={ids.input} className="flex items-center gap-2 text-base font-bold text-ink sm:text-lg">
+            <PenLine className="size-5 text-accent dark:text-accent-strong" aria-hidden="true" />
+            {inputLabel}
+          </label>
+          <span className="shrink-0 text-sm tabular-nums text-muted" aria-live="polite">
             {text.length}/{MAX_INPUT_LENGTH}
           </span>
-        </p>
-      </div>
+        </div>
 
-      <div className="flex flex-col gap-3 border-b border-line p-4 sm:p-5 lg:flex-row lg:items-center lg:justify-between">
-        <div role="group" aria-label="Filter font styles" className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 lg:flex-wrap lg:overflow-visible lg:pb-0">
-          {FILTERS.map((f) => {
-            const active = f === filter;
+        <div className="flex flex-col gap-3 md:flex-row md:items-stretch">
+          <div className="relative flex-1">
+            <textarea
+              ref={inputRef}
+              id={ids.input}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              maxLength={MAX_INPUT_LENGTH}
+              rows={3}
+              placeholder="Type or paste your text here…"
+              aria-describedby={ids.help}
+              spellCheck={false}
+              className="block min-h-24 w-full resize-y rounded-2xl border-2 border-line bg-paper px-4 py-3.5 pr-11 text-lg text-ink transition-colors placeholder:text-muted/80 focus:border-accent focus:bg-surface focus:outline-none sm:min-h-28"
+            />
+            {text && (
+              <button
+                type="button"
+                onClick={() => {
+                  setText("");
+                  inputRef.current?.focus();
+                }}
+                className="absolute right-2.5 top-2.5 grid size-8 place-items-center rounded-full text-muted hover:bg-sand hover:text-ink"
+                aria-label="Clear text"
+              >
+                <X className="size-4" aria-hidden="true" />
+              </button>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={generate}
+            className="inline-flex items-center justify-center gap-2 self-stretch rounded-2xl bg-accent px-6 py-3.5 text-base font-bold text-white shadow-[0_10px_24px_-10px_rgb(100_37_232/0.8)] transition-colors hover:bg-accent-strong dark:hover:bg-[#8455f5] md:self-center md:py-4"
+          >
+            <WandSparkles className="size-5" aria-hidden="true" />
+            Generate Fonts
+          </button>
+        </div>
+
+        <p id={ids.help} className="mt-3 flex items-start gap-1.5 text-sm text-muted">
+          <ShieldCheck className="mt-0.5 size-4 shrink-0 text-accent dark:text-accent-strong" aria-hidden="true" />
+          Your text is converted live in your browser. It is never sent to a server or saved.
+        </p>
+
+        <div
+          role="group"
+          aria-label="Filter font styles"
+          className="no-scrollbar -mx-4 mt-5 flex gap-2 overflow-x-auto px-4 pb-1 sm:-mx-7 sm:px-7 lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0"
+        >
+          {FILTERS.map(({ id, icon: Icon, tint }) => {
+            const active = id === filter;
             return (
               <button
-                key={f}
+                key={id}
                 type="button"
                 aria-pressed={active}
-                onClick={() => setFilter(f)}
-                className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                onClick={() => setFilter(id)}
+                className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold transition-all ${
                   active
-                    ? "border-accent bg-accent text-white"
-                    : "border-line bg-surface text-ink hover:border-line-strong hover:bg-sand"
+                    ? "border-accent bg-accent text-white shadow-[0_6px_16px_-8px_rgb(100_37_232/0.8)]"
+                    : "border-line bg-surface text-ink hover:-translate-y-px hover:border-accent/60 hover:bg-accent-soft"
                 }`}
               >
-                {f === "saved" && <Star className="size-3.5" aria-hidden="true" />}
-                {CATEGORY_LABELS[f]}
-                {f === "saved" && saved.length > 0 && <span className="text-xs opacity-80">({saved.length})</span>}
+                {id !== "all" && <Icon className={`size-4 ${active ? "text-white" : tint}`} aria-hidden="true" />}
+                {CATEGORY_LABELS[id]}
+                {id === "saved" && saved.length > 0 && (
+                  <span className={`text-xs ${active ? "text-white/85" : "text-muted"}`}>({saved.length})</span>
+                )}
               </button>
             );
           })}
         </div>
-        <div className="relative lg:w-56">
-          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted" aria-hidden="true" />
-          <label htmlFor="fc-search" className="sr-only">
-            Search font styles
-          </label>
-          <input
-            id="fc-search"
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search styles"
-            className="w-full rounded-lg border border-line-strong bg-surface py-2 pl-9 pr-3 text-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
-          />
-        </div>
-      </div>
+      </section>
 
-      <div className="p-4 sm:p-5">
-        <p className="mb-3 text-sm text-muted">
-          {visible.length > 0 ? `${visible.length} styles. Tap a result to copy it.` : emptyMessage}
+      {/* Results */}
+      <section aria-labelledby={ids.results} className="mt-10">
+        <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h2
+            id={ids.results}
+            ref={resultsRef}
+            tabIndex={-1}
+            className="flex items-center gap-2.5 text-2xl font-extrabold tracking-tight text-ink focus:outline-none sm:text-[1.75rem]"
+          >
+            <Sparkles className="size-6 text-accent dark:text-accent-strong" aria-hidden="true" />
+            {resultsHeading}
+          </h2>
+          <div className="relative sm:w-72">
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted" aria-hidden="true" />
+            <label htmlFor={ids.search} className="sr-only">
+              Search font styles
+            </label>
+            <input
+              id={ids.search}
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search font style…"
+              className="w-full rounded-xl border border-line bg-surface py-2.5 pl-10 pr-3 text-sm text-ink shadow-sm placeholder:text-muted focus:border-accent focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <p className="mb-4 text-sm text-muted">
+          {visible.length > 0
+            ? `${visible.length} ${filter === "all" ? "" : CATEGORY_LABELS[filter].toLowerCase() + " "}styles · tap a preview or Copy`
+            : emptyMessage}
         </p>
-        <ul className="grid gap-3 md:grid-cols-2">
+
+        <ul className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4">
           {visible.map((s) => {
             const isSaved = saved.includes(s.id);
             const isCopied = copiedId === s.id;
             return (
               <li
                 key={s.id}
-                className={`group flex flex-col rounded-xl border bg-surface p-3.5 transition-colors ${
-                  isCopied ? "border-accent bg-accent-soft" : "border-line hover:border-line-strong"
+                className={`group relative flex flex-col rounded-[var(--radius-card)] border bg-surface p-2.5 shadow-sm transition-all sm:p-3 ${
+                  isCopied
+                    ? "border-accent ring-2 ring-accent/20"
+                    : "border-line hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-[var(--shadow-card)]"
                 }`}
               >
-                <div className="mb-1.5 flex items-center justify-between gap-2">
-                  <span className="text-xs font-medium uppercase tracking-wide text-muted">{s.name}</span>
-                  <button
-                    type="button"
-                    onClick={() => toggleSaved(s.id)}
-                    aria-pressed={isSaved}
-                    aria-label={isSaved ? `Remove ${s.name} from saved styles` : `Save ${s.name} style`}
-                    className={`rounded-md p-1 hover:bg-sand ${isSaved ? "text-accent" : "text-muted"}`}
-                  >
-                    <Star className="size-4" fill={isSaved ? "currentColor" : "none"} aria-hidden="true" />
-                  </button>
-                </div>
-                <div className="flex items-start gap-3">
-                  <button
-                    type="button"
-                    onClick={() => copy(s.id, s.name)}
-                    aria-label={`Copy text in ${s.name} style`}
-                    className="glyph min-h-11 flex-1 cursor-copy rounded-md text-left text-xl leading-snug text-ink"
-                  >
-                    {outputs[s.id]}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => copy(s.id, s.name)}
-                    aria-label={`Copy ${s.name}`}
-                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
-                      isCopied
-                        ? "border-accent bg-accent text-white"
-                        : "border-line-strong text-ink hover:border-accent hover:text-accent-strong"
-                    }`}
-                  >
-                    {isCopied ? <Check className="size-4" aria-hidden="true" /> : <Copy className="size-4" aria-hidden="true" />}
-                    <span>{isCopied ? "Copied" : "Copy"}</span>
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => toggleSavedStyle(s.id)}
+                  aria-pressed={isSaved}
+                  aria-label={isSaved ? `Remove ${s.name} from saved styles` : `Save ${s.name} style`}
+                  className={`absolute right-2 top-2 z-10 grid size-8 place-items-center rounded-full transition-colors hover:bg-accent-soft ${
+                    isSaved ? "text-rose-500" : "text-muted hover:text-ink"
+                  }`}
+                >
+                  <Heart className="size-[1.1rem]" fill={isSaved ? "currentColor" : "none"} aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => copy(s)}
+                  aria-label={`Copy text in ${s.name} style`}
+                  className="flex min-h-24 flex-1 cursor-copy flex-col items-center justify-center rounded-xl px-2 pb-1 pt-6 text-center transition-colors group-hover:bg-accent-soft/60"
+                >
+                  <span className={`glyph text-ink ${previewClass(s)}`}>{outputs[s.id]}</span>
+                  <span className="mt-1.5 text-[0.7rem] font-semibold uppercase tracking-wider text-muted">{s.name}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => copy(s)}
+                  aria-label={`Copy ${s.name}`}
+                  className={`mt-2 inline-flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-sm font-bold transition-colors ${
+                    isCopied
+                      ? "bg-accent text-white"
+                      : "bg-accent-soft text-accent hover:bg-accent hover:text-white dark:text-accent-strong dark:hover:text-white"
+                  }`}
+                >
+                  {isCopied ? <Check className="size-4" aria-hidden="true" /> : <Copy className="size-4" aria-hidden="true" />}
+                  {isCopied ? "Copied!" : "Copy"}
+                </button>
               </li>
             );
           })}
@@ -233,7 +316,7 @@ export default function FontGenerator({ initialFilter = "all", sample = "Fonts C
         <p className="sr-only" role="status" aria-live="polite">
           {status}
         </p>
-      </div>
+      </section>
     </div>
   );
 }
