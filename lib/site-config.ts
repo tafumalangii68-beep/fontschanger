@@ -16,7 +16,7 @@ export const siteConfig = {
    * LAUNCH REQUIREMENT: set the owner's real contact email.
    * While empty, the contact page shows a notice instead of a mailto link.
    */
-  contactEmail: "",
+  contactEmail: "worldwebsites906@gmail.com",
   /** Date the legal pages were last reviewed (YYYY-MM-DD). */
   legalUpdated: "2026-11-14",
 } as const;
