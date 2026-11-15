@@ -420,7 +420,8 @@ export default function HomePage() {
               as the bold and script letters from the{" "}
               <a href="https://www.unicode.org/charts/PDF/U1D400.pdf">Mathematical Alphanumeric Symbols</a> block. Because
               these are characters rather than formatting, they stay styled wherever you paste them. Letters with no match,
-              such as accented letters and emoji, stay as they are.
+              such as accented letters and emoji, stay as they are. Want the full story? Read{" "}
+              <Link href="/blog/how-fancy-font-generators-work">how fancy font generators work</Link>.
             </p>
           </div>
         </Container>

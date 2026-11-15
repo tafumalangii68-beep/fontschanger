@@ -135,6 +135,10 @@ export default async function FontCategoryPage({ params }: { params: Promise<Par
           <Link href="/fonts" className="text-accent-strong underline underline-offset-2">
             font style category
           </Link>
+          . Curious how this works? Read{" "}
+          <Link href="/blog/how-fancy-font-generators-work" className="text-accent-strong underline underline-offset-2">
+            how fancy font generators work
+          </Link>
           .
         </p>
       </section>

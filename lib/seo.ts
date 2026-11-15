@@ -97,6 +97,34 @@ export function organizationJsonLd() {
   ];
 }
 
+/** Article markup for a blog post. */
+export function blogPostingJsonLd(post: {
+  title: string;
+  description: string;
+  path: string;
+  published: string;
+  updated?: string;
+  author: string;
+}) {
+  const url = absoluteUrl(post.path);
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    headline: post.title,
+    description: post.description,
+    url,
+    mainEntityOfPage: url,
+    datePublished: post.published,
+    dateModified: post.updated ?? post.published,
+    inLanguage: siteConfig.language,
+    image: absoluteUrl(OG_IMAGE.url),
+    author: { "@type": "Person", name: post.author, url: absoluteUrl("/about") },
+    publisher: { "@id": ORG_ID },
+    isPartOf: { "@id": SITE_ID },
+  };
+}
+
 export function faqJsonLd(faqs: { question: string; answer: string }[]) {
   return {
     "@context": "https://schema.org",

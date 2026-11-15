@@ -346,6 +346,21 @@ body {
   padding: 0.1em 0.35em;
   border-radius: 4px;
 }
+/* Code blocks in blog posts. */
+.prose-fc pre {
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  padding: 1rem 1.15rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.prose-fc pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
 
 dialog::backdrop {
   background: rgb(23 20 59 / 0.5);

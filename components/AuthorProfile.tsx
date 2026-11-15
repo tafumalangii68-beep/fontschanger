@@ -6,8 +6,9 @@ import Link from "next/link";
 import { Sparkles, X } from "lucide-react";
 import authorPhoto from "@/public/images/author.webp";
 import authorPhotoLarge from "@/public/images/author-large.webp";
+import { siteConfig } from "@/lib/site-config";
 
-export const AUTHOR_NAME = "Ali Khan";
+export const AUTHOR_NAME = siteConfig.author;
 const AUTHOR_TITLE = "Founder & Creator of Fonts Changer";
 
 /**
@@ -35,7 +36,7 @@ export default function AuthorProfile({ className = "", nameFrom = "lg" }: { cla
           className="size-10 shrink-0 rounded-full object-cover ring-2 ring-accent/60 ring-offset-2 ring-offset-paper"
         />
         <span
-          className={`whitespace-nowrap text-sm font-semibold text-ink ${nameFrom === "lg" ? "sr-only lg:not-sr-only" : ""}`}
+          className={`whitespace-nowrap text-sm font-semibold text-ink ${nameFrom === "lg" ? "sr-only xl:not-sr-only" : ""}`}
         >
           {AUTHOR_NAME}
         </span>

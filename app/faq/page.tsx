@@ -42,7 +42,11 @@ export default function FaqPage() {
             <div>
               <h2 className="text-lg font-bold text-ink">Still have a question?</h2>
               <p className="mt-1 text-muted">
-                See the <Link href="/fonts" className="font-semibold text-accent hover:underline dark:text-accent-strong">font style guides</Link> or send us a message.
+                See the <Link href="/fonts" className="font-semibold text-accent hover:underline dark:text-accent-strong">font style guides</Link>, read{" "}
+                <Link href="/blog/how-fancy-font-generators-work" className="font-semibold text-accent hover:underline dark:text-accent-strong">
+                  how fancy font generators work
+                </Link>{" "}
+                or send us a message.
               </p>
             </div>
             <Link

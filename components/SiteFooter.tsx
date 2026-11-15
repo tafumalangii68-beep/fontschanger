@@ -14,6 +14,7 @@ const tools = [
   { label: "Bio Generator", href: "/#bio-generator" },
   { label: "Symbol Text Generator", href: "/#text-generator" },
   { label: "Saved Styles", href: "/#saved" },
+  { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
 ];
 

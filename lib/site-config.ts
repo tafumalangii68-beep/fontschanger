@@ -7,6 +7,8 @@ export const siteConfig = {
   /** Canonical domain, no trailing slash. Replace if you launch on a different domain. */
   url: "https://fontschanger.app",
   primaryKeyword: "Fonts Changer",
+  /** Site author, shown in the header profile and on blog posts. */
+  author: "Ali Khan",
   tagline: "Change your text into fancy fonts you can copy and paste",
   description:
     "Fonts Changer turns plain text into 50+ fancy Unicode font styles (cursive, bold, aesthetic, small text and more) that you can copy and paste into Instagram, TikTok, WhatsApp, Discord and other apps.",
@@ -27,6 +29,7 @@ export const mainNav: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Font Styles", href: "/fonts" },
   { label: "Text Decorator", href: "/text-decorator" },
+  { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
   { label: "About", href: "/about" },
 ];

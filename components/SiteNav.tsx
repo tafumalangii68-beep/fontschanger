@@ -26,7 +26,7 @@ export default function SiteNav({ items }: { items: NavItem[] }) {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`rounded-xl px-4 py-2.5 text-[0.95rem] font-semibold transition-colors ${
+                  className={`whitespace-nowrap rounded-xl px-4 py-2.5 text-[0.95rem] font-semibold transition-colors ${
                     active ? "bg-accent text-white shadow-sm" : "text-ink hover:bg-sand"
                   }`}
                 >
