@@ -8,6 +8,8 @@ type MetaInput = {
   /** Use the title as-is instead of appending the site name. */
   absoluteTitle?: boolean;
   noIndex?: boolean;
+  /** Page-specific share image; defaults to the site image. */
+  image?: { url: string; width: number; height: number; alt: string };
 };
 
 /** Shared social image, generated once at build time by app/opengraph-image.tsx. */
@@ -18,7 +20,7 @@ export const OG_IMAGE = {
   alt: "Fonts Changer: fancy text you can copy and paste",
 } as const;
 
-export function buildMetadata({ title, description, path, absoluteTitle, noIndex }: MetaInput): Metadata {
+export function buildMetadata({ title, description, path, absoluteTitle, noIndex, image = OG_IMAGE }: MetaInput): Metadata {
   const url = absoluteUrl(path);
   const fullTitle = absoluteTitle ? title : `${title} | ${siteConfig.name}`;
   return {
@@ -34,9 +36,9 @@ export function buildMetadata({ title, description, path, absoluteTitle, noIndex
       description,
       siteName: siteConfig.name,
       locale: siteConfig.locale,
-      images: [OG_IMAGE],
+      images: [image],
     },
-    twitter: { card: "summary_large_image", title: fullTitle, description, images: [OG_IMAGE.url] },
+    twitter: { card: "summary_large_image", title: fullTitle, description, images: [image.url] },
   };
 }
 
@@ -105,6 +107,7 @@ export function blogPostingJsonLd(post: {
   published: string;
   updated?: string;
   author: string;
+  image?: string;
 }) {
   const url = absoluteUrl(post.path);
   return {
@@ -118,7 +121,7 @@ export function blogPostingJsonLd(post: {
     datePublished: post.published,
     dateModified: post.updated ?? post.published,
     inLanguage: siteConfig.language,
-    image: absoluteUrl(OG_IMAGE.url),
+    image: absoluteUrl(post.image ?? OG_IMAGE.url),
     author: { "@type": "Person", name: post.author, url: absoluteUrl("/about") },
     publisher: { "@id": ORG_ID },
     isPartOf: { "@id": SITE_ID },

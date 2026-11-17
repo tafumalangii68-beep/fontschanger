@@ -1,4 +1,7 @@
 /** Blog posts, newest first. Each post's body lives in app/blog/<slug>/page.tsx. */
+import type { StaticImageData } from "next/image";
+import fancyFontsCover from "@/public/images/blog/fancy-fonts-cover.webp";
+
 export type BlogPost = {
   slug: string;
   title: string;
@@ -9,6 +12,10 @@ export type BlogPost = {
   updated?: string;
   readingMinutes: number;
   tags: string[];
+  cover: StaticImageData;
+  coverAlt: string;
+  /** 1200x630 JPEG in /public used when the post is shared on social media. */
+  shareImage: string;
 };
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -20,6 +27,10 @@ export const BLOG_POSTS: BlogPost[] = [
     published: "2026-11-15",
     readingMinutes: 7,
     tags: ["Unicode", "How it works"],
+    cover: fancyFontsCover,
+    coverAlt:
+      "A large purple letter A on a stand, with the same letter shown in bold, cursive, Old English, double-struck and circled styles along a glowing line",
+    shareImage: "/images/blog/fancy-fonts-og.jpg",
   },
 ];
 

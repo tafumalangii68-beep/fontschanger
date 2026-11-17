@@ -1,3 +1,4 @@
+import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, CalendarDays, Clock, Lightbulb, UserRound, WandSparkles } from "lucide-react";
@@ -8,12 +9,44 @@ import { formatPostDate, getPost } from "@/data/blog";
 import { FONT_STYLES, bold, bubbles, doubleStruck, fraktur, italic, script, smallCaps, upsideDown, vaporwave } from "@/lib/fonts";
 import { blogPostingJsonLd, buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
+import beforeYouUse from "@/public/images/blog/before-you-use.webp";
+import copyPaste from "@/public/images/blog/copy-paste.webp";
+import fontsVsCharacters from "@/public/images/blog/fonts-vs-characters.webp";
+import generatorMachine from "@/public/images/blog/generator-machine.webp";
+import lookalikeAlphabets from "@/public/images/blog/lookalike-alphabets.webp";
+import missingLetters from "@/public/images/blog/missing-letters.webp";
+import tofuBoxes from "@/public/images/blog/tofu-boxes.webp";
+import unicodeLibrary from "@/public/images/blog/unicode-library.webp";
 
 const SLUG = "how-fancy-font-generators-work";
 const post = getPost(SLUG);
 const path = `/blog/${SLUG}`;
 
-export const metadata = post ? buildMetadata({ title: post.title, description: post.description, path, absoluteTitle: true }) : {};
+export const metadata = post
+  ? buildMetadata({
+      title: post.title,
+      description: post.description,
+      path,
+      absoluteTitle: true,
+      image: { url: post.shareImage, width: 1200, height: 630, alt: post.coverAlt },
+    })
+  : {};
+
+/** An illustration inside the article, full width of the text column. */
+function Figure({ src, alt, priority }: { src: StaticImageData; alt: string; priority?: boolean }) {
+  return (
+    <figure className="not-prose my-7">
+      <Image
+        src={src}
+        alt={alt}
+        placeholder="blur"
+        priority={priority}
+        sizes="(min-width: 800px) 768px, 100vw"
+        className="h-auto w-full rounded-[1.25rem] border border-line shadow-[var(--shadow-card)]"
+      />
+    </figure>
+  );
+}
 
 /** "U+1D407" style label for the first character of a string. */
 function cp(ch: string): string {
@@ -92,6 +125,7 @@ export default function FancyFontGeneratorsPost() {
           published: post.published,
           updated: post.updated,
           author: siteConfig.author,
+          image: post.shareImage,
         })}
       />
       <PageHero
@@ -121,6 +155,7 @@ export default function FancyFontGeneratorsPost() {
 
       <Container className="pt-6">
         <article className="prose-fc max-w-3xl">
+          <Figure src={post.cover} alt={post.coverAlt} priority />
           <p>
             You type <code>Hello</code>, press a button, and get <span className="glyph">{script("Hello")}</span>. You paste it
             into your Instagram bio and it still looks fancy. It feels like you changed the font, but you didn&apos;t. Apps
@@ -135,6 +170,7 @@ export default function FancyFontGeneratorsPost() {
           </Callout>
 
           <h2 id="fonts-vs-characters">Fonts and characters are not the same thing</h2>
+          <Figure src={fontsVsCharacters} alt="One plain letter H on a card, with an arrow to three paint brushes drawing the same H in bold, italic and cursive styles" />
           <p>
             A <strong>character</strong> is the idea of a letter: &ldquo;capital H&rdquo;. A <strong>font</strong> is a
             particular way of drawing it, like Arial or Times New Roman. When you send a message, you only send the
@@ -147,6 +183,7 @@ export default function FancyFontGeneratorsPost() {
           </p>
 
           <h2 id="what-is-unicode">What is Unicode?</h2>
+          <Figure src={unicodeLibrary} alt="A shelf of tiles holding letters, emoji, music notes, math symbols and Asian characters, with one A tile pulled out and tagged U+0041" />
           <p>
             Computers store text as numbers. <a href="https://home.unicode.org/">Unicode</a> is the agreement that says which
             number means which character, so that a message written on an iPhone reads the same on Android or Windows. Each
@@ -170,6 +207,7 @@ export default function FancyFontGeneratorsPost() {
           </p>
 
           <h2 id="lookalike-alphabets">The secret: look-alike alphabets</h2>
+          <Figure src={lookalikeAlphabets} alt="Five tiles each showing the letter H in a different style, with a magnifying glass over the Old English H showing it is its own character" />
           <p>
             Most fancy styles come from a block called{" "}
             <a href="https://www.unicode.org/charts/PDF/U1D400.pdf">Mathematical Alphanumeric Symbols</a>, added in 2001.
@@ -210,6 +248,7 @@ export default function FancyFontGeneratorsPost() {
           </p>
 
           <h2 id="step-by-step">How a generator converts your text, step by step</h2>
+          <Figure src={generatorMachine} alt="A small machine where plain H and i tiles drop into a funnel and come out as bold italic tiles on a conveyor belt" />
           <p>Say you type <code>Hi</code> and pick bold. The generator:</p>
           <ol>
             <li>Splits your text into single characters: H and i.</li>
@@ -252,6 +291,7 @@ export default function FancyFontGeneratorsPost() {
           </p>
 
           <h2 id="missing-letters">The missing letters</h2>
+          <Figure src={missingLetters} alt="A row of letter tiles A, B, D and E with an empty dashed slot, and a hand placing a golden C tile into the gap" />
           <p>
             There is one twist. A few styled letters existed in Unicode before the math block was created, for example ℎ
             (the Planck constant from physics) and ℝ (the symbol for real numbers). To avoid duplicates, Unicode left those
@@ -287,6 +327,7 @@ export default function FancyFontGeneratorsPost() {
           </p>
 
           <h2 id="why-copy-paste-works">Why the style survives copy and paste</h2>
+          <Figure src={copyPaste} alt="Two phones with copy and paste icons, and the word Hello in cursive travelling from one phone to the other looking exactly the same" />
           <p>
             When you copy fancy text, your phone copies the characters, not a font. When you paste, the app draws those
             characters with whatever font it has that contains them. Most modern phones and computers ship fonts with the
@@ -295,6 +336,7 @@ export default function FancyFontGeneratorsPost() {
           </p>
 
           <h2 id="boxes">Why you sometimes see boxes instead</h2>
+          <Figure src={tofuBoxes} alt="A phone showing a row of letters where two have turned into empty boxes with question marks, next to a confused cursor character" />
           <p>
             If a device has <em>no</em> font containing a character, it draws a placeholder instead, often an empty box
             (people call it &ldquo;tofu&rdquo;) or a question mark. This mostly happens on older phones and computers, or
@@ -303,6 +345,7 @@ export default function FancyFontGeneratorsPost() {
           </p>
 
           <h2 id="before-you-use-it">What to know before you use fancy text</h2>
+          <Figure src={beforeYouUse} alt="A checklist surrounded by four icons: headphones for screen readers, a magnifying glass for search, a 100 counter for character limits and a padlock for usernames" />
           <ul>
             <li>
               <strong>Screen readers.</strong> Tools that read text aloud may say &ldquo;mathematical bold capital H&rdquo;
