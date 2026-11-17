@@ -213,20 +213,6 @@ export default function DesktopNav() {
         </li>
         {item("fonts", "Fonts", <div className="w-64"><SimpleList links={liveLinks(FONT_LINKS)} onNavigate={close} /></div>, "left-0")}
         {item("tools", "Text Tools", <div className="w-72"><SimpleList links={liveLinks(TEXT_TOOL_LINKS)} onNavigate={close} /></div>, "left-0")}
-        {HEADER_LINKS.map((l) => {
-          const current = isCurrent(pathname, l.href);
-          return (
-            <li key={l.href}>
-              <Link
-                href={l.href}
-                aria-current={current ? "page" : undefined}
-                className={`${topLink} ${current ? "bg-white/15 text-white" : "text-white/85 hover:bg-white/10 hover:text-white"}`}
-              >
-                {l.label}
-              </Link>
-            </li>
-          );
-        })}
         {item(
           "explore",
           "Explore",
@@ -259,6 +245,20 @@ export default function DesktopNav() {
           "left-0 right-0",
           true,
         )}
+        {HEADER_LINKS.map((l) => {
+          const current = isCurrent(pathname, l.href);
+          return (
+            <li key={l.href}>
+              <Link
+                href={l.href}
+                aria-current={current ? "page" : undefined}
+                className={`${topLink} ${current ? "bg-white/15 text-white" : "text-white/85 hover:bg-white/10 hover:text-white"}`}
+              >
+                {l.label}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );

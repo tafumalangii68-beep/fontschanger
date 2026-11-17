@@ -174,11 +174,12 @@ export function liveGroups(groups: NavGroup[] = EXPLORE_GROUPS): NavGroup[] {
   return groups.map((g) => ({ ...g, links: liveLinks(g.links) })).filter((g) => g.links.length > 0);
 }
 
-/** Plain links in the header bar, after the dropdowns. */
+/** Plain links in the header bar, after the Explore menu. */
 export const HEADER_LINKS: NavLink[] = [
   { label: "Blog", href: "/blog" },
-  { label: "FAQ", href: "/faq" },
   { label: "About", href: "/about" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Contact", href: "/contact" },
 ];
 
 /** True when a nav link points at the current page (ignores #hash links to the homepage). */

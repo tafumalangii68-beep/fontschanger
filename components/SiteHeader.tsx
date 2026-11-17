@@ -23,13 +23,13 @@ export default function SiteHeader() {
         </Link>
         <DesktopNav />
         <div className="ml-auto flex items-center gap-1.5 xl:ml-0">
+          {/* Phones show the author in the menu instead; the header has no room there. */}
+          <AuthorProfile className="hidden sm:flex" tone="dark" />
+          <span aria-hidden="true" className="mx-1 hidden h-6 w-px bg-white/20 sm:block" />
           <div className="hidden xl:block">
             <SiteSearch items={searchItems} />
           </div>
           <HeaderActions />
-          {/* Phones show the author in the menu instead; the header has no room there. */}
-          <span aria-hidden="true" className="mx-1 hidden h-6 w-px bg-white/20 sm:block" />
-          <AuthorProfile className="hidden sm:flex" tone="dark" />
           <MobileNav search={<SiteSearch items={searchItems} variant="menu" />} />
         </div>
       </div>
