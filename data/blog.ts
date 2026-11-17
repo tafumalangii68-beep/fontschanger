@@ -26,6 +26,8 @@ export type BlogPost = {
   readingMinutes: number;
   tags: string[];
   cover?: StaticImageData;
+  /** Picture used only for the guide cards on the home page, not on the blog. */
+  homeImage?: StaticImageData;
   coverAlt?: string;
   /** 1200x630 JPEG in /public used when the post is shared on social media. */
   shareImage?: string;
@@ -42,7 +44,7 @@ export const BLOG_POSTS: BlogPost[] = [
     published: "2026-11-17",
     readingMinutes: 4,
     tags: ["Typography", "Basics"],
-    cover: fontVsTypefaceCover,
+    homeImage: fontVsTypefaceCover,
     coverAlt: "A large purple letter A behind four smaller A letters in thin, regular, bold and italic styles on a round stand",
     shareImage: "/images/blog/font-vs-typeface-og.jpg",
     body: [
@@ -66,7 +68,7 @@ export const BLOG_POSTS: BlogPost[] = [
     published: "2026-11-17",
     readingMinutes: 5,
     tags: ["Unicode", "Basics"],
-    cover: utf8Cover,
+    homeImage: utf8Cover,
     coverAlt: "An old computer showing ABC with an arrow to a purple globe surrounded by Japanese, Chinese, Greek and Hindi letters, an emoji and a heart",
     shareImage: "/images/blog/utf-8-vs-ascii-og.jpg",
     body: [
@@ -92,7 +94,7 @@ export const BLOG_POSTS: BlogPost[] = [
     published: "2026-11-17",
     readingMinutes: 5,
     tags: ["Unicode", "Characters"],
-    cover: zwspCover,
+    homeImage: zwspCover,
     coverAlt: "A magnifying glass between the letter tiles A and B revealing a hidden dashed tile that is otherwise invisible",
     shareImage: "/images/blog/zero-width-space-og.jpg",
     body: [
@@ -117,7 +119,7 @@ export const BLOG_POSTS: BlogPost[] = [
     published: "2026-11-17",
     readingMinutes: 6,
     tags: ["Unicode", "Reference"],
-    cover: unicodeCover,
+    homeImage: unicodeCover,
     coverAlt: "A purple cabinet of drawers with a heart, star, arrow, crown, music note, smiley and pi symbol popping out of open drawers",
     shareImage: "/images/blog/unicode-character-list-og.jpg",
     body: [
@@ -157,7 +159,7 @@ export const BLOG_POSTS: BlogPost[] = [
     published: "2026-11-17",
     readingMinutes: 5,
     tags: ["How to", "Characters"],
-    cover: copyCover,
+    homeImage: copyCover,
     coverAlt: "A phone, a laptop and a keyboard with heart, star, crown, arrow and copyright symbols floating from the screens and keys",
     shareImage: "/images/blog/how-to-copy-special-characters-og.jpg",
     body: [
