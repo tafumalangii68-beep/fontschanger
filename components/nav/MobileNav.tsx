@@ -6,7 +6,16 @@ import { usePathname } from "next/navigation";
 import { ChevronDown, LayoutGrid, Menu, Shuffle, X, Zap, type LucideIcon } from "lucide-react";
 import AuthorProfile from "@/components/AuthorProfile";
 import NavLinkItem from "@/components/nav/NavLinkItem";
-import { EXPLORE_GROUPS, FONT_LINKS, POPULAR_TOOLS, TEXT_TOOL_LINKS, type NavLink } from "@/lib/navigation";
+import {
+  FONT_LINKS,
+  HEADER_LINKS,
+  POPULAR_TOOLS,
+  TEXT_TOOL_LINKS,
+  isCurrent,
+  liveGroups,
+  liveLinks,
+  type NavLink,
+} from "@/lib/navigation";
 
 function Section({ icon: Icon, title, links, onNavigate }: { icon: LucideIcon; title: string; links: NavLink[]; onNavigate: () => void }) {
   return (
@@ -68,17 +77,21 @@ export default function MobileNav({ search }: { search: ReactNode }) {
               <AuthorProfile className="flex sm:hidden" nameFrom="always" />
               <div className="ml-auto">{search}</div>
             </div>
-            <Link
-              href="/"
-              onClick={close}
-              aria-current={pathname === "/" ? "page" : undefined}
-              className="block rounded-2xl border border-line bg-surface px-4 py-3.5 font-bold text-ink hover:bg-accent-soft"
-            >
-              Home
-            </Link>
-            <Section icon={LayoutGrid} title="Fonts" links={FONT_LINKS} onNavigate={close} />
-            <Section icon={Shuffle} title="Text Tools" links={TEXT_TOOL_LINKS} onNavigate={close} />
-            {EXPLORE_GROUPS.map((g) => (
+            {[{ label: "Home", href: "/" }, ...HEADER_LINKS].map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={close}
+                aria-current={isCurrent(pathname, l.href) ? "page" : undefined}
+                className="block rounded-2xl border border-line bg-surface px-4 py-3.5 font-bold text-ink hover:bg-accent-soft"
+              >
+                {l.label}
+              </Link>
+            ))}
+            <Section icon={LayoutGrid} title="Fonts" links={liveLinks(FONT_LINKS)} onNavigate={close} />
+            <Section icon={Shuffle} title="Text Tools" links={liveLinks(TEXT_TOOL_LINKS)} onNavigate={close} />
+            {/* Explore categories; only pages that exist are listed. */}
+            {liveGroups().map((g) => (
               <Section
                 key={g.id}
                 icon={g.icon}
@@ -107,20 +120,6 @@ export default function MobileNav({ search }: { search: ReactNode }) {
                 ))}
               </ul>
             </div>
-            {[
-              { label: "Blog", href: "/blog" },
-              { label: "FAQ", href: "/faq" },
-              { label: "About", href: "/about" },
-            ].map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={close}
-                className="mr-2 inline-block rounded-full px-3 py-2 text-sm font-semibold text-muted hover:bg-accent-soft hover:text-ink"
-              >
-                {l.label}
-              </Link>
-            ))}
           </div>
         </nav>
       )}

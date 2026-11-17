@@ -168,6 +168,23 @@ export const POPULAR_TOOLS: (NavLink & { icon: LucideIcon })[] = [
 /** Icons for the simple dropdowns. */
 export const MENU_ICONS = { fonts: LayoutGrid, tools: Shuffle, explore: Zap, crown: Crown } as const;
 
+/** Only links whose page exists. Unwritten pages (`soon`) are hidden from menus entirely. */
+export function liveLinks(links: NavLink[]): NavLink[] {
+  return links.filter((l) => !l.soon);
+}
+
+/** Explore groups that have at least one live page, with their unwritten pages removed. */
+export function liveGroups(groups: NavGroup[] = EXPLORE_GROUPS): NavGroup[] {
+  return groups.map((g) => ({ ...g, links: liveLinks(g.links) })).filter((g) => g.links.length > 0);
+}
+
+/** Plain links in the header bar, after the dropdowns. */
+export const HEADER_LINKS: NavLink[] = [
+  { label: "Blog", href: "/blog" },
+  { label: "FAQ", href: "/faq" },
+  { label: "About", href: "/about" },
+];
+
 /** True when a nav link points at the current page (ignores #hash links to the homepage). */
 export function isCurrent(pathname: string, href: string): boolean {
   const path = href.split("#")[0] || "/";

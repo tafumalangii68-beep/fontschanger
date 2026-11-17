@@ -6,29 +6,25 @@ import { usePathname } from "next/navigation";
 import { ArrowRight, ChevronDown, Zap } from "lucide-react";
 import NavLinkItem from "@/components/nav/NavLinkItem";
 import {
-  EXPLORE_GROUPS,
   FONT_LINKS,
-  GAMING,
+  HEADER_LINKS,
   POPULAR_TOOLS,
-  SOCIAL,
   TEXT_TOOL_LINKS,
   isCurrent,
+  liveGroups,
+  liveLinks,
   type NavGroup,
   type NavLink,
 } from "@/lib/navigation";
 
-type MenuId = "fonts" | "tools" | "gaming" | "social" | "explore";
+type MenuId = "fonts" | "tools" | "explore";
 
 const topLink =
   "inline-flex items-center gap-1 whitespace-nowrap rounded-xl px-3.5 py-2.5 text-[0.95rem] font-semibold transition-colors";
 
 function ViewAll({ group, onNavigate }: { group: NavGroup; onNavigate: () => void }) {
-  if (!group.href) return null;
-  if (group.hubSoon) {
-    return (
-      <span className="rounded-full bg-surface px-2.5 py-1 text-[0.7rem] font-bold uppercase tracking-wide text-muted">Soon</span>
-    );
-  }
+  // Groups without a hub page yet get no "View All" link.
+  if (!group.href || group.hubSoon) return null;
   return (
     <Link
       href={group.href}
@@ -168,11 +164,7 @@ export default function DesktopNav() {
     </li>
   );
 
-  const groupPanel = (group: NavGroup) => (
-    <div className="w-80">
-      <GroupCard group={group} onNavigate={close} />
-    </div>
-  );
+  const groups = liveGroups();
 
   return (
     <nav aria-label="Main" ref={rootRef} className="hidden xl:block">
@@ -186,16 +178,29 @@ export default function DesktopNav() {
             Home
           </Link>
         </li>
-        {item("fonts", "Fonts", <div className="w-64"><SimpleList links={FONT_LINKS} onNavigate={close} /></div>, "left-0")}
-        {item("tools", "Text Tools", <div className="w-72"><SimpleList links={TEXT_TOOL_LINKS} onNavigate={close} /></div>, "left-0")}
-        {item("gaming", GAMING.label, groupPanel(GAMING), "left-0")}
-        {item("social", SOCIAL.label, groupPanel(SOCIAL), "left-0")}
+        {item("fonts", "Fonts", <div className="w-64"><SimpleList links={liveLinks(FONT_LINKS)} onNavigate={close} /></div>, "left-0")}
+        {item("tools", "Text Tools", <div className="w-72"><SimpleList links={liveLinks(TEXT_TOOL_LINKS)} onNavigate={close} /></div>, "left-0")}
+        {HEADER_LINKS.map((l) => {
+          const current = isCurrent(pathname, l.href);
+          return (
+            <li key={l.href}>
+              <Link
+                href={l.href}
+                aria-current={current ? "page" : undefined}
+                className={`${topLink} ${current ? "bg-white/15 text-white" : "text-white/85 hover:bg-white/10 hover:text-white"}`}
+              >
+                {l.label}
+              </Link>
+            </li>
+          );
+        })}
         {item(
           "explore",
           "Explore",
           <div>
-            <div className="grid grid-cols-3 gap-3">
-              {EXPLORE_GROUPS.map((g) => (
+            {/* Only categories with written pages appear; new pages show up here automatically. */}
+            <div className={`grid gap-3 ${groups.length >= 3 ? "grid-cols-3" : "grid-cols-2"}`}>
+              {groups.map((g) => (
                 <GroupCard key={g.id} group={g} onNavigate={close} />
               ))}
             </div>
