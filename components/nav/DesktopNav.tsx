@@ -39,6 +39,12 @@ const CARD_ART: Record<string, StaticImageData> = {
 const topLink =
   "inline-flex items-center gap-1 whitespace-nowrap rounded-xl px-3.5 py-2.5 text-[0.95rem] font-semibold transition-colors";
 
+/** Purple pill: the current page and open menus always, every other item on hover. */
+const pillOn =
+  "bg-gradient-to-r from-[#7c3aed] to-[#a855f7] text-white shadow-[0_8px_20px_-8px_rgb(168_85_247/0.9)]";
+const pillOff =
+  "text-white/85 hover:bg-gradient-to-r hover:from-[#6d28d9] hover:to-[#9333ea] hover:text-white hover:shadow-[0_8px_20px_-10px_rgb(168_85_247/0.9)]";
+
 function ViewAll({ group, onNavigate }: { group: NavGroup; onNavigate: () => void }) {
   // Groups without a hub page yet get no "View All" link.
   if (!group.href || group.hubSoon) return null;
@@ -153,7 +159,7 @@ export default function DesktopNav() {
     hoverTimer.current = setTimeout(() => setOpen(null), 220);
   };
 
-  const trigger = (id: MenuId, label: string, highlight = false) => {
+  const trigger = (id: MenuId, label: string) => {
     const isOpen = open === id;
     return (
       <button
@@ -162,15 +168,7 @@ export default function DesktopNav() {
         aria-expanded={isOpen}
         aria-controls={`${baseId}-${id}`}
         onClick={() => setOpen(isOpen ? null : id)}
-        className={`${topLink} ${
-          highlight
-            ? isOpen
-              ? "bg-gradient-to-r from-[#7c3aed] to-[#a855f7] text-white shadow-[0_8px_20px_-8px_rgb(168_85_247/0.9)] ring-1 ring-white/30"
-              : "bg-gradient-to-r from-[#6d28d9] to-[#9333ea] text-white shadow-[0_8px_20px_-10px_rgb(168_85_247/0.9)] hover:from-[#7c3aed] hover:to-[#a855f7]"
-            : isOpen
-              ? "bg-white/15 text-white"
-              : "text-white/85 hover:bg-white/10 hover:text-white"
-        }`}
+        className={`${topLink} ${isOpen ? pillOn : pillOff}`}
       >
         {label}
         <ChevronDown className={`size-4 transition-transform ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
@@ -190,9 +188,9 @@ export default function DesktopNav() {
       </div>
     ) : null;
 
-  const item = (id: MenuId, label: string, content: ReactNode, panelClass: string, highlight = false) => (
+  const item = (id: MenuId, label: string, content: ReactNode, panelClass: string) => (
     <li className={id === "explore" ? "" : "relative"} onMouseEnter={() => hoverOpen(id)} onMouseLeave={hoverClose}>
-      {trigger(id, label, highlight)}
+      {trigger(id, label)}
       {panel(id, content, panelClass)}
     </li>
   );
@@ -206,7 +204,7 @@ export default function DesktopNav() {
           <Link
             href="/"
             aria-current={pathname === "/" ? "page" : undefined}
-            className={`${topLink} ${pathname === "/" ? "bg-white/15 text-white" : "text-white/85 hover:bg-white/10 hover:text-white"}`}
+            className={`${topLink} ${pathname === "/" ? pillOn : pillOff}`}
           >
             Home
           </Link>
@@ -243,7 +241,6 @@ export default function DesktopNav() {
             </div>
           </div>,
           "left-0 right-0",
-          true,
         )}
         {HEADER_LINKS.map((l) => {
           const current = isCurrent(pathname, l.href);
@@ -252,7 +249,7 @@ export default function DesktopNav() {
               <Link
                 href={l.href}
                 aria-current={current ? "page" : undefined}
-                className={`${topLink} ${current ? "bg-white/15 text-white" : "text-white/85 hover:bg-white/10 hover:text-white"}`}
+                className={`${topLink} ${current ? pillOn : pillOff}`}
               >
                 {l.label}
               </Link>
