@@ -25,7 +25,6 @@ import RecentCopies from "@/components/RecentCopies";
 import SymbolGenerator from "@/components/SymbolGenerator";
 import TypographyBackground from "@/components/TypographyBackground";
 import JsonLd from "@/components/JsonLd";
-import { BLOG_POSTS } from "@/data/blog";
 import { homeFaqs } from "@/data/faqs";
 import { ART, STEP_ART } from "@/lib/art";
 import { FONT_STYLES } from "@/lib/fonts";
@@ -427,50 +426,6 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
-
-      {/* Guides */}
-      <Container className="pt-20">
-        <section aria-labelledby="guides-heading">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading
-              id="guides-heading"
-              eyebrow="Learn"
-              title="Guides to Fancy Text and Unicode"
-              intro="Short, simple reads on how styled letters work, why some show as boxes and how to type any symbol."
-            />
-            <Link href="/blog" className="inline-flex items-center gap-1.5 font-bold text-accent hover:underline dark:text-accent-strong">
-              All guides
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-          </div>
-          <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {BLOG_POSTS.filter((p) => p.homeImage ?? p.cover).map((post) => {
-              const pic = (post.homeImage ?? post.cover)!;
-              return (
-                <li key={post.slug}>
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface shadow-sm transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-[var(--shadow-card)]"
-                  >
-                    {/* The card title says what the guide is about, so the picture is decorative. */}
-                    <Image src={pic} alt="" placeholder="blur" sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" className="aspect-[16/9] h-auto w-full object-cover" />
-                    <span className="flex flex-1 flex-col p-5">
-                      <span className="text-lg font-extrabold leading-snug tracking-tight text-ink group-hover:text-accent dark:group-hover:text-accent-strong">
-                        {post.title}
-                      </span>
-                      <span className="mt-2 line-clamp-2 text-[0.95rem] leading-relaxed text-muted">{post.description}</span>
-                      <span className="mt-auto inline-flex pt-4 items-center gap-1.5 text-sm font-bold text-accent dark:text-accent-strong">
-                        Read guide
-                        <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-                      </span>
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      </Container>
 
       {/* Why choose */}
       <Container className="pt-20">

@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
         statusCode: 301 as const,
       })),
       { source: "/font-styles", destination: "/fonts", permanent: true },
+      // Removed blog posts.
+      ...["font-vs-typeface","utf-8-vs-ascii","zero-width-space","unicode-character-list","how-to-copy-special-characters"].map((slug) => ({ source: `/blog/${slug}`, destination: "/blog", permanent: true })),
       { source: "/terms", destination: "/terms-and-conditions", permanent: true },
     ];
   },

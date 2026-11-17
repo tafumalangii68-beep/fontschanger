@@ -142,12 +142,12 @@ export const EXPLORE_GROUPS: NavGroup[] = [
     href: "/blog",
     description: "How fancy text and Unicode work",
     links: [
-      { label: "Font vs Typeface", href: "/blog/font-vs-typeface" },
-      { label: "UTF-8 vs ASCII", href: "/blog/utf-8-vs-ascii" },
-      { label: "Zero Width Space", href: "/blog/zero-width-space" },
+      { label: "How Fancy Font Generators Work", href: "/blog/how-fancy-font-generators-work" },
+      { label: "What Is Unicode?", href: "/blog/how-fancy-font-generators-work#what-is-unicode" },
+      { label: "Look-alike Alphabets", href: "/blog/how-fancy-font-generators-work#lookalike-alphabets" },
       { label: "Why Fancy Text Shows Boxes", href: "/blog/how-fancy-font-generators-work#boxes" },
-      { label: "Unicode Character List", href: "/blog/unicode-character-list" },
-      { label: "How to Copy Special Characters", href: "/blog/how-to-copy-special-characters" },
+      { label: "Why Copy and Paste Works", href: "/blog/how-fancy-font-generators-work#why-copy-paste-works" },
+      { label: "Before You Use Fancy Text", href: "/blog/how-fancy-font-generators-work#before-you-use-it" },
     ],
   },
 ];

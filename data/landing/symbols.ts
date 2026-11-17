@@ -177,7 +177,7 @@ export const SYMBOLS_SECTION: LandingSection = {
         { question: "Can I send an empty WhatsApp message?", answer: "Some people paste a braille blank (U+2800) to do this. Whether it sends depends on the app version." },
       ],
       related: ["kaomoji", "hearts", "stars-arrows"],
-      seeAlso: [{ label: "Zero width space explained", href: "/blog/zero-width-space" }],
+      seeAlso: [{ label: "How fancy text works", href: "/blog/how-fancy-font-generators-work" }],
     },
   ],
 };
