@@ -6,7 +6,7 @@ import CategoryFilters, { type Filter } from "@/components/CategoryFilters";
 import FontCard from "@/components/FontCard";
 import LivePreview from "@/components/LivePreview";
 import SearchInput from "@/components/SearchInput";
-import { COLLECTIONS, getCollection } from "@/lib/collections";
+import { COLLECTIONS, getCollection, type CollectionId } from "@/lib/collections";
 import { CATEGORY_LABELS, FONT_STYLES, MAX_INPUT_LENGTH } from "@/lib/fonts";
 import { SHOW_SAVED_EVENT, getSavedServerSnapshot, getSavedSnapshot, subscribeSaved } from "@/lib/browser-store";
 import { recordRecent, studio, useStore, view as viewStore } from "@/lib/stores";
@@ -24,6 +24,8 @@ const SORTS: { id: Sort; label: string }[] = [
 
 type Props = {
   initialFilter?: Filter;
+  /** Starts the results filtered to a curated collection (cleared when the page unmounts). */
+  initialCollection?: CollectionId;
   sample?: string;
   inputLabel?: string;
   resultsHeading?: string;
@@ -31,6 +33,7 @@ type Props = {
 
 export default function FontGenerator({
   initialFilter = "all",
+  initialCollection,
   sample = "Fonts Changer",
   inputLabel = "Type the text you want to change",
   resultsHeading = "Your Text in Different Fonts",
@@ -52,6 +55,12 @@ export default function FontGenerator({
   const setText = (value: string) => studio.set((s) => ({ ...s, text: value }));
   const setCollection = (value: string) =>
     studio.set((s) => ({ ...s, collection: getCollection(value)?.id ?? "all" }));
+
+  useEffect(() => {
+    if (!initialCollection) return;
+    studio.set((s) => ({ ...s, collection: initialCollection }));
+    return () => studio.set((s) => ({ ...s, collection: "all" }));
+  }, [initialCollection]);
 
   // Header heart button and "/#saved" links open the Saved filter.
   useEffect(() => {

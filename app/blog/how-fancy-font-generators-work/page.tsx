@@ -28,7 +28,7 @@ export const metadata = post
       description: post.description,
       path,
       absoluteTitle: true,
-      image: { url: post.shareImage, width: 1200, height: 630, alt: post.coverAlt },
+      image: post.shareImage ? { url: post.shareImage, width: 1200, height: 630, alt: post.coverAlt ?? post.title } : undefined,
     })
   : {};
 
@@ -155,7 +155,7 @@ export default function FancyFontGeneratorsPost() {
 
       <Container className="pt-6">
         <article className="prose-fc max-w-3xl">
-          <Figure src={post.cover} alt={post.coverAlt} priority />
+          {post.cover && <Figure src={post.cover} alt={post.coverAlt ?? ""} priority />}
           <p>
             You type <code>Hello</code>, press a button, and get <span className="glyph">{script("Hello")}</span>. You paste it
             into your Instagram bio and it still looks fancy. It feels like you changed the font, but you didn&apos;t. Apps

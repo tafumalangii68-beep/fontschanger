@@ -1,10 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
+import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, ChevronDown, Zap } from "lucide-react";
 import NavLinkItem from "@/components/nav/NavLinkItem";
+import stylesArt from "@/public/images/font-styles.webp";
+import socialArt from "@/public/images/instagram-fonts.webp";
+import heartArt from "@/public/images/menu-heart.webp";
+import guidesArt from "@/public/images/terms.webp";
 import {
   FONT_LINKS,
   HEADER_LINKS,
@@ -18,6 +23,14 @@ import {
 } from "@/lib/navigation";
 
 type MenuId = "fonts" | "tools" | "explore";
+
+/** 3D artwork per Explore card; cards without one show a glossy icon tile. */
+const CARD_ART: Record<string, StaticImageData> = {
+  social: socialArt,
+  styles: stylesArt,
+  symbols: heartArt,
+  guides: guidesArt,
+};
 
 const topLink =
   "inline-flex items-center gap-1 whitespace-nowrap rounded-xl px-3.5 py-2.5 text-[0.95rem] font-semibold transition-colors";
@@ -50,12 +63,28 @@ function GroupCard({ group, onNavigate }: { group: NavGroup; onNavigate: () => v
         </h3>
         <ViewAll group={group} onNavigate={onNavigate} />
       </div>
-      {/* Large faded icon as quiet decoration, like the reference design. */}
-      <Icon aria-hidden="true" className="pointer-events-none absolute -bottom-3 right-2 size-24 text-accent/10 dark:text-accent-strong/10" />
+      {/* Decorative 3D artwork on the right side of the card, like the reference design. */}
+      {CARD_ART[group.id] ? (
+        <Image
+          src={CARD_ART[group.id]}
+          alt=""
+          aria-hidden="true"
+          sizes="112px"
+          loading="eager"
+          className="pointer-events-none absolute bottom-5 right-9 h-auto w-24 opacity-95 drop-shadow-[0_10px_18px_rgb(100_37_232/0.25)]"
+        />
+      ) : (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-6 right-10 grid size-20 place-items-center rounded-[1.5rem] bg-gradient-to-br from-[#c4b5fd] via-[#a78bfa] to-[#7c3aed] text-white opacity-60 shadow-[0_14px_28px_-12px_rgb(100_37_232/0.7)] ring-4 ring-white/50"
+        >
+          <Icon className="size-10" strokeWidth={1.6} />
+        </span>
+      )}
       <ul className="relative space-y-0.5 p-2">
         {group.links.map((l) => (
           <li key={l.href}>
-            <NavLinkItem link={l} onNavigate={onNavigate} compact />
+            <NavLinkItem link={l} onNavigate={onNavigate} compact trailing />
           </li>
         ))}
       </ul>

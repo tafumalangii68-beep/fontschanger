@@ -475,6 +475,192 @@ export const fontPages: FontPage[] = [
     ],
     related: ["glitch-text", "small-text", "bold-text"],
   },
+  {
+    slug: "strikethrough-text",
+    name: "Strikethrough Text",
+    metaTitle: "Strikethrough Text Generator: Cross Out Text to Copy",
+    metaDescription:
+      "Make strikethrough, underline and crossed-out text you can copy and paste anywhere. See how combining marks draw the line through your letters.",
+    h1: "Strikethrough Text Generator",
+    intro:
+      "Draw a line through your text, underline it or cross it out, then copy and paste it into posts, bios and chats that have no formatting buttons.",
+    category: "lines",
+    sample: "old price",
+    examples: [
+      { label: "Strikethrough", plain: "old price", styleId: "strikethrough" },
+      { label: "Underline", plain: "important", styleId: "underline" },
+      { label: "Crossed out", plain: "mistake", styleId: "crossed-out" },
+    ],
+    sections: [
+      {
+        heading: "How strikethrough text works",
+        paragraphs: [
+          "Unicode has combining marks that draw on top of the character before them. The generator adds a long stroke (U+0336) after every letter, so the line runs through the whole word. Underline and overline styles use other combining marks in the same way.",
+          "Because the line is part of the text, it stays when you copy and paste, even in apps that have no strikethrough option.",
+        ],
+      },
+      {
+        heading: "Where to use it",
+        paragraphs: [],
+        list: [
+          "Show a price change: s̶a̶l̶e̶ ̶p̶r̶i̶c̶e̶ next to the new one.",
+          "Make a joke by crossing out what you “almost” said.",
+          "Mark a task as done in a plain-text list.",
+        ],
+      },
+      {
+        heading: "Apps with their own strikethrough",
+        paragraphs: [
+          "WhatsApp chats use ~text~ and YouTube comments use -text- for strikethrough. Use those in chats, and this generator everywhere else.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Why is the line broken between letters on my phone?",
+        answer:
+          "Each letter gets its own line segment. Some fonts leave tiny gaps between them. The look varies by device and app.",
+      },
+      {
+        question: "Do spaces get a line too?",
+        answer: "No. The generator skips spaces, so words stay separated and easy to read.",
+      },
+    ],
+    related: ["glitch-text", "small-text", "bold-text"],
+  },
+  {
+    slug: "old-english-font",
+    name: "Old English Font",
+    metaTitle: "Old English Font Generator: Gothic Text to Copy and Paste",
+    metaDescription:
+      "Turn text into Old English (gothic, blackletter) letters you can copy and paste. Regular and bold Fraktur styles for names, captions and titles.",
+    h1: "Old English (Gothic) Font Generator",
+    intro:
+      "Write in Old English, also called gothic or blackletter, and copy it for names, captions and titles. Choose regular or bold.",
+    category: "fancy",
+    sample: "Old English",
+    examples: [
+      { label: "Old English", plain: "Gothic", styleId: "old-english" },
+      { label: "Old English bold", plain: "Gothic", styleId: "old-english-bold" },
+      { label: "With stars", plain: "Gothic", styleId: "stars" },
+    ],
+    sections: [
+      {
+        heading: "Where gothic letters come from",
+        paragraphs: [
+          "Blackletter, or Fraktur, was the main European writing style for centuries. Unicode includes complete Fraktur alphabets in its Mathematical Alphanumeric Symbols block, because mathematicians use them as variable names. The generator swaps your letters for those characters.",
+          "A few capitals, such as ℭ and ℌ, come from an older Unicode block, so they can look slightly different from the rest of the word on some devices.",
+        ],
+      },
+      {
+        heading: "Ideas",
+        paragraphs: [],
+        list: [
+          "Gaming names with a dark or medieval feel.",
+          "Headings for music, metal or streetwear captions.",
+          "Previewing lettering ideas before a design or tattoo artist creates the final version.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Is this a real Old English font?",
+        answer:
+          "No. These are Unicode characters that look like blackletter. For print or tattoos, ask a designer to use a real blackletter font.",
+      },
+      {
+        question: "Can I read Old English text easily?",
+        answer: "Blackletter is harder to read, especially bold. Keep it to a word or two.",
+      },
+    ],
+    related: ["bold-text", "cursive-fonts", "glitch-text"],
+  },
+  {
+    slug: "bubble-letters",
+    name: "Bubble Letters",
+    metaTitle: "Bubble Letters Generator: Circle Text to Copy and Paste",
+    metaDescription:
+      "Make bubble letters and circled text like Ⓑⓤⓑⓑⓛⓔ you can copy and paste. Also try black bubbles, squares and parentheses styles.",
+    h1: "Bubble Letters Generator",
+    intro: "Put every letter in a bubble, a filled circle or a square, then copy it for names, bios and fun messages.",
+    category: "enclosed",
+    sample: "Bubble",
+    examples: [
+      { label: "Bubbles", plain: "Bubble", styleId: "bubbles" },
+      { label: "Black bubbles", plain: "Bubble", styleId: "black-bubbles" },
+      { label: "Squares", plain: "Bubble", styleId: "squares" },
+    ],
+    sections: [
+      {
+        heading: "Where circled letters come from",
+        paragraphs: [
+          "Unicode's Enclosed Alphanumerics blocks contain letters and numbers inside circles, squares and parentheses. They were made for lists and labels, and they work well as playful text.",
+          "Black bubble and square letters only exist as capitals, so the generator turns small letters into capitals for those styles.",
+        ],
+      },
+      {
+        heading: "Tips",
+        paragraphs: [],
+        list: [
+          "Bubbles are easy to read for short words, like a name.",
+          "Some systems show certain enclosed letters as colourful emoji, especially squared ones.",
+          "Numbers have bubble versions too, for example ①②③.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Why do some bubble letters look like emoji?",
+        answer: "A few enclosed letters double as emoji on some systems, so they appear coloured. That depends on your device.",
+      },
+      {
+        question: "Can I make bubble numbers?",
+        answer: "Yes. Type numbers and the Bubbles style converts digits as well.",
+      },
+    ],
+    related: ["aesthetic-fonts", "small-text", "upside-down-text"],
+  },
+  {
+    slug: "double-struck",
+    name: "Double Struck Letters",
+    metaTitle: "Double Struck Text Generator: 𝔻𝕠𝕦𝕓𝕝𝕖 𝕊𝕥𝕣𝕦𝕔𝕜 Letters",
+    metaDescription:
+      "Make double struck (blackboard bold) letters like 𝔻𝕠𝕦𝕓𝕝𝕖 you can copy and paste. Learn where the style comes from and where it works best.",
+    h1: "Double Struck Letters Generator",
+    intro: "Turn your text into double struck letters, also called blackboard bold, and copy them for names, titles and bios.",
+    category: "fancy",
+    sample: "Double Struck",
+    examples: [
+      { label: "Name", plain: "Nova", styleId: "double-struck" },
+      { label: "Numbers", plain: "2026", styleId: "double-struck" },
+      { label: "Title", plain: "Gaming", styleId: "double-struck" },
+    ],
+    sections: [
+      {
+        heading: "What double struck letters are",
+        paragraphs: [
+          "Double struck letters have an extra line inside their thick strokes. Mathematicians use them for number sets, such as ℝ for real numbers and ℕ for natural numbers, which is why Unicode includes a full alphabet of them.",
+          "Seven capitals (ℂ ℍ ℕ ℙ ℚ ℝ ℤ) existed in Unicode earlier, so they come from a different block and may look a little different from the rest of a word.",
+        ],
+      },
+      {
+        heading: "Where it looks good",
+        paragraphs: [],
+        list: ["Gaming names and clan tags.", "Short titles in a bio or caption.", "Numbers, such as a year or jersey number."],
+      },
+    ],
+    faqs: [
+      {
+        question: "What is blackboard bold?",
+        answer: "Another name for double struck letters. It comes from how teachers drew bold letters on a blackboard by doubling a line.",
+      },
+      {
+        question: "Do numbers work?",
+        answer: "Yes. Digits 0 to 9 have double struck versions too.",
+      },
+    ],
+    related: ["bold-text", "old-english-font", "bubble-letters"],
+  },
 ];
 
 export function getFontPage(slug: string): FontPage | undefined {

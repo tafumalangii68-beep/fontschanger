@@ -7,10 +7,13 @@ export default function NavLinkItem({
   link,
   onNavigate,
   compact = false,
+  trailing = false,
 }: {
   link: NavLink;
   onNavigate?: () => void;
   compact?: boolean;
+  /** Adds a second chevron on the right, as in the mega menu cards. */
+  trailing?: boolean;
 }) {
   const base = `group flex items-center gap-2 rounded-lg ${compact ? "px-2 py-1.5" : "px-2.5 py-2"} text-[0.92rem]`;
   if (link.soon) {
@@ -33,6 +36,7 @@ export default function NavLinkItem({
       <ChevronRight className="size-3.5 shrink-0 text-accent transition-transform group-hover:translate-x-0.5 dark:text-accent-strong" aria-hidden="true" />
       <span className="flex-1">{link.label}</span>
       {link.description && <span className="hidden text-xs text-muted 2xl:inline">{link.description}</span>}
+      {trailing && <ChevronRight className="size-4 shrink-0 text-muted transition-colors group-hover:text-accent" aria-hidden="true" />}
     </Link>
   );
 }

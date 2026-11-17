@@ -54,13 +54,15 @@ export default function BlogIndexPage() {
                 className="group flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-[var(--shadow-card)]"
               >
                 {/* The card title describes the post, so the cover is decorative here. */}
-                <Image
-                  src={post.cover}
-                  alt=""
-                  placeholder="blur"
-                  sizes="(min-width: 768px) 540px, 100vw"
-                  className="mb-5 h-auto w-full rounded-xl"
-                />
+                {post.cover && (
+                  <Image
+                    src={post.cover}
+                    alt=""
+                    placeholder="blur"
+                    sizes="(min-width: 768px) 540px, 100vw"
+                    className="mb-5 h-auto w-full rounded-xl"
+                  />
+                )}
                 <span className="flex flex-wrap gap-2">
                   {post.tags.map((tag) => (
                     <span key={tag} className="rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold text-accent dark:text-accent-strong">
