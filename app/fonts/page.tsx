@@ -45,6 +45,11 @@ export default function FontsIndexPage() {
           <p className="mt-2 max-w-2xl text-muted">
             Each guide opens a generator set to that style, with tips on where it works best. To type your own text in
             every style at once, use the <Link href="/" className="font-semibold text-accent underline-offset-2 hover:underline dark:text-accent-strong">Fonts Changer generator</Link>.
+            Wondering where these styles come from? Read{" "}
+            <Link href="/blog/how-fancy-font-generators-work" className="font-semibold text-accent underline-offset-2 hover:underline dark:text-accent-strong">
+              how fancy font generators work
+            </Link>
+            .
           </p>
           <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {fontPages.map((p) => (

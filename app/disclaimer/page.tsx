@@ -17,7 +17,8 @@ export default function DisclaimerPage() {
       <p>
         The generator does not change or install fonts. It replaces letters with other Unicode characters that look
         styled. These characters have their own meanings in the Unicode Standard, for example as mathematical symbols or
-        letters of other writing systems.
+        letters of other writing systems. For a simple explanation, see{" "}
+        <Link href="/blog/how-fancy-font-generators-work">how fancy font generators work</Link>.
       </p>
 
       <h2>No guarantee of display or acceptance</h2>

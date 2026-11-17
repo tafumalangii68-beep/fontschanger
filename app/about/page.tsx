@@ -118,6 +118,13 @@ export default function AboutPage() {
             <Link href="/fonts" className="font-semibold text-accent underline underline-offset-2 dark:text-accent-strong">
               font style page
             </Link>
+            , and in plain words in our guide to{" "}
+            <Link
+              href="/blog/how-fancy-font-generators-work"
+              className="font-semibold text-accent underline underline-offset-2 dark:text-accent-strong"
+            >
+              how fancy font generators work
+            </Link>
             .
           </p>
           <p className="text-sm text-muted">

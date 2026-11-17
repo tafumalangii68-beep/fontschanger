@@ -71,6 +71,8 @@ export default function TextDecoratorPage() {
             <p>
               Want more letter styles? Open the <Link href="/">Fonts Changer generator</Link> or browse all{" "}
               <Link href="/fonts">font styles</Link>. Need a full profile line? The <Link href="/#bio-generator">bio generator</Link> combines styles and symbols for you.
+              To learn why these symbols and letter styles work in almost any app, read{" "}
+              <Link href="/blog/how-fancy-font-generators-work">how fancy font generators work</Link>.
             </p>
           </div>
           <section aria-labelledby="decorator-faq">
