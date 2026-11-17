@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, CalendarDays, Clock, UserRound, WandSparkles } from "lucide-react";
@@ -21,7 +22,13 @@ export function generateStaticParams(): Params[] {
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const post = getPost((await params).slug);
   if (!post?.body) return {};
-  return buildMetadata({ title: post.title, description: post.description, path: `/blog/${post.slug}`, absoluteTitle: true });
+  return buildMetadata({
+    title: post.title,
+    description: post.description,
+    path: `/blog/${post.slug}`,
+    absoluteTitle: true,
+    image: post.shareImage ? { url: post.shareImage, width: 1200, height: 630, alt: post.coverAlt ?? post.title } : undefined,
+  });
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<Params> }) {
@@ -40,6 +47,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
           published: post.published,
           updated: post.updated,
           author: siteConfig.author,
+          image: post.shareImage,
         })}
       />
       <PageHero
@@ -69,6 +77,18 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
 
       <Container className="pt-6">
         <article className="prose-fc max-w-3xl">
+          {post.cover && (
+            <figure className="not-prose my-7">
+              <Image
+                src={post.cover}
+                alt={post.coverAlt ?? ""}
+                placeholder="blur"
+                priority
+                sizes="(min-width: 800px) 768px, 100vw"
+                className="h-auto w-full rounded-[1.25rem] border border-line shadow-[var(--shadow-card)]"
+              />
+            </figure>
+          )}
           <ArticleBody blocks={post.body} />
         </article>
 

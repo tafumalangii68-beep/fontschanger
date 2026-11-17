@@ -5,6 +5,15 @@
 import type { StaticImageData } from "next/image";
 import type { ArticleBlock } from "@/components/blog/ArticleBody";
 import fancyFontsCover from "@/public/images/blog/fancy-fonts-cover.webp";
+import fontVsTypefaceCover from "@/public/images/blog/font-vs-typeface-cover.webp";
+import utf8Cover from "@/public/images/blog/utf-8-vs-ascii-cover.webp";
+import utf8Inside from "@/public/images/blog/utf-8-vs-ascii-1.webp";
+import zwspCover from "@/public/images/blog/zero-width-space-cover.webp";
+import zwspInside from "@/public/images/blog/zero-width-space-1.webp";
+import unicodeCover from "@/public/images/blog/unicode-character-list-cover.webp";
+import unicodeInside from "@/public/images/blog/unicode-character-list-1.webp";
+import copyCover from "@/public/images/blog/how-to-copy-special-characters-cover.webp";
+import copyInside from "@/public/images/blog/how-to-copy-special-characters-1.webp";
 
 export type BlogPost = {
   slug: string;
@@ -33,6 +42,9 @@ export const BLOG_POSTS: BlogPost[] = [
     published: "2026-11-17",
     readingMinutes: 4,
     tags: ["Typography", "Basics"],
+    cover: fontVsTypefaceCover,
+    coverAlt: "A large purple letter A behind four smaller A letters in thin, regular, bold and italic styles on a round stand",
+    shareImage: "/images/blog/font-vs-typeface-og.jpg",
     body: [
       { type: "callout", title: "The short answer", text: "A **typeface** is the design, like Helvetica. A **font** is one specific version of that design, like Helvetica Bold. One typeface usually comes in several fonts." },
       { type: "h2", text: "Typeface: the design" },
@@ -54,6 +66,9 @@ export const BLOG_POSTS: BlogPost[] = [
     published: "2026-11-17",
     readingMinutes: 5,
     tags: ["Unicode", "Basics"],
+    cover: utf8Cover,
+    coverAlt: "An old computer showing ABC with an arrow to a purple globe surrounded by Japanese, Chinese, Greek and Hindi letters, an emoji and a heart",
+    shareImage: "/images/blog/utf-8-vs-ascii-og.jpg",
     body: [
       { type: "callout", title: "The short answer", text: "**ASCII** is an old code with 128 characters, mostly English letters, digits and punctuation. **UTF-8** is a way to store all of Unicode, about 160,000 characters, and it is fully compatible with ASCII." },
       { type: "h2", text: "ASCII: 128 characters" },
@@ -61,6 +76,7 @@ export const BLOG_POSTS: BlogPost[] = [
       { type: "h2", text: "Unicode and UTF-8" },
       { type: "p", text: "Unicode gives a number (a code point) to characters from almost every writing system, plus symbols and emoji. UTF-8 is the most common way to turn those numbers into bytes. It uses 1 to 4 bytes per character: simple English letters take 1 byte, and the first 128 code points are exactly the same as ASCII." },
       { type: "table", head: ["Character", "Code point", "UTF-8 bytes", "Size"], glyph: [0], rows: [["A", "U+0041", "41", "1 byte"], ["é", "U+00E9", "C3 A9", "2 bytes"], ["€", "U+20AC", "E2 82 AC", "3 bytes"], ["😀", "U+1F600", "F0 9F 98 80", "4 bytes"], ["𝐀", "U+1D400", "F0 9D 90 80", "4 bytes"]] },
+      { type: "img", src: utf8Inside, alt: "Purple blocks stacked in rows of one, two, three and four, with a smiling emoji on top, like characters that take one to four bytes" },
       { type: "h2", text: "Why UTF-8 won" },
       { type: "ul", items: ["Old ASCII text is already valid UTF-8, so nothing breaks.", "One encoding covers every language, so a single page can mix English, Urdu and emoji.", "It is compact for English and many programming languages."] },
       { type: "p", text: "Today the vast majority of web pages are served as UTF-8." },
@@ -76,12 +92,16 @@ export const BLOG_POSTS: BlogPost[] = [
     published: "2026-11-17",
     readingMinutes: 5,
     tags: ["Unicode", "Characters"],
+    cover: zwspCover,
+    coverAlt: "A magnifying glass between the letter tiles A and B revealing a hidden dashed tile that is otherwise invisible",
+    shareImage: "/images/blog/zero-width-space-og.jpg",
     body: [
       { type: "callout", title: "The short answer", text: "A **zero width space** (U+200B) is an invisible character that takes up no space. It marks a place where a line may break. It is useful in some languages and long words, but it can hide inside copied text and break passwords, searches and code." },
       { type: "h2", text: "The invisible characters you meet most" },
       { type: "table", head: ["Name", "Code point", "What it does"], rows: [["Zero width space", "U+200B", "Allows a line break with no visible space"], ["Zero width non-joiner", "U+200C", "Stops letters from joining, used in Persian and Indian scripts"], ["Zero width joiner", "U+200D", "Joins characters, for example emoji like 👨‍👩‍👧"], ["Word joiner", "U+2060", "Prevents a line break"], ["Byte order mark", "U+FEFF", "Sometimes appears at the start of a file"]] },
       { type: "h2", text: "Where they are useful" },
       { type: "ul", items: ["Languages such as Thai do not use spaces between words; a zero width space shows where a line can break.", "Family and profession emoji are several emoji glued together with zero width joiners.", "Long web addresses can be given break points so they wrap neatly."] },
+      { type: "img", src: zwspInside, alt: "A phone showing a chat profile with an empty name field, next to a clear glass cube and a mouse pointer" },
       { type: "h2", text: "Where they cause trouble" },
       { type: "ul", items: ["A password or code copied from a website stops working because a hidden character came along.", "Two words that look identical are treated as different by search.", "Code fails to run with a confusing error."] },
       { type: "h2", text: "How to find and remove them" },
@@ -97,6 +117,9 @@ export const BLOG_POSTS: BlogPost[] = [
     published: "2026-11-17",
     readingMinutes: 6,
     tags: ["Unicode", "Reference"],
+    cover: unicodeCover,
+    coverAlt: "A purple cabinet of drawers with a heart, star, arrow, crown, music note, smiley and pi symbol popping out of open drawers",
+    shareImage: "/images/blog/unicode-character-list-og.jpg",
     body: [
       { type: "callout", title: "The short answer", text: "Unicode organises its nearly 160,000 characters into **blocks**: ranges of code points for one script or theme, like Greek or arrows. Knowing a few blocks helps you find the symbol you need." },
       { type: "h2", text: "Code points, blocks and planes" },
@@ -119,6 +142,7 @@ export const BLOG_POSTS: BlogPost[] = [
         ["Mathematical Alphanumeric Symbols", "U+1D400–1D7FF", "𝐀 𝒜 𝔄 𝔸"],
         ["Emoticons", "U+1F600–1F64F", "😀 😍 😭"],
       ] },
+      { type: "img", src: unicodeInside, alt: "Rows of tiles each holding a symbol: heart, star, arrow, crown, flower, check mark, smiley and infinity" },
       { type: "h2", text: "Where fancy text comes from" },
       { type: "p", text: "The bold, cursive, Old English and double struck letters used by font generators come mostly from the Mathematical Alphanumeric Symbols block, and the wide “vaporwave” letters from Halfwidth and Fullwidth Forms. Read [how fancy font generators work](/blog/how-fancy-font-generators-work) for details." },
       { type: "h2", text: "Finding any character" },
@@ -133,6 +157,9 @@ export const BLOG_POSTS: BlogPost[] = [
     published: "2026-11-17",
     readingMinutes: 5,
     tags: ["How to", "Characters"],
+    cover: copyCover,
+    coverAlt: "A phone, a laptop and a keyboard with heart, star, crown, arrow and copyright symbols floating from the screens and keys",
+    shareImage: "/images/blog/how-to-copy-special-characters-og.jpg",
     body: [
       { type: "callout", title: "The short answer", text: "The easiest way is to copy the character from a page like our [symbols pages](/symbols) and paste it. Each system also has its own built-in picker for symbols and emoji." },
       { type: "h2", text: "Android and iPhone" },
@@ -143,6 +170,7 @@ export const BLOG_POSTS: BlogPost[] = [
       { type: "ul", items: ["Press **Control + Command + Space** to open the Character Viewer with emoji and symbols.", "Option shortcuts: Option + G gives ©, Option + 2 gives ™."] },
       { type: "h2", text: "Linux" },
       { type: "p", text: "In many apps you can press **Ctrl + Shift + U**, type the code point in hexadecimal, and press Enter. For example, Ctrl + Shift + U, then `2665`, gives ♥." },
+      { type: "img", src: copyInside, alt: "A finger tapping a heart symbol on one phone, a clipboard icon, and the same heart arriving in a chat on a second phone" },
       { type: "h2", text: "Copy and paste tips" },
       { type: "ul", items: ["If a symbol shows as a box, the device has no font for it; try a more common symbol.", "Some apps strip certain characters when you paste. Check the result before you post.", "Text copied from websites can carry hidden characters; see [zero width space](/blog/zero-width-space)."] },
       { type: "p", text: "Want styled letters instead of symbols? Use the [font generator](/) or the [Text Decorator](/text-decorator)." },

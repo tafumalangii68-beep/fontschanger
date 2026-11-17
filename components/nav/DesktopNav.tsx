@@ -10,6 +10,8 @@ import stylesArt from "@/public/images/font-styles.webp";
 import socialArt from "@/public/images/instagram-fonts.webp";
 import heartArt from "@/public/images/menu-heart.webp";
 import guidesArt from "@/public/images/terms.webp";
+import gamingArt from "@/public/images/menu-gaming.webp";
+import namesArt from "@/public/images/menu-names.webp";
 import {
   FONT_LINKS,
   HEADER_LINKS,
@@ -26,8 +28,10 @@ type MenuId = "fonts" | "tools" | "explore";
 
 /** 3D artwork per Explore card; cards without one show a glossy icon tile. */
 const CARD_ART: Record<string, StaticImageData> = {
+  gaming: gamingArt,
   social: socialArt,
   styles: stylesArt,
+  names: namesArt,
   symbols: heartArt,
   guides: guidesArt,
 };
@@ -81,7 +85,7 @@ function GroupCard({ group, onNavigate }: { group: NavGroup; onNavigate: () => v
           <Icon className="size-10" strokeWidth={1.6} />
         </span>
       )}
-      <ul className="relative space-y-0.5 p-2">
+      <ul className="relative space-y-0.5 p-2 [@media(max-height:860px)]:[&_a]:py-1">
         {group.links.map((l) => (
           <li key={l.href}>
             <NavLinkItem link={l} onNavigate={onNavigate} compact trailing />
@@ -180,7 +184,7 @@ export default function DesktopNav() {
         id={`${baseId}-${id}`}
         role="region"
         aria-labelledby={`${baseId}-${id}-btn`}
-        className={`fc-menu-panel absolute top-[calc(100%+0.6rem)] z-50 rounded-[1.5rem] border border-line bg-paper p-3 shadow-[0_30px_70px_-25px_rgb(23_20_59/0.55)] ${className}`}
+        className={`fc-menu-panel absolute top-[calc(100%+0.6rem)] z-50 max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain [scrollbar-width:thin] rounded-[1.5rem] border border-line bg-paper p-3 shadow-[0_30px_70px_-25px_rgb(23_20_59/0.55)] ${className}`}
       >
         {children}
       </div>
@@ -233,7 +237,7 @@ export default function DesktopNav() {
                 <GroupCard key={g.id} group={g} onNavigate={close} />
               ))}
             </div>
-            <div className="mt-3 flex flex-wrap items-center gap-2 rounded-2xl border border-line bg-surface/70 p-2.5">
+            <div className="sticky bottom-0 z-10 mt-3 flex flex-wrap items-center gap-2 rounded-2xl border border-line bg-surface p-2.5 shadow-[0_-10px_24px_-14px_rgb(23_20_59/0.35)]">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-accent to-[#9b5cff] px-4 py-2 text-sm font-bold text-white">
                 <Zap className="size-4" aria-hidden="true" />
                 Popular Tools:

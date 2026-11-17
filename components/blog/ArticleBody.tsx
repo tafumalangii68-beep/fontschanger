@@ -1,3 +1,4 @@
+import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Lightbulb } from "lucide-react";
@@ -9,7 +10,8 @@ export type ArticleBlock =
   | { type: "ul" | "ol"; items: string[] }
   | { type: "table"; head: string[]; rows: string[][]; glyph?: number[] }
   | { type: "code"; text: string }
-  | { type: "callout"; title: string; text: string };
+  | { type: "callout"; title: string; text: string }
+  | { type: "img"; src: StaticImageData; alt: string };
 
 /** Turns the small inline syntax into React nodes. */
 export function inline(text: string): ReactNode[] {
@@ -50,6 +52,18 @@ export default function ArticleBody({ blocks }: { blocks: ArticleBlock[] }) {
     <>
       {blocks.map((b, k) => {
         switch (b.type) {
+          case "img":
+            return (
+            <figure key={k} className="not-prose my-7">
+              <Image
+                src={b.src}
+                alt={b.alt}
+                placeholder="blur"
+                sizes="(min-width: 800px) 768px, 100vw"
+                className="h-auto w-full rounded-[1.25rem] border border-line shadow-[var(--shadow-card)]"
+              />
+            </figure>
+          );
           case "p":
             return <p key={k}>{inline(b.text)}</p>;
           case "h2":
