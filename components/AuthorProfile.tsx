@@ -15,7 +15,16 @@ const AUTHOR_TITLE = "Founder & Creator of Fonts Changer";
  * Small round photo plus name in the header. Clicking it opens a profile popup.
  * The name shows from `nameFrom` up and stays readable to screen readers below it.
  */
-export default function AuthorProfile({ className = "", nameFrom = "lg" }: { className?: string; nameFrom?: "lg" | "always" }) {
+export default function AuthorProfile({
+  className = "",
+  nameFrom = "lg",
+  tone = "light",
+}: {
+  className?: string;
+  nameFrom?: "lg" | "always";
+  /** "dark" for the purple header, "light" for white surfaces such as the mobile menu. */
+  tone?: "light" | "dark";
+}) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
 
@@ -33,10 +42,10 @@ export default function AuthorProfile({ className = "", nameFrom = "lg" }: { cla
           alt=""
           width={40}
           height={40}
-          className="size-10 shrink-0 rounded-full object-cover ring-2 ring-accent/60 ring-offset-2 ring-offset-paper"
+          className={`size-10 shrink-0 rounded-full object-cover ring-2 ring-offset-2 ${tone === "dark" ? "ring-white/60 ring-offset-[#2b0f6b]" : "ring-accent/60 ring-offset-paper"}`}
         />
         <span
-          className={`whitespace-nowrap text-sm font-semibold text-ink ${nameFrom === "lg" ? "sr-only xl:not-sr-only" : ""}`}
+          className={`whitespace-nowrap text-sm font-semibold ${tone === "dark" ? "text-white" : "text-ink"} ${nameFrom === "lg" ? "sr-only 2xl:not-sr-only" : ""}`}
         >
           {AUTHOR_NAME}
         </span>

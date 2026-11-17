@@ -21,13 +21,12 @@ export default function HeaderActions() {
       <button
         type="button"
         onClick={() => setTheme(document.documentElement.classList.contains("dark") ? "light" : "dark")}
-        className="grid size-10 place-items-center rounded-full text-ink transition-colors hover:bg-sand"
+        className="grid size-10 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/15 transition-colors hover:bg-white/20"
         aria-label="Switch between light and dark mode"
       >
         <Moon className="size-5 dark:hidden" aria-hidden="true" />
         <Sun className="hidden size-5 dark:block" aria-hidden="true" />
       </button>
-      <span aria-hidden="true" className="mx-0.5 hidden h-6 w-px bg-line sm:block" />
       <Link
         href="/#saved"
         onClick={(e) => {
@@ -36,11 +35,11 @@ export default function HeaderActions() {
             window.dispatchEvent(new Event(SHOW_SAVED_EVENT));
           }
         }}
-        className="flex h-10 items-center gap-1.5 rounded-full border border-line bg-surface pl-3 pr-1.5 text-ink shadow-sm transition-colors hover:border-accent"
+        className="flex h-10 items-center gap-1.5 rounded-full bg-white/10 pl-3 pr-1.5 text-white ring-1 ring-white/15 transition-colors hover:bg-white/20"
         aria-label={`Saved font styles: ${saved.length}`}
       >
-        <Heart className="size-[1.15rem] text-accent" fill={saved.length ? "currentColor" : "none"} aria-hidden="true" />
-        <span className="grid min-w-6 place-items-center rounded-full bg-navy px-1.5 py-0.5 text-xs font-bold text-white dark:bg-accent">
+        <Heart className="size-[1.15rem] text-[#f9a8d4]" fill={saved.length ? "currentColor" : "none"} aria-hidden="true" />
+        <span className="grid min-w-6 place-items-center rounded-full bg-white px-1.5 py-0.5 text-xs font-bold text-navy">
           {saved.length}
         </span>
       </Link>

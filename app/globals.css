@@ -435,3 +435,19 @@ dialog::backdrop {
     block-size: auto;
   }
 }
+
+/* Header dropdowns and mobile menu: short fade and lift when they open. */
+.fc-menu-panel {
+  animation: fc-menu-in 0.16s ease-out;
+}
+@keyframes fc-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fc-menu-panel {
+    animation: none;
+  }
+}
