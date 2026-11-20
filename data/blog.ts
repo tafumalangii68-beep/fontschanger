@@ -3,6 +3,7 @@
  */
 import type { StaticImageData } from "next/image";
 import fancyFontsCover from "@/public/images/blog/fancy-fonts-cover.webp";
+import whatsappCover from "@/public/images/blog/whatsapp-cover.webp";
 
 export type BlogPost = {
   slug: string;
@@ -21,6 +22,19 @@ export type BlogPost = {
 };
 
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    slug: "how-to-format-text-in-whatsapp",
+    title: "How to Format Text in WhatsApp: Bold, Italic, Strikethrough",
+    description:
+      "Write bold, italic, strikethrough and monospace text in WhatsApp with simple symbols or the menu. Plus lists, quotes and fixes when it doesn't work.",
+    published: "2026-11-20",
+    readingMinutes: 5,
+    tags: ["WhatsApp", "How to"],
+    cover: whatsappCover,
+    coverAlt:
+      "A purple phone showing WhatsApp chat bubbles with bold, italic and crossed-out text, surrounded by a golden asterisk, underscore and tilde",
+    shareImage: "/images/blog/whatsapp-og.jpg",
+  },
   {
     slug: "how-fancy-font-generators-work",
     title: "How Do Fancy Font Generators Work? (Unicode Explained Simply)",

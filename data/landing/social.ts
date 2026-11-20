@@ -54,7 +54,10 @@ export const SOCIAL_SECTION: LandingSection = {
         { question: "Can the other person see my fancy text?", answer: "Yes, as long as their phone has a font for those characters. Bold, italic and cursive styles are the most widely supported." },
       ],
       related: ["snapchat-telegram", "facebook", "linkedin"],
-      seeAlso: [{ label: "Bold text generator", href: "/fonts/bold-text" }],
+      seeAlso: [
+        { label: "Bold text generator", href: "/fonts/bold-text" },
+        { label: "How to format text in WhatsApp", href: "/blog/how-to-format-text-in-whatsapp" },
+      ],
     },
     {
       slug: "facebook",

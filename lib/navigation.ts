@@ -147,7 +147,7 @@ export const EXPLORE_GROUPS: NavGroup[] = [
       { label: "Look-alike Alphabets", href: "/blog/how-fancy-font-generators-work#lookalike-alphabets" },
       { label: "Why Fancy Text Shows Boxes", href: "/blog/how-fancy-font-generators-work#boxes" },
       { label: "Why Copy and Paste Works", href: "/blog/how-fancy-font-generators-work#why-copy-paste-works" },
-      { label: "Before You Use Fancy Text", href: "/blog/how-fancy-font-generators-work#before-you-use-it" },
+      { label: "WhatsApp Bold, Italic & Strikethrough", href: "/blog/how-to-format-text-in-whatsapp" },
     ],
   },
 ];
