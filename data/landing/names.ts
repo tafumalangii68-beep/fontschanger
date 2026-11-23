@@ -58,7 +58,10 @@ export const NAMES_SECTION: LandingSection = {
         { question: "Can I add my own symbols?", answer: "Yes. Copy a name, then add symbols from the symbols pages or the Text Decorator." },
       ],
       related: ["boys", "aesthetic-usernames", "couple"],
-      seeAlso: [{ label: "Heart symbols", href: "/symbols/hearts" }],
+      seeAlso: [
+        { label: "Heart symbols", href: "/symbols/hearts" },
+        { label: "Aesthetic fonts for names, bios and captions", href: "/blog/aesthetic-fonts-for-names-bios-captions" },
+      ],
     },
     {
       slug: "attitude",
@@ -100,7 +103,10 @@ export const NAMES_SECTION: LandingSection = {
         { question: "Can I use spaces in a username?", answer: "Most handles do not allow spaces. Use a dot or underscore instead." },
       ],
       related: ["girls", "royal", "couple"],
-      seeAlso: [{ label: "Aesthetic fonts", href: "/fonts/aesthetic-fonts" }],
+      seeAlso: [
+        { label: "Aesthetic fonts", href: "/fonts/aesthetic-fonts" },
+        { label: "Aesthetic fonts for names, bios and captions", href: "/blog/aesthetic-fonts-for-names-bios-captions" },
+      ],
     },
     {
       slug: "royal",

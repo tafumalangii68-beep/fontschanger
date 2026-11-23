@@ -25,4 +25,6 @@ export type FontPage = {
   sections: ContentSection[];
   faqs: Faq[];
   related: string[];
+  /** Optional blog guide linked below the generator. */
+  guide?: { label: string; href: string };
 };

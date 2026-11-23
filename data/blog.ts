@@ -2,6 +2,7 @@
  * Blog posts, newest first. Each post has its own page in app/blog/<slug>/page.tsx.
  */
 import type { StaticImageData } from "next/image";
+import aestheticCover from "@/public/images/blog/aesthetic-cover.webp";
 import fancyFontsCover from "@/public/images/blog/fancy-fonts-cover.webp";
 import whatsappCover from "@/public/images/blog/whatsapp-cover.webp";
 
@@ -22,6 +23,19 @@ export type BlogPost = {
 };
 
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    slug: "aesthetic-fonts-for-names-bios-captions",
+    title: "Aesthetic Fonts for Stylish Names, Bios and Captions",
+    description:
+      "How to use aesthetic fonts in your name, bio and captions: the best soft styles, ideas to copy, symbol tips and how to keep it readable.",
+    published: "2026-11-23",
+    readingMinutes: 6,
+    tags: ["Aesthetic", "Instagram"],
+    cover: aestheticCover,
+    coverAlt:
+      "A lilac phone showing a profile with a golden name bar and a crown, surrounded by pink lilies, clouds, a golden moon, a heart and sparkles",
+    shareImage: "/images/blog/aesthetic-og.jpg",
+  },
   {
     slug: "how-to-format-text-in-whatsapp",
     title: "How to Format Text in WhatsApp: Bold, Italic, Strikethrough",

@@ -404,7 +404,7 @@ export default function FancyFontGeneratorsPost() {
               { href: "/fonts/bold-text", label: "Bold text generator" },
               { href: "/fonts/glitch-text", label: "Glitch (zalgo) text generator" },
               { href: "/text-decorator", label: "Text Decorator: symbols and frames" },
-              { href: "/faq", label: "Fancy text FAQ" },
+              { href: "/blog/aesthetic-fonts-for-names-bios-captions", label: "Aesthetic fonts for names and bios" },
               { href: "/blog", label: "All blog posts" },
             ].map((l) => (
               <li key={l.href}>

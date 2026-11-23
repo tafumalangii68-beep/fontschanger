@@ -49,7 +49,10 @@ export const SYMBOLS_SECTION: LandingSection = {
         { question: "Can I add hearts to my name in games?", answer: "Many games accept ♡ and ♥ in display names. Check the preview before you confirm." },
       ],
       related: ["crowns", "butterflies-flowers", "kaomoji"],
-      seeAlso: [{ label: "Stylish names for girls", href: "/names/girls" }],
+      seeAlso: [
+        { label: "Stylish names for girls", href: "/names/girls" },
+        { label: "Aesthetic fonts for names, bios and captions", href: "/blog/aesthetic-fonts-for-names-bios-captions" },
+      ],
     },
     {
       slug: "crowns",
@@ -94,6 +97,7 @@ export const SYMBOLS_SECTION: LandingSection = {
         { question: "Which arrow is best for bios?", answer: "↳ and ➜ are popular because they are clear and widely supported." },
       ],
       related: ["hearts", "crowns", "butterflies-flowers"],
+      seeAlso: [{ label: "Aesthetic fonts for names, bios and captions", href: "/blog/aesthetic-fonts-for-names-bios-captions" }],
     },
     {
       slug: "butterflies-flowers",
@@ -115,7 +119,10 @@ export const SYMBOLS_SECTION: LandingSection = {
         { question: "Which flowers look the same on every phone?", answer: "Text flowers like ✿ ❀ ❁ follow your text colour and look more consistent than emoji flowers." },
       ],
       related: ["hearts", "stars-arrows", "kaomoji"],
-      seeAlso: [{ label: "Aesthetic usernames", href: "/names/aesthetic-usernames" }],
+      seeAlso: [
+        { label: "Aesthetic usernames", href: "/names/aesthetic-usernames" },
+        { label: "Aesthetic fonts for names, bios and captions", href: "/blog/aesthetic-fonts-for-names-bios-captions" },
+      ],
     },
     {
       slug: "kaomoji",

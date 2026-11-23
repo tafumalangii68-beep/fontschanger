@@ -140,6 +140,16 @@ export default async function FontCategoryPage({ params }: { params: Promise<Par
             how fancy font generators work
           </Link>
           .
+          {page.guide && (
+            <>
+              {" "}
+              For ideas, see our guide to{" "}
+              <Link href={page.guide.href} className="text-accent-strong underline underline-offset-2">
+                {page.guide.label}
+              </Link>
+              .
+            </>
+          )}
         </p>
       </section>
 

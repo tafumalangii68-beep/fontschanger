@@ -148,6 +148,7 @@ export const EXPLORE_GROUPS: NavGroup[] = [
       { label: "Why Fancy Text Shows Boxes", href: "/blog/how-fancy-font-generators-work#boxes" },
       { label: "Why Copy and Paste Works", href: "/blog/how-fancy-font-generators-work#why-copy-paste-works" },
       { label: "WhatsApp Bold, Italic & Strikethrough", href: "/blog/how-to-format-text-in-whatsapp" },
+      { label: "Aesthetic Fonts for Names & Bios", href: "/blog/aesthetic-fonts-for-names-bios-captions" },
     ],
   },
 ];

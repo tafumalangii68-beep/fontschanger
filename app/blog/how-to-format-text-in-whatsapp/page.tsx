@@ -305,7 +305,7 @@ export default function WhatsAppFormattingPost() {
               { href: "/social-media/whatsapp", label: "WhatsApp stylish text" },
               { href: "/fonts/bold-text", label: "Bold text generator" },
               { href: "/fonts/strikethrough-text", label: "Strikethrough text generator" },
-              { href: "/fonts/cursive-fonts", label: "Cursive font generator" },
+              { href: "/blog/aesthetic-fonts-for-names-bios-captions", label: "Aesthetic fonts for names and bios" },
               { href: "/blog/how-fancy-font-generators-work", label: "How fancy font generators work" },
               { href: "/blog", label: "All blog posts" },
             ].map((l) => (

@@ -155,6 +155,7 @@ export const fontPages: FontPage[] = [
       },
     ],
     related: ["bold-text", "instagram-fonts", "aesthetic-fonts"],
+    guide: { label: "aesthetic fonts for names, bios and captions", href: "/blog/aesthetic-fonts-for-names-bios-captions" },
   },
   {
     slug: "bold-text",
@@ -295,6 +296,7 @@ export const fontPages: FontPage[] = [
       },
     ],
     related: ["small-text", "instagram-fonts", "cursive-fonts"],
+    guide: { label: "aesthetic fonts for names, bios and captions", href: "/blog/aesthetic-fonts-for-names-bios-captions" },
   },
   {
     slug: "small-text",
@@ -358,6 +360,7 @@ export const fontPages: FontPage[] = [
       },
     ],
     related: ["aesthetic-fonts", "upside-down-text", "instagram-fonts"],
+    guide: { label: "aesthetic fonts for names, bios and captions", href: "/blog/aesthetic-fonts-for-names-bios-captions" },
   },
   {
     slug: "glitch-text",
