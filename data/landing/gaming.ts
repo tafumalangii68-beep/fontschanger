@@ -65,7 +65,10 @@ export const GAMING_SECTION: LandingSection = {
         { question: "Can I use the same name as someone else?", answer: "Usually not exactly. If a name is taken, add a symbol or swap one letter style to make it unique." },
       ],
       related: ["pubg-bgmi", "cod-valorant", "fortnite"],
-      seeAlso: [{ label: "Text Decorator", href: "/text-decorator" }],
+      seeAlso: [
+        { label: "Text Decorator", href: "/text-decorator" },
+        { label: "Cool fonts for gaming names", href: "/blog/cool-fonts-for-gaming-names" },
+      ],
     },
     {
       slug: "pubg-bgmi",
@@ -98,6 +101,7 @@ export const GAMING_SECTION: LandingSection = {
         { question: "Can I use symbols in my clan name?", answer: "Often yes, but clan names can have their own length and character rules. Test the name before you confirm." },
       ],
       related: ["free-fire", "cod-valorant", "fortnite"],
+      seeAlso: [{ label: "Cool fonts for gaming names", href: "/blog/cool-fonts-for-gaming-names" }],
     },
     {
       slug: "roblox",
@@ -122,7 +126,10 @@ export const GAMING_SECTION: LandingSection = {
         { question: "Where can I use fancy text on Roblox?", answer: "Profile descriptions and some group text accept more characters than names do. Paste and check the preview before saving." },
       ],
       related: ["minecraft", "fortnite", "free-fire"],
-      seeAlso: [{ label: "Aesthetic usernames", href: "/names/aesthetic-usernames" }],
+      seeAlso: [
+        { label: "Aesthetic usernames", href: "/names/aesthetic-usernames" },
+        { label: "Cool fonts for gaming names", href: "/blog/cool-fonts-for-gaming-names" },
+      ],
     },
     {
       slug: "fortnite",
@@ -147,6 +154,7 @@ export const GAMING_SECTION: LandingSection = {
         { question: "Will friends still find me after a name change?", answer: "Friends you already have stay on your list, but people searching for your old name will not find you." },
       ],
       related: ["free-fire", "pubg-bgmi", "cod-valorant"],
+      seeAlso: [{ label: "Cool fonts for gaming names", href: "/blog/cool-fonts-for-gaming-names" }],
     },
     {
       slug: "minecraft",
@@ -175,6 +183,7 @@ export const GAMING_SECTION: LandingSection = {
         { question: "Where does styled text work in Minecraft?", answer: "It depends on the server. Nicknames, books and signs sometimes accept it. Try it, and if you see boxes, the game font does not include those characters." },
       ],
       related: ["roblox", "fortnite", "free-fire"],
+      seeAlso: [{ label: "Cool fonts for gaming names", href: "/blog/cool-fonts-for-gaming-names" }],
     },
     {
       slug: "cod-valorant",
@@ -203,6 +212,7 @@ export const GAMING_SECTION: LandingSection = {
         { question: "Can I use the same tag in COD and Valorant?", answer: "Yes, if both accept the characters you used. Keeping one tag across games helps friends find you." },
       ],
       related: ["pubg-bgmi", "free-fire", "fortnite"],
+      seeAlso: [{ label: "Cool fonts for gaming names", href: "/blog/cool-fonts-for-gaming-names" }],
     },
   ],
 };

@@ -369,7 +369,7 @@ export default function AestheticFontsPost() {
               { href: "/fonts/aesthetic-fonts", label: "Aesthetic font generator" },
               { href: "/names/aesthetic-usernames", label: "Aesthetic username generator" },
               { href: "/fonts/cursive-fonts", label: "Cursive font generator" },
-              { href: "/fonts/small-text", label: "Small text generator" },
+              { href: "/blog/cool-fonts-for-gaming-names", label: "Cool fonts for gaming names" },
               { href: "/blog/how-fancy-font-generators-work", label: "How fancy font generators work" },
               { href: "/blog", label: "All blog posts" },
             ].map((l) => (

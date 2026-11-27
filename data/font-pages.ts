@@ -226,6 +226,7 @@ export const fontPages: FontPage[] = [
       },
     ],
     related: ["instagram-fonts", "cursive-fonts", "glitch-text"],
+    guide: { label: "cool fonts for gaming names", href: "/blog/cool-fonts-for-gaming-names" },
   },
   {
     slug: "aesthetic-fonts",
@@ -577,6 +578,7 @@ export const fontPages: FontPage[] = [
       },
     ],
     related: ["bold-text", "cursive-fonts", "glitch-text"],
+    guide: { label: "cool fonts for gaming names", href: "/blog/cool-fonts-for-gaming-names" },
   },
   {
     slug: "bubble-letters",
@@ -663,6 +665,7 @@ export const fontPages: FontPage[] = [
       },
     ],
     related: ["bold-text", "old-english-font", "bubble-letters"],
+    guide: { label: "cool fonts for gaming names", href: "/blog/cool-fonts-for-gaming-names" },
   },
 ];
 

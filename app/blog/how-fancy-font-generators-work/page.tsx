@@ -402,7 +402,7 @@ export default function FancyFontGeneratorsPost() {
             {[
               { href: "/fonts/cursive-fonts", label: "Cursive font generator" },
               { href: "/fonts/bold-text", label: "Bold text generator" },
-              { href: "/fonts/glitch-text", label: "Glitch (zalgo) text generator" },
+              { href: "/blog/cool-fonts-for-gaming-names", label: "Cool fonts for gaming names" },
               { href: "/text-decorator", label: "Text Decorator: symbols and frames" },
               { href: "/blog/aesthetic-fonts-for-names-bios-captions", label: "Aesthetic fonts for names and bios" },
               { href: "/blog", label: "All blog posts" },

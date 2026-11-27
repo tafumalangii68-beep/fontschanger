@@ -4,6 +4,7 @@
 import type { StaticImageData } from "next/image";
 import aestheticCover from "@/public/images/blog/aesthetic-cover.webp";
 import fancyFontsCover from "@/public/images/blog/fancy-fonts-cover.webp";
+import gamingCover from "@/public/images/blog/gaming-cover.webp";
 import whatsappCover from "@/public/images/blog/whatsapp-cover.webp";
 
 export type BlogPost = {
@@ -23,6 +24,19 @@ export type BlogPost = {
 };
 
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    slug: "cool-fonts-for-gaming-names",
+    title: "Cool Fonts for Gaming Names: Stylish Nicknames for PUBG, Free Fire and Fortnite",
+    description:
+      "Make a stylish gaming name with cool fonts and symbols. Name ideas to copy for PUBG, BGMI, Free Fire and Fortnite, plus fixes when a name won't work.",
+    published: "2026-11-27",
+    readingMinutes: 6,
+    tags: ["Gaming", "Names"],
+    cover: gamingCover,
+    coverAlt:
+      "A purple phone on a stand showing a golden winged name tag with a crown, next to a purple gamepad, a golden headset, a crosshair and purple gems",
+    shareImage: "/images/blog/gaming-og.jpg",
+  },
   {
     slug: "aesthetic-fonts-for-names-bios-captions",
     title: "Aesthetic Fonts for Stylish Names, Bios and Captions",

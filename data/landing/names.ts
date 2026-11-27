@@ -39,7 +39,10 @@ export const NAMES_SECTION: LandingSection = {
         { question: "How do I make my own name stylish?", answer: "Type it in the box at the top. Every style updates as you type, and you can copy any of them." },
       ],
       related: ["girls", "attitude", "royal"],
-      seeAlso: [{ label: "Free Fire stylish name", href: "/gaming-names/free-fire" }],
+      seeAlso: [
+        { label: "Free Fire stylish name", href: "/gaming-names/free-fire" },
+        { label: "Cool fonts for gaming names", href: "/blog/cool-fonts-for-gaming-names" },
+      ],
     },
     {
       slug: "girls",
@@ -80,6 +83,7 @@ export const NAMES_SECTION: LandingSection = {
         { question: "Can I combine two styles?", answer: "Copy one style, then add symbols from the Text Decorator to build your own mix." },
       ],
       related: ["boys", "royal", "aesthetic-usernames"],
+      seeAlso: [{ label: "Cool fonts for gaming names", href: "/blog/cool-fonts-for-gaming-names" }],
     },
     {
       slug: "aesthetic-usernames",

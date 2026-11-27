@@ -75,7 +75,10 @@ export const SYMBOLS_SECTION: LandingSection = {
         { question: "Will crowns work in Free Fire or PUBG names?", answer: "Often yes. Test the name preview in the game before confirming." },
       ],
       related: ["hearts", "stars-arrows", "kaomoji"],
-      seeAlso: [{ label: "Royal names", href: "/names/royal" }],
+      seeAlso: [
+        { label: "Royal names", href: "/names/royal" },
+        { label: "Cool fonts for gaming names", href: "/blog/cool-fonts-for-gaming-names" },
+      ],
     },
     {
       slug: "stars-arrows",
